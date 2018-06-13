@@ -24,7 +24,7 @@ module.exports = {
     /*
     ** Run ESLint on save
     */
-    extend (config, { isDev, isClient }) {
+    extend(config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
@@ -33,6 +33,16 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
+    },
+    styleResources: {
+      scss: './assets/common/*.scss',
     }
-  }
+  },
+  css: [
+     'element-ui/lib/theme-chalk/index.css',
+    { src: "~assets/common/common.scss", lang: "scss" }
+  ],
+  plugins: [{
+    src: '@/plugins/element-ui'
+  }]
 }

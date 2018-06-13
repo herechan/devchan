@@ -1,0 +1,36 @@
+$mainColor:#38b7ea;
+$borderColor:#eceff2;
+$targetColor:#898d92;
+$fontColor:#565a5f; 
+@mixin cardBorder{
+    border:1px solid #eceff2;
+    border-bottom: none;
+    box-shadow: 0 1px 3px -1px rgba(0,0,0,0.2);
+}
+body{
+    // font-size: 14]
+    color: #565a5f;
+    min-height: 100vh;
+    background-color: #f5f8f9;
+}
+@font-face {
+    font-family: 'iconfont';  /* project id 705325 */
+    src: url('//at.alicdn.com/t/font_705325_lgvwf4tdlzi.eot');
+    src: url('//at.alicdn.com/t/font_705325_lgvwf4tdlzi.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_705325_lgvwf4tdlzi.woff') format('woff'),
+    url('//at.alicdn.com/t/font_705325_lgvwf4tdlzi.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_705325_lgvwf4tdlzi.svg#iconfont') format('svg');
+  }
+  .iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;}
+    li{
+        list-style: none;
+    }
+    a{
+        text-decoration: none;
+        color: #565a5f;
+    }
