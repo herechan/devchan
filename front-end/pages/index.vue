@@ -390,7 +390,7 @@ main {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 700px) {
   main .recent-col {
     margin-top: 20px;
     padding-left: 0;
