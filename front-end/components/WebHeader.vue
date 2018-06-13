@@ -63,6 +63,7 @@ header {
     height: 64px;
     margin: auto;
     padding: 0 20px;
+    
     .header-left {
       height: 64px;
       display: flex;
@@ -158,9 +159,6 @@ header {
       line-height: 34px;
       margin-right: 20px;
       flex-shrink: 0;
-    }
-    .header-coll-input{
-        padding-right: 20px;
     }
     .header-coll-search /deep/ input {
       border-radius: 25px;
