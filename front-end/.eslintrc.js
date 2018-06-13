@@ -15,12 +15,6 @@ module.exports = {
   // required to lint *.vue files
   plugins: [
     'vue',
-    // ["component", [
-    //   {
-    //     "libraryName": "element-ui",
-    //     "styleLibraryName": "~theme"
-    //   }
-    // ]]
   ],
   // add your custom rules here
   rules: {}

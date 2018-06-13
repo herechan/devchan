@@ -63,6 +63,7 @@ header {
     height: 64px;
     margin: auto;
     padding: 0 20px;
+    
     .header-left {
       height: 64px;
       display: flex;
@@ -120,8 +121,8 @@ header {
         justify-content: space-around;
         align-items: center;
         .user-mini-portrait {
-          height: 44px;
-          width: 44px;
+          height: 40px;
+          width: 40px;
           overflow: hidden;
           border-radius: 50%;
 
@@ -159,9 +160,6 @@ header {
       margin-right: 20px;
       flex-shrink: 0;
     }
-    .header-coll-input{
-        padding-right: 20px;
-    }
     .header-coll-search /deep/ input {
       border-radius: 25px;
       height: 34px;
@@ -170,7 +168,7 @@ header {
       top: -3px;
     }
     span {
-      margin-right: 20px;
+      margin-right: 30px;
       flex-shrink: 0;
     }
   }

@@ -90,23 +90,25 @@
             </div>
           </div>
         </el-col>
-        <el-col :lg="5" :sm="7" class="recent-col">
-          <p class="recent-title">近期文章</p>
-          <div class="recent-article">
-            <div class="recent-article-item">
-              <a href="" class="recent-article-cover"></a>
-              <div class="recent-article-info">
-                <a href="" class="recent-article-tag">电影</a>
-                <a href="" class="recent-article-title" title="之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他">之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他</a>
-                <p class="recent-article-time">2018-6-13</p>
+        <el-col :lg="5" :sm="7" class="aside-col">
+          <div class="aside-box">
+            <p class="aside-title">近期文章</p>
+            <div class="recent-article">
+              <div class="recent-article-item">
+                <a href="" class="recent-article-cover"></a>
+                <div class="recent-article-info">
+                  <a href="" class="recent-article-tag">电影</a>
+                  <a href="" class="recent-article-title" title="之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他">之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他</a>
+                  <p class="recent-article-time">2018-6-13</p>
+                </div>
               </div>
-            </div>
-            <div class="recent-article-item">
-              <a href="" class="recent-article-cover"></a>
-              <div class="recent-article-info">
-                <a href="" class="recent-article-tag">电影</a>
-                <a href="" class="recent-article-title" title="之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他">之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他</a>
-                <p class="recent-article-time">2018-6-13</p>
+              <div class="recent-article-item">
+                <a href="" class="recent-article-cover"></a>
+                <div class="recent-article-info">
+                  <a href="" class="recent-article-tag">电影</a>
+                  <a href="" class="recent-article-title" title="之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他">之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他</a>
+                  <p class="recent-article-time">2018-6-13</p>
+                </div>
               </div>
             </div>
           </div>
@@ -134,7 +136,7 @@ main {
     padding-right: 15px;
     .user-banner {
       background-color: #fff;
-     @include cardBorder;
+      @include cardBorder;
       .user-info {
         padding: 15px 20px;
         img {
@@ -219,7 +221,7 @@ main {
               i {
                 font-size: 24px;
                 color: $targetColor;
-                transition: .2s ease;
+                transition: 0.2s ease;
                 &:hover {
                   color: $fontColor;
                 }
@@ -332,9 +334,12 @@ main {
       }
     }
   }
-  .recent-col {
+  .aside-col {
     padding-left: 25px;
-    .recent-title {
+    .aside-box{
+      margin-bottom: 40px;
+    }
+    .aside-title {
       font-size: 14px;
     }
     .recent-article-item {
@@ -387,15 +392,16 @@ main {
         }
       }
     }
+    
   }
 }
 
 @media screen and (max-width: 700px) {
-  main .recent-col {
+  main .aside-col {
     margin-top: 20px;
     padding-left: 0;
   }
-  main .timeline-col .timeline-wrap .timeline-article .article-title{
+  main .timeline-col .timeline-wrap .timeline-article .article-title {
     font-size: 22px;
     padding-top: 15px;
   }
