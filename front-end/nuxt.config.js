@@ -40,6 +40,7 @@ module.exports = {
   },
   css: [
     'element-ui/lib/theme-chalk/index.css',
+    'element-ui/lib/theme-chalk/display.css',
     // '~assets/util/theme/index.css',
     { src: "~assets/common/common.scss", lang: "scss" }
   ],

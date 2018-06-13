@@ -1,6 +1,6 @@
 <template>
   <div id="wrap">
-    <!-- <WebHeader/> -->
+    <WebHeader/>
     <main>
       <el-row>
         <el-col :lg="5" class="user-banner-col hidden-md-and-down">
@@ -117,10 +117,10 @@
 </template>
 
 <script>
-// import WebHeader from "~/components/WebHeader.vue";
+import WebHeader from "~/components/WebHeader.vue";
 export default {
   components: {
-    // WebHeader
+    WebHeader
   }
 };
 </script>
