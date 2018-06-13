@@ -19,6 +19,7 @@
     "babel-eslint": "^8.2.1",
     "babel-plugin-component": "^1.1.1",
     "css-loader": "^0.28.11",
+    "element-theme-chalk": "^2.4.1",
     "element-ui": "^2.4.1",
     "eslint": "^4.15.0",
     "eslint-friendly-formatter": "^3.0.0",
