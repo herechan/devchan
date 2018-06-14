@@ -10,12 +10,7 @@
               </div>
               <span class="logo-name">Chan</span>
               <div class="header-nav hidden-sm-and-down">
-                <span>主页</span>
-                <span>文章</span>
-                <span>微博</span>
-                <span>归档</span>
-                <span>标签</span>
-                <span>关于</span>
+                <span v-for="(item,index) in navList" :key="index" @click="go(item.pathName)">{{item.name}}</span>
               </div>
             </div>
           </el-col>
@@ -38,12 +33,7 @@
       <!--小屏幕二级菜单-->
       <div class="header-coll hidden-sm-and-up">
         <div class="header-coll-nav fl">
-          <span>主页</span>
-          <span>文章</span>
-          <span>微博</span>
-          <span>归档</span>
-          <span>标签</span>
-          <span>关于</span>
+          <span @click="go(item.pathName)" v-for="(item,index) in navList" :key="index">{{item.name}}</span>
         </div>
         <div class="header-coll-input">
           <el-input placeholder="Search" class="header-coll-search fr">
@@ -176,9 +166,46 @@ header {
     }
   }
 }
-@media screen and(max-width: 768px){
-  .header-main{
+@media screen and(max-width: 768px) {
+  .header-main {
     border-bottom: 1px solid $borderColor;
   }
 }
 </style>
+<script>
+export default {
+  mounted() {
+  },
+  data() {
+    return {
+      navList: [
+        {
+          name: "主页",
+          pathName:"/"
+        },
+        {
+          name: "文章",
+          pathName:"essay"
+        },
+        {
+          name: "微博",
+          pathName:""
+        },
+        {
+          name: "标签",
+          pathName:""
+        },
+        {
+          name: "关于",
+          pathName:""
+        }
+      ]
+    };
+  },
+  methods:{
+    go:function(name){
+      this.$router.push(name)
+    }
+  }
+};
+</script>

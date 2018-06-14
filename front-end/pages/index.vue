@@ -181,8 +181,8 @@
 </template>
 
 <script>
-import WebHeader from "~/components/WebHeader.vue";
-import WebFooter from "~/components/WebFooter.vue";
+import WebHeader from "~/components/webHeader.vue";
+import WebFooter from "~/components/webFooter.vue";
 import HomeBody from "~/pages/index/index.vue";
 export default {
   components: {
@@ -329,6 +329,7 @@ main {
   }
   .aside-col {
     padding-left: 25px;
+    user-select: none;
     .aside-box {
       margin-bottom: 40px;
       .aside-list {
@@ -345,7 +346,7 @@ main {
               font-size: 12px;
               color: $ccc;
               transition: 0.2s ease;
-              margin-right: 5px;
+              margin-right: 2px;
             }
             &:hover {
               i {
