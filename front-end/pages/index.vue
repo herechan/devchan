@@ -57,7 +57,7 @@
           </div>
         </el-col>
         <el-col :lg="14" :sm="17" class="timeline-col">
-          <div class="timeline-wrap">
+          <!-- <div class="timeline-wrap">
             <div class="timeline-article">
               <a href=""><img src="~assets/img/article-cover.png" alt="" class="timeline-article-cover"></a>
               <p class="article-title" title="之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他">之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他</p>
@@ -92,7 +92,8 @@
               <el-pagination layout="prev, pager, next" :total="50">
               </el-pagination>
             </div>
-          </div>
+          </div> -->
+          <HomeBody></HomeBody>
         </el-col>
         <el-col :lg="5" :sm="7" class="aside-col">
           <div class="aside-box">
@@ -211,14 +212,19 @@
         </el-col>
       </el-row>
     </main>
+    <WebFooter/>
   </div>
 </template>
 
 <script>
 import WebHeader from "~/components/WebHeader.vue";
+import WebFooter from "~/components/WebFooter.vue";
+import HomeBody from "~/pages/_home/Home.vue";
 export default {
   components: {
-    WebHeader
+    WebHeader,
+    WebFooter,
+    HomeBody
   }
 };
 </script>
@@ -329,131 +335,31 @@ main {
     }
   }
   .timeline-col {
-    .timeline-wrap {
-      .timeline-article {
-        background: #fff;
-        @include cardBorder;
-        padding-bottom: 20px;
-        a {
-          display: block;
-          .timeline-article-cover {
-            width: 100%;
-          }
-        }
-        .timeline-article-cover {
-          width: 100%;
-        }
-        .article-title {
-          padding: 20px 20px 0;
-          font-size: 28px;
-          cursor: pointer;
-          transition: 0.2s ease;
-          user-select: none;
-          &:hover {
-            color: $mainColor;
-          }
-        }
-        .article-meta {
-          padding: 0 20px;
-          margin-top: 15px;
-          display: flex;
-          justify-content: flex-start;
-          p {
-            align-items: center;
-            display: flex;
-            &:first-child {
-              margin-right: 15px;
-            }
-            span {
-              margin-left: 3px;
-            }
-          }
-        }
-        .article-section-normal {
-          padding: 0 20px;
-          margin: 1.6em 0;
-          line-height: 1.7em;
-          p {
-            margin-bottom: 20px;
-          }
-        }
-        .article-more {
-          display: inline-block;
-          line-height: 1em;
-          padding: 6px 15px;
-          border-radius: 15px;
-          background: #f5f8f9;
-          font-size: 14px;
-          color: #999;
-          text-shadow: 0 1px #fff;
-          text-decoration: none;
-          margin-left: 15px;
-          cursor: pointer;
-          transition: 0.2s ease;
-          &:hover {
-            background: #38b7ea;
-            color: #fff;
-            text-decoration: none;
-            text-shadow: 0 1px #169cd2;
-          }
-        }
-        .devider {
-          height: 1px;
-          border-top: 1px solid $borderColor;
-          margin: 20px;
-        }
-        .share-btn {
-          padding: 0 20px;
-          div {
-            display: flex;
-            justify-content: flex-end;
-            float: right;
-            cursor: pointer;
-            &:hover {
-              span {
-                color: #565a5f;
-              }
-              i {
-                color: #565a5f;
-              }
-            }
-            span {
-              color: #999;
-              font-size: 12px;
-              margin-left: 5px;
-            }
-            i {
-              color: #999;
-            }
-          }
-        }
+  }
+  .page-box {
+    text-align: center;
+    margin-top: 35px;
+    button {
+      background-color: $bgColor;
+    }
+    .btn-next {
+      color: $fontColor;
+      &:hover {
+        color: $mainColor;
       }
-      .page-box {
-        text-align: center;
-        margin-top: 35px;
-        button {
-          background-color: $bgColor;
-        }
-        .btn-next {
-          color: $fontColor;
-          &:hover{
-            color: $mainColor;
-          }
-          &:disabled:hover{
-            color: $pageBtnDis;
-          }
-        }
-        li {
-          background-color: $bgColor;
-          color: $pageColor;
-          &:hover {
-            color: $mainColor;
-          }
-        }
-        .active {
-          color: $fontColor;
-        }
+      &:disabled:hover {
+        color: $pageBtnDis;
       }
+    }
+    li {
+      background-color: $bgColor;
+      color: $pageColor;
+      &:hover {
+        color: $mainColor;
+      }
+    }
+    .active {
+      color: $fontColor;
     }
   }
   .aside-col {
@@ -542,7 +448,6 @@ main {
     }
   }
 }
-
 @media screen and (max-width: 700px) {
   main .aside-col {
     margin-top: 20px;
@@ -554,3 +459,5 @@ main {
   }
 }
 </style>
+
+
