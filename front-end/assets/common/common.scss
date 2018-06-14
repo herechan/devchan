@@ -1,17 +1,23 @@
 $mainColor:#38b7ea;
 $borderColor:#eceff2;
 $targetColor:#898d92;
-$fontColor:#565a5f; 
+$fontColor:#565a5f;
+$bgColor:#f5f8f9;
+$ccc:#ccc;
+$asideColor:#777;
+$asideHoverColor:#333;
+$pageColor:#999;
+$pageBtnDis:#c0c4cc;
 @mixin cardBorder {
     border: 1px solid #eceff2;
     border-bottom: none;
-    box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2);
   }
   body {
     // font-size: 14]
     color: #565a5f;
     min-height: 100vh;
-    background-color: #f5f8f9;
+    background-color: $bgColor;
   }
   @font-face {
     font-family: "iconfont"; /* project id 705325 */
@@ -54,4 +60,9 @@ $fontColor:#565a5f;
   }
   .fr{
       float: right;
+  }
+  .elli{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }

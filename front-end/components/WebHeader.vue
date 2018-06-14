@@ -1,69 +1,71 @@
 <template>
-    <div id="container">
-        <header>
-            <div class="header-main">
-                <el-row>
-                    <el-col :span="14">
-                        <div class="header-left">
-                            <div class="logo">
-                                <img src="~assets/img/logo.png" alt="">
-                            </div>
-                            <span class="logo-name">Chan</span>
-                            <div class="header-nav hidden-sm-and-down">
-                                <span>主页</span>
-                                <span>文章</span>
-                                <span>微博</span>
-                                <span>标签</span>
-                                <span>关于</span>
-                            </div>
-                        </div>
-                    </el-col>
-                    <el-col :span="10">
-                        <div class="header-right">
-                            <el-input placeholder="Search" class="header-search hidden-xs-only">
-                                <i slot="suffix" class="el-input__icon el-icon-search"></i>
-                            </el-input>
-                            <div class="user-mini hidden-lg-and-up">
-                                <div class="user-mini-portrait">
-                                    <img src="~assets/img/user.png" alt="">
+  <div id="container">
+    <header>
+      <div class="header-main">
+        <el-row>
+          <el-col :span="14">
+            <div class="header-left">
+              <div class="logo">
+                <img src="~assets/img/logo.png" alt="">
+              </div>
+              <span class="logo-name">Chan</span>
+              <div class="header-nav hidden-sm-and-down">
+                <span>主页</span>
+                <span>文章</span>
+                <span>微博</span>
+                <span>归档</span>
+                <span>标签</span>
+                <span>关于</span>
+              </div>
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <div class="header-right">
+              <el-input placeholder="Search" class="header-search hidden-xs-only">
+                <i slot="suffix" class="el-input__icon el-icon-search"></i>
+              </el-input>
+              <div class="user-mini hidden-lg-and-up">
+                <div class="user-mini-portrait">
+                  <img src="~assets/img/user.png" alt="">
 
-                                </div>
-                                <i class="el-icon-caret-bottom"></i>
-                            </div>
-                        </div>
-                    </el-col>
-                </el-row>
-            </div>
-            <!--小屏幕二级菜单-->
-            <div class="header-coll hidden-sm-and-up">
-                <div class="header-coll-nav fl">
-                    <span>主页</span>
-                    <span>文章</span>
-                    <span>微博</span>
-                    <span>标签</span>
-                    <span>关于</span>
                 </div>
-                <div class="header-coll-input">
-                    <el-input placeholder="Search" class="header-coll-search fr">
-                    <i slot="suffix" class="el-input__icon el-icon-search"></i>
-                </el-input>
-                </div>
-                
+                <i class="el-icon-caret-bottom"></i>
+              </div>
             </div>
-        </header>
-    </div>
+          </el-col>
+        </el-row>
+      </div>
+      <!--小屏幕二级菜单-->
+      <div class="header-coll hidden-sm-and-up">
+        <div class="header-coll-nav fl">
+          <span>主页</span>
+          <span>文章</span>
+          <span>微博</span>
+          <span>归档</span>
+          <span>标签</span>
+          <span>关于</span>
+        </div>
+        <div class="header-coll-input">
+          <el-input placeholder="Search" class="header-coll-search fr">
+            <i slot="suffix" class="el-input__icon el-icon-search"></i>
+          </el-input>
+        </div>
+
+      </div>
+    </header>
+  </div>
 </template>
 <style lang="scss" scoped>
 header {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-
+  background-color: #fff;
   .header-main {
     max-width: 1360px;
-    background-color: #fff;
+
     height: 64px;
     margin: auto;
     padding: 0 20px;
-    
+
     .header-left {
       height: 64px;
       display: flex;
@@ -148,10 +150,10 @@ header {
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
-    .header-coll-nav{
-        display: flex;
-        align-items: center;
-        height: 100%;
+    .header-coll-nav {
+      display: flex;
+      align-items: center;
+      height: 100%;
     }
     .header-coll-search {
       height: 34px;
@@ -163,6 +165,7 @@ header {
     .header-coll-search /deep/ input {
       border-radius: 25px;
       height: 34px;
+      border-color: $borderColor;
     }
     .header-coll-search /deep/ .el-input__suffix {
       top: -3px;
@@ -171,6 +174,11 @@ header {
       margin-right: 30px;
       flex-shrink: 0;
     }
+  }
+}
+@media screen and(max-width: 768px){
+  .header-main{
+    border-bottom: 1px solid $borderColor;
   }
 }
 </style>

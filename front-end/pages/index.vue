@@ -88,6 +88,10 @@
                 </div>
               </div>
             </div>
+            <div class="page-box">
+              <el-pagination layout="prev, pager, next" :total="50">
+              </el-pagination>
+            </div>
           </div>
         </el-col>
         <el-col :lg="5" :sm="7" class="aside-col">
@@ -111,6 +115,98 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="aside-box">
+            <p class="aside-title">文章归档</p>
+            <ul class="aside-list">
+              <li class="elli">
+                <a href="#">
+                  <i class="el-icon-caret-right"></i>
+                  电影影评 (3)
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="el-icon-caret-right"></i>
+                  技术文章
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="el-icon-caret-right"></i>
+                  心灵鸡汤
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="aside-box">
+            <p class="aside-title">个人动态</p>
+            <ul class="aside-list">
+              <li class="elli">
+                <a href="#">
+                  <i class="el-icon-caret-right"></i>
+                  2018年6月 (3)
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="el-icon-caret-right"></i>
+                  2018年5月 (5)
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="el-icon-caret-right"></i>
+                  2018年2月 (6)
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="aside-box">
+            <p class="aside-title">标签分类</p>
+            <ul class="aside-list">
+              <li class="elli">
+                <a href="#">
+                  <i class="el-icon-caret-right"></i>
+                  音乐
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="el-icon-caret-right"></i>
+                  电影
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="el-icon-caret-right"></i>
+                  技术
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="aside-box">
+            <p class="aside-title">链接</p>
+            <ul class="aside-list">
+              <li class="elli">
+                <a href="#">
+                  <i class="el-icon-caret-right"></i>
+                  element-ui
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="el-icon-caret-right"></i>
+                  nuxt
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="el-icon-caret-right"></i>
+                  Echo Js
+                </a>
+              </li>
+            </ul>
           </div>
         </el-col>
       </el-row>
@@ -332,15 +428,67 @@ main {
           }
         }
       }
+      .page-box {
+        text-align: center;
+        margin-top: 35px;
+        button {
+          background-color: $bgColor;
+        }
+        .btn-next {
+          color: $fontColor;
+          &:hover{
+            color: $mainColor;
+          }
+          &:disabled:hover{
+            color: $pageBtnDis;
+          }
+        }
+        li {
+          background-color: $bgColor;
+          color: $pageColor;
+          &:hover {
+            color: $mainColor;
+          }
+        }
+        .active {
+          color: $fontColor;
+        }
+      }
     }
   }
   .aside-col {
     padding-left: 25px;
-    .aside-box{
+    .aside-box {
       margin-bottom: 40px;
+      .aside-list {
+        padding-left: 10px;
+        li {
+          color: $targetColor;
+          width: auto;
+          margin-bottom: 15px;
+          a {
+            font-size: 12px;
+            color: $asideColor;
+            transition: 0.2s ease;
+            i {
+              font-size: 12px;
+              color: $ccc;
+              transition: 0.2s ease;
+              margin-right: 5px;
+            }
+            &:hover {
+              i {
+                color: $targetColor;
+              }
+              color: $asideHoverColor;
+            }
+          }
+        }
+      }
     }
     .aside-title {
       font-size: 14px;
+      padding-bottom: 15px;
     }
     .recent-article-item {
       height: 102px;
@@ -392,7 +540,6 @@ main {
         }
       }
     }
-    
   }
 }
 
