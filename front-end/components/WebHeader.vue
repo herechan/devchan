@@ -47,7 +47,8 @@
 </template>
 <style lang="scss" scoped>
 header {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  // box-shadow: 0 2px 3px -1px rgba(0, 0, 0, .06);
+  box-shadow: 0 2px 3px -1px rgba(0,0,0,0.2);
   background-color: #fff;
   .header-main {
     max-width: 1360px;
@@ -131,7 +132,7 @@ header {
   }
   .header-coll {
     height: 49px;
-    border-bottom: 1px solid $borderColor;
+    border-bottom: none;
     background-color: #fff;
     margin-top: 1px;
     padding: 0 20px;
@@ -188,13 +189,13 @@ export default {
           pathName:"essay"
         },
         {
-          name: "微博",
+          name: "推文",
           pathName:""
         },
-        {
-          name: "标签",
-          pathName:""
-        },
+        // {
+        //   name: "标签",
+        //   pathName:"tags"
+        // },
         {
           name: "关于",
           pathName:""

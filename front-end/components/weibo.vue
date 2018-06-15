@@ -31,9 +31,9 @@ export default {};
       height: 44px;
       width: 44px;
       overflow: hidden;
-      border-radius: 50%;
       img {
         width: 100%;
+        border-radius: 50%;
       }
     }
     .weibo-body {

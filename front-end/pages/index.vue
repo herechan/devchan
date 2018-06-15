@@ -204,11 +204,12 @@ main {
       background-color: #fff;
       @include cardBorder;
       .user-info {
-        padding: 15px 20px;
+        padding:20px;
         img {
           display: block;
           max-width: 135px;
           margin: auto;
+          border-radius: 50%;
         }
         p {
           text-align: center;
