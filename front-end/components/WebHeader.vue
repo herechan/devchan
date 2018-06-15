@@ -188,7 +188,7 @@ export default {
           pathName:"essay"
         },
         {
-          name: "微博",
+          name: "推文",
           pathName:""
         },
         {
