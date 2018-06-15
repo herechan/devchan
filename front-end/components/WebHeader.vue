@@ -192,10 +192,6 @@ export default {
           name: "推文",
           pathName:""
         },
-        // {
-        //   name: "标签",
-        //   pathName:"tags"
-        // },
         {
           name: "关于",
           pathName:""

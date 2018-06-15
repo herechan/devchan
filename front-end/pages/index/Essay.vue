@@ -84,7 +84,6 @@ export default {
       margin-top: 20px;
       background-color: #fff;
       @include cardBorder;
-
       .essay-dot {
         height: 12px;
         width: 12px;
