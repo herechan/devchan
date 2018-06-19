@@ -3,7 +3,7 @@
     <WebHeader/>
     <main>
       <el-row>
-        <el-col :lg="5" class="user-banner-col hidden-md-and-down">
+        <el-col :lg="5" class="user-banner-col" :class="userBanner">
           <div class="user-banner">
             <div class="user-info">
               <img src="~assets/img/user.png" alt="">
@@ -189,6 +189,16 @@ export default {
     WebHeader,
     WebFooter,
     HomeBody
+  },
+  mounted(){
+  },
+  data(){
+    return{
+      userBanner:""
+    }
+  },
+  methods:{
+    
   }
 };
 </script>
@@ -298,6 +308,10 @@ main {
         }
       }
     }
+  }
+  .user-banner-col-active{
+    display: block;
+    
   }
   .timeline-col {
     
@@ -423,6 +437,12 @@ main {
   main .timeline-col .timeline-wrap .timeline-article .article-title {
     font-size: 22px;
     padding-top: 15px;
+  }
+}
+
+@media screen and (max-width: 991) {
+  .user-banner-col{
+    display: none;
   }
 }
 </style>
