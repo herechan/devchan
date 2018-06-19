@@ -1,9 +1,12 @@
 export const state = () => ({
-    userBannerClass:0
-  })
-  
-  export const mutations = {
-    setuserBannerClass(state,text){
-        state.userBannerClass = text
-    }
+  userBannerClass: ""
+})
+
+export const mutations = {
+  setUserBannerClass(state, text) {
+    state.userBannerClass = "user-banner-col-active"
+  },
+  removeUserBannerClass(state, text) {
+    state.userBannerClass = ""
   }
+}

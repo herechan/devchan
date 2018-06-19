@@ -190,16 +190,18 @@ export default {
     WebFooter,
     HomeBody
   },
-  mounted(){
-  },
-  data(){
-    return{
-      userBanner:""
+  mounted() {},
+  computed:{
+    userBanner(){
+      return this.$store.state.header.userBannerClass
     }
   },
-  methods:{
-    
-  }
+  data() {
+    return {
+      // userBanner: this.$store.state.header.userBannerClass
+    };
+  },
+  methods: {}
 };
 </script>
 
@@ -209,12 +211,13 @@ main {
   margin: auto;
   padding: 30px 15px 30px 15px;
   .user-banner-col {
+    transition: 0.2s ease;
     padding-right: 15px;
     .user-banner {
       background-color: #fff;
       @include cardBorder;
       .user-info {
-        padding:20px;
+        padding: 20px;
         img {
           display: block;
           max-width: 135px;
@@ -309,12 +312,10 @@ main {
       }
     }
   }
-  .user-banner-col-active{
+  .user-banner-col-active {
     display: block;
-    
   }
   .timeline-col {
-    
   }
   .page-box {
     text-align: center;
@@ -440,8 +441,8 @@ main {
   }
 }
 
-@media screen and (max-width: 991) {
-  .user-banner-col{
+@media screen and (max-width: 1200px) {
+  .user-banner-col {
     display: none;
   }
 }
