@@ -1,9 +1,13 @@
+
 <template>
     <ul class="filter-inner">
         <li @click="tagTrigger(index,item)" :class="{'filter-active':tagArr[index]}" class="filter-item" v-for="(item, index) in tags" :key="index">{{item.name}}</li>
     </ul>
 </template>
 <script>
+/**
+ * 文章与后管理的文章标签列表
+ */
 export default {
   data() {
     return {
