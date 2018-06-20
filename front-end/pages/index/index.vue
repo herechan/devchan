@@ -2,7 +2,9 @@
 <template>
   <div class="timeline-wrap">
     <div class="timeline-article timeline-item">
-      <a href=""><img src="~assets/img/article-cover.png" alt="" class="timeline-article-cover"></a>
+      <a href="">
+        <img src="~assets/img/article-cover.png" alt="" class="timeline-article-cover">
+      </a>
       <p class="article-title" title="之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他">之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他</p>
       <ArticleMeta/>
       <div class="article-section article-section-normal">
@@ -33,7 +35,7 @@
 import WebFooter from "~/components/weibo.vue";
 import ArticleMeta from "~/components/widget/articleMeta.vue";
 export default {
-  components:{
+  components: {
     WebFooter,
     ArticleMeta
   }
@@ -43,7 +45,7 @@ export default {
 <style lang="scss" scoped>
 .timeline-wrap {
   width: 100%;
-  .timeline-item{
+  .timeline-item {
     margin-bottom: 45px;
   }
   .timeline-article {
@@ -69,7 +71,7 @@ export default {
         color: $mainColor;
       }
     }
-    
+
     .article-section-normal {
       padding: 0 20px;
       margin: 1.6em 0;
@@ -110,7 +112,7 @@ export default {
         justify-content: flex-end;
         float: right;
         cursor: pointer;
-        
+
         &:hover {
           span {
             color: #565a5f;
@@ -123,11 +125,11 @@ export default {
           color: #999;
           font-size: 12px;
           margin-left: 5px;
-          transition: .2s ease;
+          transition: 0.2s ease;
         }
         i {
           color: #999;
-          transition: .2s ease;
+          transition: 0.2s ease;
         }
       }
     }

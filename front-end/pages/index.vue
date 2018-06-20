@@ -1,9 +1,10 @@
 <template>
-  <div id="wrap">
+  <div id="wrap" :class="triggerBody" @click="removeShadow">
     <WebHeader/>
     <main>
+      <div class="shadow" v-if="$store.state.header.shadow"></div>
       <el-row>
-        <el-col :lg="5" class="user-banner-col" :class="userBanner">
+        <el-col :lg="5" class="user-banner-col" :class="userBanner" @click.stop.native>
           <div class="user-banner">
             <div class="user-info">
               <img src="~assets/img/user.png" alt="">
@@ -190,18 +191,38 @@ export default {
     WebFooter,
     HomeBody
   },
-  mounted() {},
-  computed:{
-    userBanner(){
-      return this.$store.state.header.userBannerClass
+  mounted() {
+    this.document = document;
+  },
+  computed: {
+    userBanner() {
+      return this.$store.state.header.userBannerClass;
+    },
+    triggerBody() {
+      if (this.document) {
+        var body = this.document.querySelector("body");
+        if (this.$store.state.header.userBannerClass) {
+          body.style.overflow = "hidden";
+        } else {
+          body.style.overflow = "auto";
+        }
+      }
+      return "";
     }
   },
   data() {
     return {
-      // userBanner: this.$store.state.header.userBannerClass
+      document: "",
     };
   },
-  methods: {}
+  methods: {
+    removeShadow() {
+      if (this.$store.state.header.userBannerClass) {
+        this.$store.commit("header/removeUserBannerClass");
+      }
+      // document.querySelector(".user-banner-col").style.display = "none"
+    }
+  }
 };
 </script>
 
@@ -210,8 +231,17 @@ main {
   max-width: 1360px;
   margin: auto;
   padding: 30px 15px 30px 15px;
+  .shadow {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: #000;
+    opacity: 0.4;
+    z-index: 99;
+  }
   .user-banner-col {
-    transition: 0.2s ease;
     padding-right: 15px;
     .user-banner {
       background-color: #fff;
@@ -313,7 +343,18 @@ main {
     }
   }
   .user-banner-col-active {
-    display: block;
+    // display: block;
+    position: absolute;
+    width: 230px;
+    top: -30px;
+    right: -10px;
+    height: 469px;
+    z-index: 100;
+    opacity: 1;
+    .user-banner {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
   }
   .timeline-col {
   }
@@ -430,6 +471,9 @@ main {
     }
   }
 }
+
+
+
 @media screen and (max-width: 700px) {
   main .aside-col {
     margin-top: 20px;
@@ -439,11 +483,18 @@ main {
     font-size: 22px;
     padding-top: 15px;
   }
+  main .user-banner-col-active {
+    top: -81px;
+  }
 }
 
 @media screen and (max-width: 1200px) {
   .user-banner-col {
-    display: none;
+    // display: none;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    opacity: 0;
   }
 }
 </style>

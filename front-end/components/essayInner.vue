@@ -3,7 +3,7 @@
     <div class="essay-article">
         <div class="essay-inner">
             <p class="essay-title">
-                <span>永远年轻，永远热泪盈眶</span>
+                <span>forever youth forever weeping</span>
             </p>
         </div>
         <ArticleMeta/>
@@ -15,7 +15,7 @@
     padding: 10px 15px;
     position: relative;
     background-color: #fff;
-    z-index: 999;
+    z-index: 98;
     border-bottom: 1px solid $borderColor;
     .essay-title {
       span {

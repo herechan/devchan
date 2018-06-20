@@ -19,7 +19,7 @@
               <el-input placeholder="Search" class="header-search hidden-xs-only">
                 <i slot="suffix" class="el-input__icon el-icon-search"></i>
               </el-input>
-              <div class="user-mini hidden-lg-and-up" @click="triggerUserHeader ">
+              <div class="user-mini hidden-lg-and-up" @click.stop="triggerUserHeader ">
                 <div class="user-mini-portrait">
                   <img src="~assets/img/user.png" alt="">
                 </div>
@@ -47,6 +47,8 @@
 <style lang="scss" scoped>
 header {
   // box-shadow: 0 2px 3px -1px rgba(0, 0, 0, .06);
+  position: relative;
+  z-index: 100;
   box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2);
   background-color: #fff;
   .header-main {
@@ -188,7 +190,7 @@ export default {
         },
         {
           name: "推文",
-          pathName: ""
+          pathName: "twitter"
         },
         {
           name: "关于",
@@ -205,10 +207,10 @@ export default {
       var userHeaderState = this.$store.state.header.userBannerClass;
       if (userHeaderState) {
         this.$store.commit("header/removeUserBannerClass");
+        // document.querySelector(".user-banner-col").style.display = "none"
       } else {
         this.$store.commit("header/setUserBannerClass");
       }
-      console.log(this.$store.state.header.userBannerClass);
     }
   }
 };

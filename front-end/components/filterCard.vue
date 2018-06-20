@@ -1,12 +1,12 @@
 <template>
-    <div class="filter">
-        <p class="filter-header">
-            <span>文章分类</span>
-        </p>
-        <ul class="filter-inner">
-            <li @click="tagTrigger(index,item)" :class="{'filter-active':tagArr[index]}" class="filter-item" v-for="(item, index) in tags" :key="index">{{item.name}}</li>
-        </ul>
-    </div>
+  <div class="filter">
+    <p class="filter-header">
+      <span>文章分类</span>
+    </p>
+    <ul class="filter-inner">
+      <li @click="tagTrigger(index,item)" :class="{'filter-active':tagArr[index]}" class="filter-item" v-for="(item, index) in tags" :key="index">{{item.name}}</li>
+    </ul>
+  </div>
 </template>
 <script>
 export default {
@@ -72,9 +72,9 @@ export default {
     justify-content: flex-start;
     margin-left: 0;
     padding-left: 13px;
-    
+
     padding-bottom: 8px;
-    width: calc(100% + 48px);
+    width: calc(100% + 26px);
     flex-wrap: wrap;
     .filter-item {
       padding: 0 8px;

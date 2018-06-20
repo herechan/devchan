@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <FilterCard/>
+    <FilterCard class="filter-card"/>
     <div class="timeline-wrap">
       <div class="timeline-year">
         <div class="year-icon">
@@ -109,6 +109,12 @@ export default {
 @media screen and(max-width: 768px) {
   .container {
     padding-left: 20px;
+  }
+}
+@media screen and(max-width: 1199px){
+  .filter-card{
+    width: calc(100% + 20px);
+    margin-left: -20px;
   }
 }
 </style>
