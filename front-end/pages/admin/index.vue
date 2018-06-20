@@ -12,9 +12,9 @@
                         </div>
                         <div class="card-row">
                             <p class="card-row-name">选择标签</p>
-                            <ul class="card-list">
-                                
-                            </ul>
+                            <div class="card-list">
+
+                            </div>
                         </div>
                     </div>
                 </Card>
@@ -30,6 +30,7 @@
 </template>
 <script>
 import Card from "~/components/adminCard";
+import TagList from "~/components/essaySort";
 export default {
   components: {
     Card
