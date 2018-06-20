@@ -12,6 +12,7 @@ $weiboPadding:20px;
 $shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2);
 $cardPadding:10px 20px;
 $cardBg:#fff;
+$asideDevider:#eee;
 @mixin cardBorder {
     border: 1px solid #eceff2;
     border-bottom: none;
@@ -26,11 +27,11 @@ $cardBg:#fff;
   }
   @font-face {
     font-family: 'iconfont';  /* project id 705325 */
-    src: url('//at.alicdn.com/t/font_705325_qqkemit1eb8.eot');
-    src: url('//at.alicdn.com/t/font_705325_qqkemit1eb8.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_705325_qqkemit1eb8.woff') format('woff'),
-    url('//at.alicdn.com/t/font_705325_qqkemit1eb8.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_705325_qqkemit1eb8.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_705325_n3jn2evqm09.eot');
+    src: url('//at.alicdn.com/t/font_705325_n3jn2evqm09.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_705325_n3jn2evqm09.woff') format('woff'),
+    url('//at.alicdn.com/t/font_705325_n3jn2evqm09.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_705325_n3jn2evqm09.svg#iconfont') format('svg');
   }
   .iconfont {
     font-family: "iconfont" !important;
