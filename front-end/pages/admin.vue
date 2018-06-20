@@ -17,7 +17,9 @@
         <header>
             <p class="header-title">Writing Center</p>
         </header>
-        <main>d</main>
+        <article>
+            <nuxt-child/>
+        </article>
     </div>
 </template>
 <script>
@@ -29,15 +31,18 @@ export default {
       asideList: [
         {
           name: "Writing Center",
-          icon: "&#xe633;"
+          icon: "&#xe633;",
+          path: "/admin"
         },
         {
           name: "Twitter",
-          icon: "&#xe749;"
+          icon: "&#xe749;",
+          path: ""
         },
         {
-        name:"Draft",
-        icon:"&#xe64e;"
+          name: "Draft",
+          icon: "&#xe64e;",
+          path: ""
         }
       ]
     };
@@ -45,6 +50,7 @@ export default {
   methods: {
     triggerAside(item, index) {
       this.curIndex = index;
+      this.$router.push(item.path);
     }
   }
 };
@@ -109,13 +115,14 @@ header {
   justify-content: space-between;
   align-items: center;
   padding-left: 280px;
-  .header-title{
-      font-size: 20px;
-      font-weight: 400;
+  .header-title {
+    font-size: 24px;
+    font-weight: 400;
   }
 }
-main{
-    padding-left: 280px;
+article {
+  padding-left: 280px;
+//   padding-right: 20px;
 }
 </style>
 
