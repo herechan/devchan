@@ -4,25 +4,51 @@
         <el-row class="justify-row">
             <el-col :sm="12">
                 <Card class="card">
-                    <span slot="header">文章概况</span>
+                    <span slot="header">Overview</span>
                     <div slot="article">
                         <div class="card-row">
-                            <p class="card-row-name">标题</p>
+                            <p class="card-row-name">Title</p>
                             <el-input v-model="title" placeholder=""></el-input>
                         </div>
                         <div class="card-row">
-                            <p class="card-row-name">选择标签</p>
+                            <p class="card-row-name">Tags</p>
                             <div class="card-list">
-
+                                <TagList/>
                             </div>
+                        </div>
+                        <div class="card-row fake">
+                            <p class="card-row-name">rules</p>
+                            <el-input :disabled="true" placeholder=""></el-input>
+                        </div>
+                        <div class="card-row fake">
+                            <p class="card-row-name">standard</p>
+                            <el-input :disabled="true" placeholder=""></el-input>
                         </div>
                     </div>
                 </Card>
             </el-col>
             <el-col :sm="12">
                 <Card class="card">
-                    <span slot="header">文章简介</span>
-
+                    <span slot="header">Summary</span>
+                    <div slot="article">
+                        <div class="card-row">
+                            <p class="card-row-name">intro</p>
+                            <el-input class="edit-text" :resize="'none'" :rows="3" v-model="editText" type="textarea" placeholder=""></el-input>
+                        </div>
+                        <div class="card-row">
+                            <p class="card-row-name" @click="showText">cover</p>
+                            <el-upload class="upload-demo" action="https://www.baidu.com">
+                                <el-button size="small" type="primary">upload<i class="el-icon-upload el-icon--right"></i></el-button>
+                            </el-upload>
+                        </div>
+                    </div>
+                </Card>
+            </el-col>
+        </el-row>
+        <el-row class="">
+            <el-col :span="24">
+                <Card class="card">
+                    <span slot="header">Writting Edit</span>
                 </Card>
             </el-col>
         </el-row>
@@ -33,13 +59,24 @@ import Card from "~/components/adminCard";
 import TagList from "~/components/essaySort";
 export default {
   components: {
-    Card
+    Card,
+    TagList
   },
   data() {
     return {
+      u: "",
+      editText: "",
       title: "",
-      cardList:[{}]
+      cardList: [{}]
     };
+  },
+  methods: {
+    showText() {
+      console.log(this.editText);
+    },
+    checkFile(e) {
+      console.log(e);
+    }
   }
 };
 </script>
@@ -66,7 +103,17 @@ export default {
       font-weight: 600;
       margin-bottom: 10px;
     }
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
+  .filter-inner {
+    padding: 0;
+  }
+}
+.card .card-row /deep/ .filter-item {
+  padding-left: 0;
+  padding-right: 16px;
 }
 @media screen and(max-width: 767px) {
   .justify-row {

@@ -15,7 +15,7 @@
             </ul>
         </aside>
         <header>
-            <p class="header-title">Writing Center</p>
+            <p class="header-title">Writting Center</p>
         </header>
         <article>
             <nuxt-child/>
@@ -30,7 +30,7 @@ export default {
       search: "",
       asideList: [
         {
-          name: "Writing Center",
+          name: "Writting Center",
           icon: "&#xe633;",
           path: "/admin"
         },

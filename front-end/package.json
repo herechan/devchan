@@ -13,6 +13,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "mavon-editor": "^2.6.9",
     "nuxt": "^1.0.0"
   },
   "devDependencies": {
@@ -30,7 +31,7 @@
   },
   "config": {
     "nuxt": {
-      "host":"192.168.10.62",
+      "host": "192.168.10.62",
       "port": "8890"
     }
   }
