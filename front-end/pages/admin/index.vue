@@ -54,9 +54,11 @@
                     <div class="test" ref="a">sdfsdf</div>
                     <span slot="header">Writting Edit</span>
                     <div slot="article">
-                        <no-ssr>
-                            <mavonEditor ref="editor" v-model="mdText"></mavonEditor>
-                        </no-ssr>
+                        <div class="md-editor-box">
+                            <no-ssr>
+                                <mavonEditor :boxShadow="false" placeholder="write something..." v-model="mdText"></mavonEditor>
+                            </no-ssr>
+                        </div>
                     </div>
                 </Card>
             </el-col>
@@ -78,14 +80,12 @@ export default {
   data() {
     return {
       editText: "",
-      mdText:"",
+      mdText: "",
       title: "",
       cardList: [{}]
     };
   },
-  mounted() {
-     markdownIt.set({ placeholder: "do something..." });
-  },
+  mounted() {},
   methods: {
     showText() {
       console.log(this.editText);
@@ -125,6 +125,9 @@ export default {
   }
   .filter-inner {
     padding: 0;
+  }
+  .md-editor-box{
+      padding: 15px 0;
   }
 }
 .card .card-row /deep/ .filter-item {
