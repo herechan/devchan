@@ -61,7 +61,7 @@ aside {
   width: 260px;
   background-color: #fff;
   box-shadow: 5px 0px 8px -4px rgba(0, 0, 0, 0.2);
-  position: absolute;
+  position: fixed;
   left: 0;
   .admin-logo {
     display: flex;

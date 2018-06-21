@@ -56,7 +56,7 @@
                     <div slot="article">
                         <div class="md-editor-box">
                             <no-ssr>
-                                <mavonEditor :boxShadow="false" placeholder="write something..." v-model="mdText"></mavonEditor>
+                                <mavonEditor :ishljs="true" :boxShadow="false" placeholder="write something..." v-model="mdText"></mavonEditor>
                             </no-ssr>
                         </div>
                     </div>
@@ -126,8 +126,15 @@ export default {
   .filter-inner {
     padding: 0;
   }
-  .md-editor-box{
-      padding: 15px 0;
+  .md-editor-box {
+    padding: 10px 0 0 0;
+    .markdown-body {
+      max-height: 600px;
+      min-height: 600px;
+      /deep/ .v-show-content{//预览区的背景，这里直接修改css样式
+        background-color: #fff;
+      }
+    }
   }
 }
 .card .card-row /deep/ .filter-item {
