@@ -13,6 +13,9 @@ $shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2);
 $cardPadding:10px 20px;
 $cardBg:#fff;
 $asideDevider:#eee;
+$red:#F44336;
+$yellow:#fdd835;
+$green:#67C23A;
 @mixin cardBorder {
     border: 1px solid #eceff2;
     border-bottom: none;
@@ -27,11 +30,11 @@ $asideDevider:#eee;
   }
   @font-face {
     font-family: 'iconfont';  /* project id 705325 */
-    src: url('//at.alicdn.com/t/font_705325_n3jn2evqm09.eot');
-    src: url('//at.alicdn.com/t/font_705325_n3jn2evqm09.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_705325_n3jn2evqm09.woff') format('woff'),
-    url('//at.alicdn.com/t/font_705325_n3jn2evqm09.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_705325_n3jn2evqm09.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_705325_yd54u216cbs.eot');
+    src: url('//at.alicdn.com/t/font_705325_yd54u216cbs.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_705325_yd54u216cbs.woff') format('woff'),
+    url('//at.alicdn.com/t/font_705325_yd54u216cbs.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_705325_yd54u216cbs.svg#iconfont') format('svg');
   }
   .iconfont {
     font-family: "iconfont" !important;

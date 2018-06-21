@@ -7,7 +7,7 @@
                     <span slot="header">Overview</span>
                     <div slot="article">
                         <div class="card-row">
-                            <p class="card-row-name">Title</p>
+                            <p class="card-row-name">title</p>
                             <el-input v-model="title" placeholder=""></el-input>
                         </div>
                         <div class="card-row">

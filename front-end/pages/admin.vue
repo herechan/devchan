@@ -1,28 +1,30 @@
 <template>
-    <div class="container">
-        <aside class="">
-            <div class="admin-logo">
-                <img src="~/assets/img/user.png" alt="">
-                <p class="admin-user">ChanAdmin</p>
-            </div>
-            <div class="devider"></div>
-            <div class="search-box">
-                <el-input v-model="search" class="search"></el-input>
-            </div>
-            <ul class="aside-list">
-                <li @click="triggerAside(item,index)" :class="{'aside-item-active':curIndex == index}" class="aside-item" v-for="(item, index) in asideList" :key="index">
-                    <i class="iconfont" v-html="item.icon"></i>{{item.name}}</li>
-            </ul>
-        </aside>
-        <header>
-            <p class="header-title">Writting Center</p>
-        </header>
-        <article>
-            <nuxt-child/>
-        </article>
-    </div>
+  <div class="container">
+    <aside class="">
+      <div class="admin-logo">
+        <img src="~/assets/img/user.png" alt="">
+        <p class="admin-user">ChanAdmin</p>
+      </div>
+      <div class="devider"></div>
+      <div class="search-box">
+        <el-input v-model="search" class="search"></el-input>
+      </div>
+      <ul class="aside-list">
+        <li @click="triggerAside(item,index)" :class="{'aside-item-active':curIndex == index}" class="aside-item" v-for="(item, index) in asideList" :key="index">
+          <i class="iconfont" v-html="item.icon"></i>{{item.name}}</li>
+      </ul>
+    </aside>
+    <header>
+      <p class="header-title">Writting Center</p>
+    </header>
+    <article>
+      <nuxt-child/>
+    </article>
+    <ToolBox/>
+  </div>
 </template>
 <script>
+import ToolBox from "~/components/widget/toolBox";
 export default {
   data() {
     return {
@@ -46,6 +48,9 @@ export default {
         }
       ]
     };
+  },
+  components:{
+    ToolBox
   },
   methods: {
     triggerAside(item, index) {
@@ -122,7 +127,7 @@ header {
 }
 article {
   padding-left: 280px;
-//   padding-right: 20px;
+  //   padding-right: 20px;
 }
 </style>
 
