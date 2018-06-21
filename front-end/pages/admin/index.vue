@@ -38,7 +38,9 @@
                         <div class="card-row">
                             <p class="card-row-name" @click="showText">cover</p>
                             <el-upload class="upload-demo" action="https://www.baidu.com">
-                                <el-button size="small" type="primary">upload<i class="el-icon-upload el-icon--right"></i></el-button>
+                                <el-button size="small" type="primary">upload
+                                    <i class="el-icon-upload el-icon--right"></i>
+                                </el-button>
                             </el-upload>
                         </div>
                     </div>
@@ -47,28 +49,42 @@
         </el-row>
         <el-row class="">
             <el-col :span="24">
+
                 <Card class="card">
+                    <div class="test" ref="a">sdfsdf</div>
                     <span slot="header">Writting Edit</span>
+                    <div slot="article">
+                        <no-ssr>
+                            <mavonEditor ref="editor" v-model="mdText"></mavonEditor>
+                        </no-ssr>
+                    </div>
                 </Card>
             </el-col>
         </el-row>
+
     </div>
 </template>
 <script>
 import Card from "~/components/adminCard";
 import TagList from "~/components/essaySort";
+import { mavonEditor } from "mavon-editor";
+var markdownIt = mavonEditor.getMarkdownIt();
 export default {
   components: {
     Card,
-    TagList
+    TagList,
+    mavonEditor
   },
   data() {
     return {
-      u: "",
       editText: "",
+      mdText:"",
       title: "",
       cardList: [{}]
     };
+  },
+  mounted() {
+     markdownIt.set({ placeholder: "do something..." });
   },
   methods: {
     showText() {

@@ -45,7 +45,10 @@ module.exports = {
     { src: "~assets/common/common.scss", lang: "scss" }
   ],
   plugins: [{
-    src: '@/plugins/element-ui'
+    src: '@/plugins/element-ui',
+    ssr:true
+  }, {
+    src: "~/plugins/mavon-editor",
+    ssr: false
   }],
-  
 }

@@ -13,6 +13,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "markdown-it": "^8.4.1",
     "mavon-editor": "^2.6.9",
     "nuxt": "^1.0.0"
   },
