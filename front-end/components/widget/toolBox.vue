@@ -13,7 +13,7 @@
                 <span>{{dialogContent}}</span>
             </div>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button @click="dialogVisible = false" v-if="showCancle">取 消</el-button>
                 <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
             </span>
         </el-dialog>
@@ -24,7 +24,8 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      dialogTitle:"",
+      showCancle:false,
+      dialogTitle: "",
       icon: "",
       dialogContent: "",
       toolList: [
@@ -34,11 +35,11 @@ export default {
         },
         {
           code: "&#xe626;",
-          flag: "del"
+          flag: "draft"
         },
         {
           code: "&#xe668;",
-          flag: "draft"
+          flag: "del"
         }
       ]
     };
@@ -47,18 +48,20 @@ export default {
     triggerTool(item) {
       this.dialogVisible = true;
       if (item.flag == "save" || item.flag == "draft") {
+          this.showCancle = false;
         this.icon = `<i class='el-icon-success dialog-icon-success'></i>`;
         if (item.flag == "save") {
           this.dialogContent = "保存成功";
-            this.dialogTitle = "保存文章"
+          this.dialogTitle = "保存文章";
         } else {
           this.dialogContent = "已保存至草稿箱";
-          this.dialogTitle = "保存草稿"
+          this.dialogTitle = "保存草稿";
         }
       } else {
+          this.showCancle = true;
         this.icon = `<i class='el-icon-warning dialog-icon-warning'></i>`;
-        this.dialogContent = "确认删除放弃该文章？未保存的将被删除";
-        this.dialogTitle = "删除文章"
+        this.dialogContent = "确认删除放弃该文章？";
+        this.dialogTitle = "删除文章";
       }
     }
   }
