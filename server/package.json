@@ -9,6 +9,7 @@
   "author": "chan",
   "license": "MIT",
   "devDependencies": {
+    "koa-router": "^7.4.0",
     "mongoose": "^5.1.6"
   }
 }
