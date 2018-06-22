@@ -220,7 +220,6 @@ export default {
       if (this.$store.state.header.userBannerClass) {
         this.$store.commit("header/removeUserBannerClass");
       }
-      // document.querySelector(".user-banner-col").style.display = "none"
     }
   }
 };
