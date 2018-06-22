@@ -71,7 +71,7 @@ export default {
       this.shadow = true;
       document.querySelector("body").style.overflow = "hidden";
       this.shadowStyle = document.querySelector(".shadow").style
-      this.shadowStyle.display = "block"
+      this.shadowStyle.display = "block";
       setTimeout(() => {
         this.shadowStyle.opacity = .4;
       }, 20);
@@ -80,6 +80,7 @@ export default {
       this.shadow = false;
       this.mobileState = false;
       this.shadowStyle.opacity = 0;
+      document.querySelector("body").style.overflow = "auto";
       setTimeout(() => {
         this.shadowStyle.display = "none";
       }, 400);
@@ -112,7 +113,7 @@ aside {
   box-shadow: 5px 0px 8px -4px rgba(0, 0, 0, 0.2);
   position: fixed;
   left: 0;
-  z-index: 1999;
+  z-index: 2999;
   .admin-logo {
     display: flex;
     justify-content: center;
