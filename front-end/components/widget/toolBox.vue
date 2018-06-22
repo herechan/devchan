@@ -159,5 +159,12 @@ export default {
 .dialog-icon-warning {
   color: $red;
 }
+.v-modal{
+  z-index:3999!important;
+}
+.el-dialog__wrapper,{
+  z-index: 4000!important;
+}
+
 </style>
 

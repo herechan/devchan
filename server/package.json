@@ -1,0 +1,11 @@
+{
+  "name": "devchan-server",
+  "version": "1.0.0",
+  "description": "personal website server",
+  "main": "app.js",
+  "scripts": {
+    "test": "t"
+  },
+  "author": "chan",
+  "license": "MIT"
+}
