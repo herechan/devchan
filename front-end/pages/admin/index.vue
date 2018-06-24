@@ -70,6 +70,7 @@
 import Card from "~/components/adminCard";
 import TagList from "~/components/essaySort";
 import { mavonEditor } from "mavon-editor";
+import Axios from "axios";
 var markdownIt = mavonEditor.getMarkdownIt();
 export default {
   components: {
@@ -85,7 +86,11 @@ export default {
       cardList: [{}]
     };
   },
-  mounted() {},
+  mounted() {
+    Axios.get(`${this.serverUrl}/admin/articleTags`).then(r=>{
+      console.log(r)
+    })
+  },
   methods: {
     showText() {
       console.log(this.editText);

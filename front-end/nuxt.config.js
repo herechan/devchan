@@ -1,4 +1,8 @@
 module.exports = {
+  env:{
+    frontUrl: process.env.FRONT_URL || 'http://localhost:8890',
+    serverUrl:process.env.SERVER_URL || 'http://localhost:9091'
+  },
   /*
   ** Headers of the page
   */
@@ -50,5 +54,7 @@ module.exports = {
   }, {
     src: "~/plugins/mavon-editor",
     ssr: false
+  },{
+    src:"~/plugins/site.config.js"
   }],
 }
