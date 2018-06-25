@@ -6,7 +6,6 @@ const koaBody = require("koa-body");
 const adminRouter = require("./routers/adminRouter");
 app.use(cors());
 app.use(koaBody({
-    multipart:true,
     formidable: {
         maxFileSize: 10*1024*1024
     }

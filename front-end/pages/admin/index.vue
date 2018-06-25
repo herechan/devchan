@@ -37,7 +37,7 @@
             </div>
             <div class="card-row">
               <p class="card-row-name" @click="showText">cover</p>
-              <el-upload list-type="picture-card"  class="upload-demo" :multiple="false" :action="serverUrl+'/admin/articleCover'">
+              <el-upload :on-success="fileUpSuccess" list-type="picture-card"  class="upload-demo" :multiple="false" :action="serverUrl+'/admin/articleCover'">
                 <el-button size="small" type="primary">upload
                   <i class="el-icon-upload el-icon--right"></i>
                 </el-button>
@@ -90,11 +90,16 @@ export default {
   },
   mounted() {},
   methods: {
+    fileUpSuccess(r,file){
+      console.log(r);
+      console.log(file)
+    },
     showText() {
       console.log(this.editText);
     },
     checkFile(e) {
       console.log(e);
+      
     },
     validate() {
       if (
