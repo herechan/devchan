@@ -37,7 +37,7 @@
             </div>
             <div class="card-row">
               <p class="card-row-name" @click="showText">cover</p>
-              <el-upload class="upload-demo" action="https://www.baidu.com">
+              <el-upload list-type="picture-card"  class="upload-demo" :multiple="false" :action="serverUrl+'/admin/articleCover'">
                 <el-button size="small" type="primary">upload
                   <i class="el-icon-upload el-icon--right"></i>
                 </el-button>

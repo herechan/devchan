@@ -1,4 +1,4 @@
-var Article = require("../model/articleTags");
+var Article = require("../../model/articleTags");
 module.exports = (ctx) => {
     return new Promise((resolved,rejected)=>{
         Article.find({}).exec((err, doc) => {
