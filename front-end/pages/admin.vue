@@ -21,12 +21,12 @@
     <article>
       <nuxt-child/>
     </article>
-    <ToolBox/>
+    
     <div class="shadow" @click="removeShadow"></div>
   </div>
 </template>
 <script>
-import ToolBox from "~/components/widget/toolBox";
+
 export default {
   data() {
     return {
@@ -54,9 +54,7 @@ export default {
       ]
     };
   },
-  components: {
-    ToolBox
-  },
+  
   methods: {
     triggerAside(item, index) {
       this.curIndex = index;

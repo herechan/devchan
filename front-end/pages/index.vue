@@ -262,8 +262,6 @@ main {
 
           margin-top: 10px;
         }
-        .career {
-        }
         .user-location {
           font-size: 12px;
           margin-top: 2px;
@@ -354,8 +352,6 @@ main {
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px;
     }
-  }
-  .timeline-col {
   }
   .page-box {
     text-align: center;

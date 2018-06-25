@@ -1,4 +1,9 @@
-let getArticle = require("../servers/getArticleTags")
+let getArticle = require("../dao/writting-center/getArticleTags")
+let uploadWrittingCover = require("../dao/writting-center/uploadWrittingCover")
 exports.ARTICLE_TAGS = async (ctx) => {
-    var _articleTags = await getArticle(ctx);
+  await getArticle(ctx);
+}
+//文章封面
+exports.ARTICLE_COVER = async (ctx) => {
+   await uploadWrittingCover(ctx);
 }

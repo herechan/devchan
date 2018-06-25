@@ -1,30 +1,31 @@
 <!--admin页面中右下角工具盒-->
 <template>
-    <div class="container toolbox">
-        <div class="main-box">
-            <i class="iconfont">&#xe678;</i>
-        </div>
-        <div class="tool-item" v-for="(item,index) in toolList" :key="index" @click="triggerTool(item)">
-            <i class="iconfont" :class="{'last-icon':index == toolList.length -1}" v-html="item.code"></i>
-        </div>
-        <el-dialog title="" :visible.sync="dialogVisible" :append-to-body="true" custom-class="tool-dialog">
-            <div class="dialog-content">
-                <span v-html="icon" class="dialog-icon"></span>
-                <span>{{dialogContent}}</span>
-            </div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false" v-if="showCancle">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-            </span>
-        </el-dialog>
+  <div class="container toolbox">
+    <div class="main-box">
+      <i class="iconfont">&#xe678;</i>
     </div>
+    <div class="tool-item" v-for="(item,index) in toolList" :key="index" @click="triggerTool(item)">
+      <i class="iconfont" :class="{'last-icon':index == toolList.length -1}" v-html="item.code"></i>
+    </div>
+    <el-dialog title="" :visible.sync="dialogVisible" :append-to-body="true" custom-class="tool-dialog">
+      <div class="dialog-content">
+        <span v-html="icon" class="dialog-icon"></span>
+        <span>{{dialogContent}}</span>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false" v-if="showCancle">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
 </template>
 <script>
 export default {
+  mounted() {},
   data() {
     return {
       dialogVisible: false,
-      showCancle:false,
+      showCancle: false,
       dialogTitle: "",
       icon: "",
       dialogContent: "",
@@ -46,22 +47,34 @@ export default {
   },
   methods: {
     triggerTool(item) {
-      this.dialogVisible = true;
       if (item.flag == "save" || item.flag == "draft") {
-          this.showCancle = false;
+        this.showCancle = false;
         this.icon = `<i class='el-icon-success dialog-icon-success'></i>`;
         if (item.flag == "save") {
           this.dialogContent = "保存成功";
           this.dialogTitle = "保存文章";
+          this.saveAction();
         } else {
+          this.dialogVisible = true;
           this.dialogContent = "已保存至草稿箱";
           this.dialogTitle = "保存草稿";
         }
       } else {
-          this.showCancle = true;
+        this.dialogVisible = true;
+        this.showCancle = true;
         this.icon = `<i class='el-icon-warning dialog-icon-warning'></i>`;
         this.dialogContent = "确认删除放弃该文章？";
         this.dialogTitle = "删除文章";
+      }
+    },
+    saveAction() {
+      if (!this.$parent.validate()) {
+        this.$message({
+          message: this.validateFailure,
+          type: "warning"
+        });
+      } else {
+        this.dialogVisible = true;
       }
     }
   }
@@ -159,12 +172,11 @@ export default {
 .dialog-icon-warning {
   color: $red;
 }
-.v-modal{
-  z-index:3999!important;
+.v-modal {
+  z-index: 3999 !important;
 }
-.el-dialog__wrapper,{
-  z-index: 4000!important;
+.el-dialog__wrapper {
+  z-index: 4000 !important;
 }
-
 </style>
 

@@ -1,42 +1,27 @@
 
 <template>
-    <ul class="filter-inner">
-        <li @click="tagTrigger(index,item)" :class="{'filter-active':tagArr[index]}" class="filter-item" v-for="(item, index) in tags" :key="index">{{item.name}}</li>
-    </ul>
+  <ul class="filter-inner">
+    <li @click="tagTrigger(index,item)" :class="{'filter-active':tagArr[index]}" class="filter-item" v-for="(item, index) in tags" :key="index">{{item.name}}</li>
+  </ul>
 </template>
 <script>
 /**
  * 文章与后管理的文章标签列表
  */
+import axios from "axios";
 export default {
   data() {
     return {
-      tagArr: [],
-      tags: [
-        {
-          name: "html"
-        },
-        {
-          name: "css"
-        },
-        {
-          name: "nuxt"
-        },
-        {
-          name: "radius"
-        },
-        {
-          name: "react"
-        },
-        {
-          name: "nodejs"
-        },
-      ]
+      tagArr: []
+      // tags: this.$store.state.articleTags.articleTags
     };
   },
   computed: {
     isActive(index) {
       return this.tagArr[index];
+    },
+    tags() {
+      return this.$store.state.articleTags.articleTags;
     }
   },
   methods: {
@@ -47,7 +32,18 @@ export default {
       } else {
         this.$set(arr, index, item.name);
       }
+      this.$store.commit("articleTags/setArticleTagsActive", this.tagArr);
     }
+  },
+  mounted() {
+    axios.get(`${this.serverUrl}/admin/articleTags`).then(r => {
+      if (r.status == 200 && r.data.length > 0) {
+        this.$store.commit("articleTags/getArticleTags", r.data);
+      }
+    });
+
+    //清空标签选中状态
+    this.$store.commit("articleTags/setArticleTagsActive", []);
   }
 };
 </script>
