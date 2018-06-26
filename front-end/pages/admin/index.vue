@@ -35,9 +35,9 @@
               <p class="card-row-name">intro</p>
               <el-input class="edit-text" :resize="'none'" :rows="3" v-model="intro" type="textarea" placeholder=""></el-input>
             </div>
-            <div class="card-row">
+            <div class="card-row upload-cover-row">
               <p class="card-row-name" @click="showText">cover</p>
-              <el-upload :on-success="fileUpSuccess" list-type="picture-card"  class="upload-demo" :multiple="false" :action="serverUrl+'/admin/articleCover'">
+              <el-upload :on-remove="removeCover" :limit="1" :on-success="fileUpSuccess" list-type="picture" class="upload-demo" :multiple="false" :action="serverUrl+'/admin/articleCover'">
                 <el-button size="small" type="primary">upload
                   <i class="el-icon-upload el-icon--right"></i>
                 </el-button>
@@ -70,7 +70,7 @@
 import Card from "~/components/adminCard";
 import TagList from "~/components/essaySort";
 import { mavonEditor } from "mavon-editor";
-import Axios from "axios";
+import axios from "axios";
 import ToolBox from "~/components/widget/toolBox";
 var markdownIt = mavonEditor.getMarkdownIt();
 export default {
@@ -85,21 +85,33 @@ export default {
       intro: "",
       mdText: "",
       title: "",
+      coverPath: "",
       cardList: [{}]
     };
   },
   mounted() {},
   methods: {
-    fileUpSuccess(r,file){
-      console.log(r);
-      console.log(file)
+    removeCover(f) {
+      if (!this.coverPath) {
+        return;
+      }
+      axios.post(`${this.serverUrl}/admin/articleCoverDelete`,{
+        coverPath:this.coverPath
+      }).then(r=>{
+        
+      })
+      this.coverPath = "";
+    },
+    fileUpSuccess(r, file) {
+      if (r.status == 1) {
+        this.coverPath = r.data;
+      }
     },
     showText() {
       console.log(this.editText);
     },
     checkFile(e) {
       console.log(e);
-      
     },
     validate() {
       if (
@@ -161,6 +173,18 @@ export default {
 .card .card-row /deep/ .filter-item {
   padding-left: 0;
   padding-right: 16px;
+}
+.upload-cover-row /deep/ .el-upload-list__item {
+  max-width: 350px;
+}
+.upload-cover-row
+  /deep/
+  .el-upload-list--picture
+  .el-upload-list__item-thumbnail {
+  width: auto;
+}
+.upload-cover-row /deep/ .el-upload-list__item-name {
+  padding-left: 10px;
 }
 @media screen and(max-width: 767px) {
   .justify-row {
