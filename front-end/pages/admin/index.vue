@@ -28,7 +28,7 @@
         </Card>
       </el-col>
       <el-col :sm="12">
-        <Card class="card">
+        <Card class="card upload-card">
           <span slot="header">Summary</span>
           <div slot="article">
             <div class="card-row">
@@ -42,6 +42,11 @@
                   <i class="el-icon-upload el-icon--right"></i>
                 </el-button>
               </el-upload>
+              <transition name="cover-fade">
+                <div class="no-cover" v-if="!coverPath">
+                  暂无预览
+                </div>
+              </transition>
             </div>
           </div>
         </Card>
@@ -49,14 +54,13 @@
     </el-row>
     <el-row class="">
       <el-col :span="24">
-
         <Card class="card">
           <div class="test" ref="a">sdfsdf</div>
           <span slot="header">Writting Edit</span>
           <div slot="article">
             <div class="md-editor-box">
               <no-ssr>
-                <mavonEditor :ishljs="true" :boxShadow="false" placeholder="write something..." v-model="mdText"></mavonEditor>
+                <mavonEditor @imgAdd="addImg" :ishljs="true" :boxShadow="false" placeholder="write something..." v-model="mdText"></mavonEditor>
               </no-ssr>
             </div>
           </div>
@@ -80,6 +84,7 @@ export default {
     mavonEditor,
     ToolBox
   },
+  computed: {},
   data() {
     return {
       intro: "",
@@ -91,15 +96,19 @@ export default {
   },
   mounted() {},
   methods: {
+    addImg(filename,file){
+      console.log(filename)
+      console.log(file)
+    },
     removeCover(f) {
       if (!this.coverPath) {
         return;
       }
-      axios.post(`${this.serverUrl}/admin/articleCoverDelete`,{
-        coverPath:this.coverPath
-      }).then(r=>{
-        
-      })
+      axios
+        .post(`${this.serverUrl}/admin/articleCoverDelete`, {
+          coverPath: this.coverPath
+        })
+        .then(r => {});
       this.coverPath = "";
     },
     fileUpSuccess(r, file) {
@@ -129,6 +138,17 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.cover-fade-enter-active {
+  transition: opacity 0.3s;
+  transition-delay: 0.5s;
+}
+.cover-fade-leave-active {
+  transition: opacity 0;
+  transition-delay: 0;
+}
+.cover-fade-enter, .cover-fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+  opacity: 0;
+}
 .justify-row {
   .el-col {
     &:first-child {
@@ -154,6 +174,15 @@ export default {
     &:last-child {
       margin-bottom: 0;
     }
+    .no-cover {
+      height: 110px;
+      border: 1px solid $borderColor;
+      background-color: $bgColor;
+      line-height: 110px;
+      text-align: center;
+      font-size: 14px;
+      border-radius: 4px;
+    }
   }
   .filter-inner {
     padding: 0;
@@ -170,12 +199,30 @@ export default {
     }
   }
 }
+.upload-card {
+  height: 397px;
+}
+.card-list{
+  min-height: 28px;
+}
 .card .card-row /deep/ .filter-item {
   padding-left: 0;
   padding-right: 16px;
 }
-.upload-cover-row /deep/ .el-upload-list__item {
-  max-width: 350px;
+.upload-cover-row {
+  /deep/ .el-upload-list__item {
+    max-width: 350px;
+    height: 110px;
+    img {
+      height: 90px;
+    }
+    .el-upload-list__item-name {
+      line-height: 90px;
+    }
+  }
+  /deep/ .el-upload-list {
+    margin-top: 19px;
+  }
 }
 .upload-cover-row
   /deep/
