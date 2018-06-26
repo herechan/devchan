@@ -43,7 +43,7 @@ function deleteCover(path) {
         throw err;
         rej();
       }
-      reo(resObj(1, "remove success!", ""))
+      reo(resObj(1, "remove success!", ""));
     })
   })
 }
