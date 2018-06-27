@@ -96,9 +96,41 @@ export default {
   },
   mounted() {},
   methods: {
-    addImg(filename,file){
-      console.log(filename)
-      console.log(file)
+    addImg(filename, file) {
+      if (!file.name || !file.miniurl) {
+        return;
+      }
+      var formData = new FormData();
+      formData.append("image", file.miniurl);
+      // axios({
+      //   url: `${this.serverUrl}/admin/articleImageUpload`,
+      //   data: {
+      //     data: formData,
+      //     filename: file.name
+      //   },
+      //   method: "post",
+      //   headers: {
+      //     "Content-Type": "multipart/form-data"
+      //   }
+      // }).then(r => {
+      //   console.log(r);
+      // });
+      this.xhr(formData)
+    },
+    xhr: function(formdata) {
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("post", `${this.serverUrl}/admin/articleImageUpload`, true);
+
+      xmlHttp.send(formdata);
+
+      xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4) {
+          if (xmlHttp.status == 200) {
+            var data = xmlHttp.responseText;
+            console.log(data);
+          }
+        }
+      };
     },
     removeCover(f) {
       if (!this.coverPath) {
@@ -202,7 +234,7 @@ export default {
 .upload-card {
   height: 397px;
 }
-.card-list{
+.card-list {
   min-height: 28px;
 }
 .card .card-row /deep/ .filter-item {
