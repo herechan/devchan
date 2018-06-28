@@ -32,7 +32,7 @@ exports.ARTICLE_IMAGE_UPLOAD = async (ctx, next) => {
   var newPath = path.resolve(__dirname, "../public/image/article-image/" + file.name);
   var writter = fs.createWriteStream(newPath);
   var articleImageStream = reader.pipe(writter);
-  ctx.body = await streamFunc(articleImageStream, newPath)
+  ctx.body = await streamFunc(articleImageStream, newPath);
 }
 
 //文章保存
@@ -66,8 +66,8 @@ function streamFunc(s, newPath) {
 
 
 function deleteCover(path) {
-  fs.unlink(path, (err) => {
-    return new Promise((reo, rej) => {
+  return new Promise((reo, rej) => {
+    fs.unlink(path, (err) => {
       if (err) {
         throw err;
         rej();

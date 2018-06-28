@@ -10,7 +10,7 @@ app.use(cors());
 app.use(serve(path.resolve(__dirname, "public")))
 app.use(koaBody({
     multipart: true,
-    formidable: { 
+    formidable: {
         maxFileSize: 10 * 1024 * 1024
     },
     formLimit: 10 * 1024 * 1024

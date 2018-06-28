@@ -99,10 +99,10 @@ export default {
     axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
   },
   methods: {
-    imgDel(){
+    imgDel() {
       return false;
     },
-    imageClick(){
+    imageClick() {
       return false;
     },
     addImg(filename, file) {
@@ -111,6 +111,7 @@ export default {
       }
       var formData = new FormData();
       formData.append("image", file);
+      console.log(file);
       axios
         .post(`${this.serverUrl}/admin/articleImageUpload`, formData, {
           headers: {
@@ -119,7 +120,7 @@ export default {
         })
         .then(r => {
           if (r.status == 200 && r.data.result) {
-            var url = r.data.result.replace(/\\/g,"/");
+            var url = r.data.result.replace(/\\/g, "/");
             this.$refs.md.$img2Url(filename, `${this.serverUrl}${url}`);
           }
         });
@@ -132,28 +133,41 @@ export default {
         .post(`${this.serverUrl}/admin/articleCoverDelete`, {
           coverPath: this.coverPath
         })
-        .then(r => {});
-      this.coverPath = "";
+        .then(r => {
+          console.log(r);
+          if (r.status == 200) {
+            this.coverPath = "";
+          }
+        });
     },
     fileUpSuccess(r, file) {
       if (r.status == 1) {
-        this.coverPath = r.data;
+        this.coverPath = r.result;
       }
     },
     showText() {
       console.log(this.editText);
     },
-    checkFile(e) {
-      console.log(e);
-    },
+    checkFile(e) {},
     validate() {
       if (
         this.trim(this.intro) &&
         this.trim(this.title) &&
-        this.trim(this.mdText)
+        this.trim(this.mdText) &&
+        this.$store.state.articleTags.articleTagsActive.join("")
       ) {
-        console.log(this.mdText);
-        return true;
+        axios
+          .post(`${this.serverUrl}/admin/saveArticle`, {
+            intro: this.intro,
+            mdText: this.mdText,
+            title: this.title,
+            tags: this.$store.state.articleTags.articleTagsActive,
+            coverPath: this.coverPath
+          })
+          .then(r => {
+            console.log(r);
+          });
+        // return true;
       } else {
         return false;
       }
@@ -269,3 +283,18 @@ export default {
   }
 }
 </style>
+<style lang="scss">
+body /deep/ .markdown-body .v-show-content {
+  ul {
+    li {
+      list-style-type: disc;
+    }
+  }
+  ol {
+    li {
+      list-style-type: decimal;
+    }
+  }
+}
+</style>
+
