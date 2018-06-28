@@ -29,30 +29,12 @@ exports.ARTICLE_COVER_DELETE = async (ctx) => {
 
 //文章内容图片上传
 exports.ARTICLE_IMAGE_UPLOAD = async (ctx, next) => {
-
-  // var fileObj = ctx.request.body.data.get("image")
-  // var baseData = fileObj.miniurl.replace(/^data:image\/png;base64,/, "");
-  // var filename = new Date().getTime() + "_" + fileObj.filename;
-  // var filePath = path.resolve(__dirname, `../public/image/article-image/${filename}`)
-  // ctx.body = await writeArticleImage(filePath,baseData);
-  // console.log(Object.keys(ctx.request.body))
-  // console.log(ctx.request.body[5])
-  // for(var i in ctx.request.body){
-  //   console.log(ctx.request.body[i])
-  // }
-  ctx.body = "";
-
-  //  ctx.body = await writeArticleImage(ctx)
-  // ctx.body = ""
-  // ctx.body = "test"
-  // var form = new formidable.IncomingForm();
-  // form.parse(ctx.req, (err, files) => {
-  //   if (err) throw err;
-  //   console.log(files.get("image"));
-  //   ctx.body = "9"
-  // })
-
-
+  var file = ctx.request.files.image;
+  var reader = fs.createReadStream(file.path);
+  var newPath = path.resolve(__dirname, "../public/image/article-image/" + file.name);
+  var writter = fs.createWriteStream(newPath);
+  var articleImageStream = reader.pipe(writter);
+  ctx.body = await streamFunc(articleImageStream,newPath)
 }
 
 function writeArticleImage(ctx) {
@@ -60,18 +42,9 @@ function writeArticleImage(ctx) {
   return new Promise((reso, reje) => {
     form.parse(ctx.req, async (err, file, files) => {
       if (err) throw err;
-      console.log(Object.keys(file))
-      console.log(Object.keys(files))
-      console.log(file);
+      console.log(file)
+      console.log(files)
     })
-    // fs.writeFile(filePath, baseData, "base64", (err) => {
-    //   if (err) throw err;
-    //   rejc({
-    //     status: 1,
-    //     msg: "save success",
-    //     data: filePath.split("public")[1]
-    //   })
-    // })
   })
 }
 

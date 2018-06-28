@@ -76,6 +76,7 @@ import TagList from "~/components/essaySort";
 import { mavonEditor } from "mavon-editor";
 import axios from "axios";
 import ToolBox from "~/components/widget/toolBox";
+import qs from "qs";
 var markdownIt = mavonEditor.getMarkdownIt();
 export default {
   components: {
@@ -94,35 +95,31 @@ export default {
       cardList: [{}]
     };
   },
-  mounted() {},
+  mounted() {
+    axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
+  },
   methods: {
     addImg(filename, file) {
       if (!file.name || !file.miniurl) {
         return;
       }
       var formData = new FormData();
-      formData.append("image", file.miniurl);
-      // axios({
-      //   url: `${this.serverUrl}/admin/articleImageUpload`,
-      //   data: {
-      //     data: formData,
-      //     filename: file.name
-      //   },
-      //   method: "post",
-      //   headers: {
-      //     "Content-Type": "multipart/form-data"
-      //   }
-      // }).then(r => {
-      //   console.log(r);
-      // });
-      this.xhr(formData)
+      formData.append("image", file);
+
+      axios
+        .post(`${this.serverUrl}/admin/articleImageUpload`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(r => {});
+      // console.log(8989)
+      // this.xhr(formData)
     },
     xhr: function(formdata) {
       var xmlHttp = new XMLHttpRequest();
       xmlHttp.open("post", `${this.serverUrl}/admin/articleImageUpload`, true);
-
       xmlHttp.send(formdata);
-
       xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4) {
           if (xmlHttp.status == 200) {
