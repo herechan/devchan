@@ -118,8 +118,8 @@ export default {
           }
         })
         .then(r => {
-          if (r.status == 200 && r.data.data) {
-            var url = r.data.data.replace(/\\/g,"/");
+          if (r.status == 200 && r.data.result) {
+            var url = r.data.result.replace(/\\/g,"/");
             this.$refs.md.$img2Url(filename, `${this.serverUrl}${url}`);
           }
         });

@@ -1,7 +1,7 @@
-module.exports = (status,msg,data)=>{
+module.exports = (status,msg,result)=>{
     return {
         status,
         msg,
-        data
+        result
     }
 }

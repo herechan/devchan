@@ -32,13 +32,16 @@ export default {
       } else {
         this.$set(arr, index, item.name);
       }
-      this.$store.commit("articleTags/setArticleTagsActive", this.tagArr);
+      this.$store.commit(
+        "articleTags/setArticleTagsActive",
+        this.tagArr.slice(0)
+      );
     }
   },
   mounted() {
     axios.get(`${this.serverUrl}/admin/articleTags`).then(r => {
-      if (r.status == 200 && r.data.length > 0) {
-        this.$store.commit("articleTags/getArticleTags", r.data);
+      if (r.status == 200 && r.data.result.length > 0) {
+        this.$store.commit("articleTags/getArticleTags", r.data.result);
       }
     });
 

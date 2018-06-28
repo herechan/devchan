@@ -1,19 +1,17 @@
 const fs = require("fs")
 const path = require("path");
-let getArticle = require("../dao/writting-center/getArticleTags")
-let uploadWrittingCover = require("../dao/writting-center/uploadAricleCover");
+let writtingCenter = require("../dao/writtingCenter")
 let resObj = require("../util/resObj");
 const formidable = require("formidable");
 
 exports.ARTICLE_TAGS = async (ctx) => {
-  await getArticle(ctx);
+  await writtingCenter.getArticle(ctx);
 }
 //封面
 exports.ARTICLE_COVER = async (ctx, next) => {
-
   const file = ctx.request.files.file;
   const coverName = file.path.split("\\")[file.path.split("\\").length - 1];
-  const time = new Date()
+  const time = new Date();
   const newPath = path.resolve(__dirname, "../public/image/article-cover/" + time.getTime() + "_" + file.name)
   const reader = fs.createReadStream(file.path);
   const stream = fs.createWriteStream(newPath);
@@ -34,7 +32,12 @@ exports.ARTICLE_IMAGE_UPLOAD = async (ctx, next) => {
   var newPath = path.resolve(__dirname, "../public/image/article-image/" + file.name);
   var writter = fs.createWriteStream(newPath);
   var articleImageStream = reader.pipe(writter);
-  ctx.body = await streamFunc(articleImageStream,newPath)
+  ctx.body = await streamFunc(articleImageStream, newPath)
+}
+
+//文章保存
+exports.ARTICLE_SAVE = async (ctx, next) => {
+  await writtingCenter.saveArticle(ctx);
 }
 
 function writeArticleImage(ctx) {
