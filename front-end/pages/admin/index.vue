@@ -60,7 +60,7 @@
           <div slot="article">
             <div class="md-editor-box">
               <no-ssr>
-                <mavonEditor @imgAdd="addImg" :ishljs="true" :boxShadow="false" placeholder="write something..." v-model="mdText"></mavonEditor>
+                <mavonEditor ref="md" :imageClick="imageClick" @imgDel="imgDel" @imgAdd="addImg" :ishljs="true" :boxShadow="false" placeholder="write something..." v-model="mdText"></mavonEditor>
               </no-ssr>
             </div>
           </div>
@@ -99,35 +99,30 @@ export default {
     axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
   },
   methods: {
+    imgDel(){
+      return false;
+    },
+    imageClick(){
+      return false;
+    },
     addImg(filename, file) {
       if (!file.name || !file.miniurl) {
         return;
       }
       var formData = new FormData();
       formData.append("image", file);
-
       axios
         .post(`${this.serverUrl}/admin/articleImageUpload`, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
         })
-        .then(r => {});
-      // console.log(8989)
-      // this.xhr(formData)
-    },
-    xhr: function(formdata) {
-      var xmlHttp = new XMLHttpRequest();
-      xmlHttp.open("post", `${this.serverUrl}/admin/articleImageUpload`, true);
-      xmlHttp.send(formdata);
-      xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4) {
-          if (xmlHttp.status == 200) {
-            var data = xmlHttp.responseText;
-            console.log(data);
+        .then(r => {
+          if (r.status == 200 && r.data.data) {
+            var url = r.data.data.replace(/\\/g,"/");
+            this.$refs.md.$img2Url(filename, `${this.serverUrl}${url}`);
           }
-        }
-      };
+        });
     },
     removeCover(f) {
       if (!this.coverPath) {
