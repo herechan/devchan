@@ -1,7 +1,7 @@
 const fs = require("fs")
 const path = require("path");
 let writtingCenter = require("../dao/writtingCenter")
-let resObj = require("../util/resObj");
+let resObj = require("../common/resObj");
 const formidable = require("formidable");
 
 exports.ARTICLE_TAGS = async (ctx) => {

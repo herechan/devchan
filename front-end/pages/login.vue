@@ -14,10 +14,10 @@
                         </div>
                         <div class="login-row">
                             <p class="login-name">密码</p>
-                            <el-input v-model="password"></el-input>
+                            <el-input v-model="password" type="password"></el-input>
                         </div>
                         <div class="login-row" style="text-align:right;margin-top:30px;">
-                            <el-button type="primary">登录</el-button>
+                            <el-button type="primary" @click="login">登录</el-button>
                         </div>
                     </div>
                     <p class="login-back">&#60; 返回首页</p>
@@ -27,12 +27,31 @@
     </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       username: "",
       password: ""
     };
+  },
+  methods: {
+    login() {
+      if (
+        this.username.replace(/\s/g, "") &&
+        this.password.replace(/\s/g, "")
+      ) {
+        axios.post(`${this.serverUrl}/login`, {
+          username: this.username,
+          password: this.password
+        });
+      } else {
+        this.$message({
+          message: "请填写有效用户名密码",
+          type: "warning"
+        });
+      }
+    }
   }
 };
 </script>
@@ -74,16 +93,16 @@ export default {
           margin-bottom: 20px;
         }
       }
-      .login-back{
-            font-size: 12px;
-            cursor: pointer;
-            color: $asideColor;
-            margin-top: 20px;
-            &:hover{
-                text-decoration: underline;
-            }
-            padding-left: 20px;
+      .login-back {
+        font-size: 12px;
+        cursor: pointer;
+        color: $asideColor;
+        margin-top: 20px;
+        &:hover {
+          text-decoration: underline;
         }
+        padding-left: 20px;
+      }
     }
   }
 }
