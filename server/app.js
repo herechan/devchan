@@ -6,7 +6,14 @@ const koaBody = require("koa-body");
 const serve = require("koa-static");
 const path = require("path");
 const token = require("./common/token");
-
+const jwt = require("koa-jwt");
+const {Nuxt,Builder} = require("nuxt")
+app.use(jwt({
+    secret: "user_token"
+}).unless({
+    path: [/^((?!\/admin).)*$/, /\/login/]
+    // path: [/^\/essay/, /^\/login/];
+}))
 app.use(cors());
 app.use(serve(path.resolve(__dirname, "public")))
 app.use(koaBody({

@@ -39,7 +39,7 @@ export default {
     }
   },
   mounted() {
-    axios.get(`${this.serverUrl}/admin/articleTags`).then(r => {
+    axios.get(`${this.serverUrl}/articleTags`).then(r => {
       if (r.status == 200 && r.data.result.length > 0) {
         this.$store.commit("articleTags/getArticleTags", r.data.result);
       }

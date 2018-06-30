@@ -34,7 +34,6 @@ export default {
       mobileState: false,
       shadow: false,
       search: "",
-      shadowStyle : "",
       asideList: [
         {
           name: "Writting Center",
@@ -68,19 +67,20 @@ export default {
     addShadow() {
       this.shadow = true;
       document.querySelector("body").style.overflow = "hidden";
-      this.shadowStyle = document.querySelector(".shadow").style
-      this.shadowStyle.display = "block";
+      var shadow = document.querySelector(".shadow").style;
+      shadow.display = "block";
       setTimeout(() => {
-        this.shadowStyle.opacity = .4;
+        shadow.opacity = .4;
       }, 20);
     },
     removeShadow() {
       this.shadow = false;
       this.mobileState = false;
-      this.shadowStyle.opacity = 0;
+      var shadow = document.querySelector(".shadow").style;
+      shadow.opacity = 0;
       document.querySelector("body").style.overflow = "auto";
       setTimeout(() => {
-        this.shadowStyle.display = "none";
+        shadow.display = "none";
       }, 400);
     }
   }

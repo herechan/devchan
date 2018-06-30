@@ -5,7 +5,7 @@ let resObj = require("../common/resObj");
 const formidable = require("formidable");
 
 exports.ARTICLE_TAGS = async (ctx) => {
-  await writtingCenter.getArticle(ctx);
+  await writtingCenter.getArticleTags(ctx);
 }
 //封面
 exports.ARTICLE_COVER = async (ctx, next) => {
@@ -38,6 +38,12 @@ exports.ARTICLE_IMAGE_UPLOAD = async (ctx, next) => {
 //文章保存
 exports.ARTICLE_SAVE = async (ctx, next) => {
   await writtingCenter.saveArticle(ctx);
+}
+
+//markdown页面登录权限验证
+exports.INDEX_CHECK = async (ctx,next)=>{
+  console.log(888)
+  // ctx.body = resObj(1,"author confirm!","")
 }
 
 function writeArticleImage(ctx) {
