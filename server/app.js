@@ -7,7 +7,7 @@ const serve = require("koa-static");
 const path = require("path");
 const token = require("./common/token");
 const jwt = require("koa-jwt");
-// const { Nuxt, Builder } = require("nuxt");
+const { Nuxt, Builder } = require("nuxt");
 // const nuxtConfig = require("./../front-end/nuxt.config.js");
 app.use(jwt({
     secret: "user_token"
@@ -30,18 +30,10 @@ const router = require("./routers/router");
 app.use(router.routes());
 
 
-// nuxt.build().then(()=>{
-//     console.log("nuxt renderder")
-// })
-// const isPord = process.env.NODE_ENV === "production";
-// const nuxt = new Nuxt({ dev: !isPord });
 // nuxtConfig.dev = process.env.NODE_ENV === "production"
-// nuxtConfig.srcDir = "client/"
 // const nuxt = new Nuxt(nuxtConfig)
 
-// console.log(isPord)
 //当前为开发模式
-// console.log(nuxt)
 // if (!nuxtConfig.dev) {
 //     const builder = new Builder(nuxt)
 //     builder.build()

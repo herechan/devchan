@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookie from "js-cookie"
 export default (context) => {
     
-    console.log(window)
+    // console.log(window)
     // console.log(localStorage)
     // if (context.route.path.match(/admin/)) {
     //     var token = window.localStorage.token;

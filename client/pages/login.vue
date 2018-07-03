@@ -54,16 +54,16 @@ export default {
                 message: "登录成功！",
                 type: "success"
               });
-              localStorage.setItem("token",r.data.result.token)
-              Cookie.set("name","chan")
-              this.$store.commit("token/addToken", r.data.result.token);
+              // localStorage.setItem("token",r.data.result.token)
+              // Cookie.set("name","chan")
+              // this.$store.commit("token/addToken", r.data.result.token);
             } else {
               this.$message({
                 message: "登陆失败，请检查用户名与密码",
                 type: "warning"
               });
-              localStorage.removeItem("token")
-              this.$store.commit("token/removeToken");
+              // localStorage.removeItem("token")
+              // this.$store.commit("token/removeToken");
             }
           });
       } else {
