@@ -1,7 +1,12 @@
 module.exports = {
-  env:{
+  router: {
+    middleware: "auth"
+  },
+  srcDir: "client/",
+  env: {
     frontUrl: process.env.FRONT_URL || 'http://localhost:8890',
-    serverUrl:process.env.SERVER_URL || 'http://localhost:9091'
+    serverUrl: process.env.SERVER_URL || 'http://localhost:9091',
+    baseUrl: process.env.BASE_URL || "http://localhost:9091"
   },
   /*
   ** Headers of the page
@@ -39,21 +44,21 @@ module.exports = {
       }
     },
     styleResources: {
-      scss: './assets/common/*.scss',
+      scss: './client/assets/common/*.scss',
     }
   },
   css: [
     'element-ui/lib/theme-chalk/index.css',
     'element-ui/lib/theme-chalk/display.css',
-    { src: "~assets/common/common.scss", lang: "scss" }
+    { src: "~/assets/common/common.scss", lang: "scss" }
   ],
   plugins: [{
     src: '@/plugins/element-ui',
-    ssr:true
+    ssr: true
   }, {
     src: "~/plugins/mavon-editor",
     ssr: false
-  },{
-    src:"~/plugins/site.config.js"
+  }, {
+    src: "~/plugins/site.config.js"
   }],
 }

@@ -113,7 +113,7 @@ export default {
       formData.append("image", file);
       console.log(file);
       axios
-        .post(`${this.serverUrl}/admin/articleImageUpload`, formData, {
+        .post(`${process.env.baseUrl}/admin/articleImageUpload`, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
@@ -121,7 +121,7 @@ export default {
         .then(r => {
           if (r.status == 200 && r.data.result) {
             var url = r.data.result.replace(/\\/g, "/");
-            this.$refs.md.$img2Url(filename, `${this.serverUrl}${url}`);
+            this.$refs.md.$img2Url(filename, `${process.env.baseUrl}${url}`);
           }
         });
     },
@@ -130,7 +130,7 @@ export default {
         return;
       }
       axios
-        .post(`${this.serverUrl}/admin/articleCoverDelete`, {
+        .post(`${process.env.baseUrl}/admin/articleCoverDelete`, {
           coverPath: this.coverPath
         })
         .then(r => {
@@ -157,7 +157,7 @@ export default {
         this.$store.state.articleTags.articleTagsActive.join("")
       ) {
         axios
-          .post(`${this.serverUrl}/admin/saveArticle`, {
+          .post(`${process.env.baseUrl}/admin/saveArticle`, {
             intro: this.intro,
             mdText: this.mdText,
             title: this.title,

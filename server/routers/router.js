@@ -9,6 +9,7 @@ router.get("/articleTags",admin.ARTICLE_TAGS)
     .post("/admin/articleImageUpload", admin.ARTICLE_IMAGE_UPLOAD)
     .post("/admin/saveArticle", admin.ARTICLE_SAVE)
     .get("/admin",admin.INDEX_CHECK)
+    .get("/auth",admin.CHECK_AUTH)
 
 //login
 router.post("/login", user.FIND_USER)

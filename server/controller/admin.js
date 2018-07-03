@@ -41,11 +41,15 @@ exports.ARTICLE_SAVE = async (ctx, next) => {
 }
 
 //markdown页面登录权限验证
-exports.INDEX_CHECK = async (ctx,next)=>{
+exports.INDEX_CHECK = async (ctx, next) => {
   console.log(888)
   // ctx.body = resObj(1,"author confirm!","")
 }
 
+//验证登录权限
+exports.CHECK_AUTH = async (ctx, next) => { 
+  console.log(ctx)
+}                                                                                                                                                                                                                                                                                          
 function writeArticleImage(ctx) {
   var form = new formidable.IncomingForm();
   return new Promise((reso, reje) => {
