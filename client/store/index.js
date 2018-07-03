@@ -3,7 +3,12 @@ export const state = () => ({
 })
 
 export const mutations = {
-    hh(){
-        console.log(8989)
+
+}
+
+export const actions = {
+    nuxtServerInit({ commit }, { req }) {
+        console.log("-----------------------------------------------");
+        console.log(req)
     }
 }

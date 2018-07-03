@@ -8,7 +8,7 @@ const path = require("path");
 const token = require("./common/token");
 const jwt = require("koa-jwt");
 const { Nuxt, Builder } = require("nuxt");
-// const nuxtConfig = require("./../front-end/nuxt.config.js");
+const nuxtConfig = require("../nuxt.config.js");
 app.use(jwt({
     secret: "user_token"
 }).unless({
@@ -16,7 +16,6 @@ app.use(jwt({
     // path: [/\/twitter/, /\/login/,/\/essay/,/\/articleTags/]
 }))
 app.use(cors());
-// console.log(process.env.NODE_ENV)
 app.use(serve(path.resolve(__dirname, "public")))
 app.use(koaBody({
     multipart: true,
@@ -29,16 +28,16 @@ app.use(koaBody({
 const router = require("./routers/router");
 app.use(router.routes());
 
-
-// nuxtConfig.dev = process.env.NODE_ENV === "production"
-// const nuxt = new Nuxt(nuxtConfig)
+nuxtConfig.dev = process.env.NODE_ENV === "production"
+nuxtConfig.srcDir = path.resolve(__dirname,"../client");
+const nuxt = new Nuxt(nuxtConfig)
 
 //当前为开发模式
-// if (!nuxtConfig.dev) {
-//     const builder = new Builder(nuxt)
-//     builder.build()
-// }
-// app.use(nuxt.render)
+if (!nuxtConfig.dev) {
+    const builder = new Builder(nuxt)
+    builder.build()
+}
+app.use(nuxt.render)
 
 app.listen(9091, () => [
     console.log("server start at http://localhost:9091")
