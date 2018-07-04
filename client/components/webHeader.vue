@@ -204,12 +204,12 @@ export default {
       this.$router.push(name);
     },
     triggerUserHeader() {
-      var userHeaderState = this.$store.state.header.userBannerClass;
+      var userHeaderState = this.$store.state.userBannerClass;
       if (userHeaderState) {
-        this.$store.commit("page/removeUserBannerClass");
+        this.$store.commit("removeUserBannerClass");
         // document.querySelector(".user-banner-col").style.display = "none"
       } else {
-        this.$store.commit("page/setUserBannerClass");
+        this.$store.commit("setUserBannerClass");
       }
     }
   }

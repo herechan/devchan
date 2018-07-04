@@ -154,14 +154,14 @@ export default {
         this.trim(this.intro) &&
         this.trim(this.title) &&
         this.trim(this.mdText) &&
-        this.$store.state.admin.articleTagsActive.join("")
+        this.$store.state.articleTagsActive.join("")
       ) {
         axios
           .post(`${process.env.baseUrl}/admin/saveArticle`, {
             intro: this.intro,
             mdText: this.mdText,
             title: this.title,
-            tags: this.$store.state.admin.articleTagsActive,
+            tags: this.$store.state.articleTagsActive,
             coverPath: this.coverPath
           })
           .then(r => {

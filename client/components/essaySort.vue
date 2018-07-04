@@ -20,7 +20,7 @@ export default {
       return this.tagArr[index];
     },
     tags() {
-      return this.$store.state.admin.articleTags;
+      return this.$store.state.articleTags;
     }
   },
   methods: {
@@ -32,7 +32,7 @@ export default {
         this.$set(arr, index, item.name);
       }
       this.$store.commit(
-        "admin/setArticleTagsActive",
+        "setArticleTagsActive",
         this.tagArr.slice(0)
       );
     }
@@ -40,12 +40,12 @@ export default {
   mounted() {
     axios.get(`${process.env.baseUrl}/articleTags`).then(r => {
       if (r.status == 200 && r.data.result.length > 0) {
-        this.$store.commit("admin/getArticleTags", r.data.result);
+        this.$store.commit("getArticleTags", r.data.result);
       }
     });
 
     //清空标签选中状态
-    this.$store.commit("admin/setArticleTagsActive", []);
+    this.$store.commit("setArticleTagsActive", []);
   }
 };
 </script>

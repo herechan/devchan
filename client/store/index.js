@@ -1,16 +1,19 @@
-export const state = () => ({
+import Vuex from 'vuex'
+import getters from './getters'
+import mutations from './mutations'
+import actions from './actions'
 
-})
-
-export const mutations = {
-
-}
-
-export const actions = {
-    nuxtServerInit({ commit }, data) {
-        console.log("-----------------------------------------------");
-        console.log(data);
-        console.log("*******************************************************");
-        // console.log(res)
-    }
+export default () => {
+    return new Vuex.Store({
+        state: {
+            articleTags: [],
+            articleTagsActive: [],
+            userBannerClass: "",
+            bodyScroll: true,
+            shadow: false
+        },
+        getters,
+        mutations,
+        actions
+    })
 }

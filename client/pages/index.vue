@@ -2,7 +2,7 @@
   <div id="wrap" :class="triggerBody" @click="removeShadow">
     <WebHeader/>
     <main>
-      <div class="shadow" v-if="$store.state.header.shadow"></div>
+      <div class="shadow" v-if="$store.state.shadow"></div>
       <el-row>
         <el-col :lg="5" class="user-banner-col" :class="userBanner" @click.stop.native>
           <div class="user-banner">
@@ -196,12 +196,12 @@ export default {
   },
   computed: {
     userBanner() {
-      return this.$store.state.header.userBannerClass;
+      return this.$store.state.userBannerClass;
     },
     triggerBody() {
       if (this.document) {
         var body = this.document.querySelector("body");
-        if (this.$store.state.header.userBannerClass) {
+        if (this.$store.state.userBannerClass) {
           body.style.overflow = "hidden";
         } else {
           body.style.overflow = "auto";
@@ -217,8 +217,8 @@ export default {
   },
   methods: {
     removeShadow() {
-      if (this.$store.state.header.userBannerClass) {
-        this.$store.commit("page/removeUserBannerClass");
+      if (this.$store.state.userBannerClass) {
+        this.$store.commit("removeUserBannerClass");
       }
     }
   }
