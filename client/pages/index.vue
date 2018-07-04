@@ -218,7 +218,7 @@ export default {
   methods: {
     removeShadow() {
       if (this.$store.state.header.userBannerClass) {
-        this.$store.commit("header/removeUserBannerClass");
+        this.$store.commit("page/removeUserBannerClass");
       }
     }
   }

@@ -7,8 +7,10 @@ export const mutations = {
 }
 
 export const actions = {
-    nuxtServerInit({ commit }, { req }) {
+    nuxtServerInit({ commit }, data) {
         console.log("-----------------------------------------------");
-        console.log(req)
+        console.log(data);
+        console.log("*******************************************************");
+        // console.log(res)
     }
 }

@@ -206,10 +206,10 @@ export default {
     triggerUserHeader() {
       var userHeaderState = this.$store.state.header.userBannerClass;
       if (userHeaderState) {
-        this.$store.commit("header/removeUserBannerClass");
+        this.$store.commit("page/removeUserBannerClass");
         // document.querySelector(".user-banner-col").style.display = "none"
       } else {
-        this.$store.commit("header/setUserBannerClass");
+        this.$store.commit("page/setUserBannerClass");
       }
     }
   }
