@@ -7,12 +7,19 @@ exports.FIND_USER = async (ctx, next) => {
         const token = jwt.sign({
             username: result.username,
             id: result.id.toString()
-        }, "user_token", {
-                expiresIn: "8h"
+        }, "devchan_token", {
+                expiresIn: "24h"
             })
+        ctx.cookies.set("devchan_token", token, {
+            path: '/',
+            maxAge: 1000 * 60 * 60 * 24,
+            httpOnly: false,
+            overwrite: true
+        })
         ctx.body = resObj(1, "login success!", {
             token: token
         })
+
     } else {
         ctx.body = resObj(0, "login failed!", "")
     }

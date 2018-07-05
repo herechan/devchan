@@ -12,13 +12,16 @@ const nuxtConfig = require("../nuxt.config.js");
 const router = require("./routers/router");
 
 
-app.use(jwt({
-    secret: "user_token"
-}).unless({
-    path: [/^((?!\/admin).)*$/, /\/login/]
-    // path: [/\/twitter/, /\/login/,/\/essay/,/\/articleTags/]
-}))
-app.use(cors());
+// app.use(jwt({
+//     secret: "devchan_token"
+// }).unless({
+//     path: [/^((?!\/admin).)*$/, /\/login/]
+//     // path: [/\/twitter/, /\/login/,/\/essay/,/\/articleTags/]
+// }))
+
+app.use(cors({
+    credentials: true
+}));
 app.use(serve(path.resolve(__dirname, "public")))
 app.use(koaBody({
     multipart: true,
@@ -31,18 +34,17 @@ app.use(koaBody({
 
 app.use(router.routes());
 
-nuxtConfig.dev = process.env.NODE_ENV === "production"
-nuxtConfig.srcDir = path.resolve(__dirname, "../client");
-const nuxt = new Nuxt(nuxtConfig)
+// nuxtConfig.dev = process.env.NODE_ENV === "production"
+// nuxtConfig.srcDir = path.resolve(__dirname, "../client");
+// const nuxt = new Nuxt(nuxtConfig)
 
-//当前为开发模式
+// //当前为开发模式
 
-if (!nuxtConfig.dev) {
-    const builder = new Builder(nuxt)
-    builder.build();
-}
-app.use(nuxt.render)
-
+// if (!nuxtConfig.dev) {
+//     const builder = new Builder(nuxt)
+//     builder.build();
+// }
+// app.use(nuxt.render)
 app.listen(9091, () => [
     console.log("server start at http://localhost:9091")
 ]);

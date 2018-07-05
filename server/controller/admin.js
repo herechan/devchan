@@ -48,7 +48,6 @@ exports.INDEX_CHECK = async (ctx, next) => {
 
 //验证登录权限
 exports.CHECK_AUTH = async (ctx, next) => { 
-  console.log(ctx)
 }                                                                                                                                                                                                                                                                                          
 function writeArticleImage(ctx) {
   var form = new formidable.IncomingForm();

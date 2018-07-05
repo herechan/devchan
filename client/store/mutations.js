@@ -14,5 +14,8 @@ export default {
         state.userBannerClass = "";
         state.bodyScroll = true;
         state.shadow = false;
+    },
+    setUserToken(state,token){
+        state.userToken = token;
     }
 }

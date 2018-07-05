@@ -15,12 +15,10 @@ exports.findUser = async (ctx) => {
                     id: doc._id,
                     status:1
                 });
-                // ctx.body = resObj(1, "find success", "")
             } else {
                 resolved({
                     status:0
                 });
-                // ctx.body = resObj(0, "no found", "")
             }
         })
     })

@@ -10,7 +10,8 @@ export default () => {
             articleTagsActive: [],
             userBannerClass: "",
             bodyScroll: true,
-            shadow: false
+            shadow: false,
+            userToken:""
         },
         getters,
         mutations,
