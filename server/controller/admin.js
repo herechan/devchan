@@ -7,7 +7,7 @@ const formidable = require("formidable");
 exports.ARTICLE_TAGS = async (ctx) => {
   await writtingCenter.getArticleTags(ctx);
 }
-//封面
+//上传封面
 exports.ARTICLE_COVER = async (ctx, next) => {
   const file = ctx.request.files.file;
   const coverName = file.path.split("\\")[file.path.split("\\").length - 1];

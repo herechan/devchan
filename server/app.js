@@ -20,7 +20,8 @@ const router = require("./routers/router");
 // }))
 
 app.use(cors({
-    credentials: true
+    credentials: true,
+    // origin:"http://localhost:8890"
 }));
 app.use(serve(path.resolve(__dirname, "public")))
 app.use(koaBody({

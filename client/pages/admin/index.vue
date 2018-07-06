@@ -37,7 +37,7 @@
             </div>
             <div class="card-row upload-cover-row">
               <p class="card-row-name" @click="showText">cover</p>
-              <el-upload :on-remove="removeCover" :limit="1" :on-success="fileUpSuccess" list-type="picture" class="upload-demo" :multiple="false" :action="serverUrl+'/admin/articleCover'">
+              <el-upload :with-credentials="true" :on-remove="removeCover" :limit="1" :on-success="fileUpSuccess" list-type="picture" class="upload-demo" :multiple="false" :action="serverUrl+'/admin/articleCover'">
                 <el-button size="small" type="primary">upload
                   <i class="el-icon-upload el-icon--right"></i>
                 </el-button>

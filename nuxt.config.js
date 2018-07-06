@@ -59,6 +59,6 @@ module.exports = {
     src: "~/plugins/mavon-editor",
     ssr: false
   }, {
-    src: "~/plugins/site.config.js"
+    src: "~/plugins/site.config.js",
   }],
 }
