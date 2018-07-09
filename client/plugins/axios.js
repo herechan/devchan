@@ -1,8 +1,11 @@
 import axios from "axios";
-import Vue from "vue"
+import store from "~/store/index.js"
+// import Vue from "vue"
 axios.interceptors.response.use(function (response) {
-  // 对响应数据做点什么
-  console.log(1)
+  console.log(response)
+  if (response.data.status == 401) {
+    $nuxt._router.push("/login");
+  }
   return response;
 }, function (error) {
   // 对响应错误做点什么

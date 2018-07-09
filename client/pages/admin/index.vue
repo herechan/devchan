@@ -141,8 +141,11 @@ export default {
         });
     },
     fileUpSuccess(r, file) {
+      console.log(r)
       if (r.status == 1) {
         this.coverPath = r.result;
+      }else if(r.status == 401){
+        this.$router.push("/login")
       }
     },
     showText() {

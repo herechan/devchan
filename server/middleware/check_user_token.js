@@ -8,7 +8,7 @@ exports.user_token = async (ctx, next) => {
     if (token) {
         try {
             const decode = jwt.verify(token, config.jwt.secret);
-            const username = decde.username;
+            const username = decode.username;
             const password = decode.password;
             Users.findOne({
                 username: username,
@@ -17,19 +17,26 @@ exports.user_token = async (ctx, next) => {
                 if (err) {
                     console.log(err);
                     throw err;
-                    // ctx.throw(500);
+                    ctx.body = resObj(500, "server error!", "");
+                }
+                if (doc) {
+                    next();
+                } else {
+                    res.body = resObj(401, "There is no matching user!", "")
                 }
             })
         } catch (e) {
             console.log(e)
-            // ctx.body = resObj(500,"server error!","")
+            ctx.body = resObj(500, "server error!", "")
         }
     } else {
         // ctx.body = resObj(401, "no auth!", "");
-        console.log(`${ctx.req.headers.origin}/auth`);
-        console.log(ctx.redirect)
-        ctx.set('Access-Control-Allow-Origin', `${ctx.req.headers.origin}`);
-        ctx.redirect(`${ctx.req.headers.origin}/auth`);
+        // console.log(`${ctx.req.headers.origin}/auth`);
+        // console.log(ctx.redirect)
+        // ctx.set('Access-Control-Allow-Origin', `${ctx.req.headers.origin}`);
+        // ctx.redirect(`${ctx.req.headers.origin}/auth`);
+        console.log("no auth")
+        return (ctx.body = resObj(401, "no auth!", ""))
     }
 
 }

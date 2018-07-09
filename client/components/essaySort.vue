@@ -8,7 +8,7 @@
 /**
  * 文章与后管理的文章标签列表
  */
-import axios from "axios";
+import axios from "~/plugins/axios";
 export default {
   data() {
     return {
