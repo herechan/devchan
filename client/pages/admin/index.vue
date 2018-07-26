@@ -37,7 +37,7 @@
             </div>
             <div class="card-row upload-cover-row">
               <p class="card-row-name" @click="showText">cover</p>
-              <el-upload :with-credentials="true" :on-remove="removeCover" :limit="1" :on-success="fileUpSuccess" list-type="picture" class="upload-demo" :multiple="false" :action="serverUrl+'/admin/articleCover'">
+              <el-upload :with-credentials="true" :on-remove="removeCover" :limit="1" :on-success="fileUpSuccess" list-type="picture" class="upload-demo" :multiple="false" :action="baseUrl+'/admin/articleCover'">
                 <el-button size="small" type="primary">upload
                   <i class="el-icon-upload el-icon--right"></i>
                 </el-button>
@@ -111,7 +111,6 @@ export default {
       }
       var formData = new FormData();
       formData.append("image", file);
-      console.log(file);
       axios
         .post(`${process.env.baseUrl}/admin/articleImageUpload`, formData, {
           headers: {
@@ -121,7 +120,8 @@ export default {
         .then(r => {
           if (r.status == 200 && r.data.result) {
             var url = r.data.result.replace(/\\/g, "/");
-            this.$refs.md.$img2Url(filename, `${process.env.baseUrl}${url}`);
+            
+            this.$refs.md.$img2Url(filename, `${process.env.staticUrl}${url}`);
           }
         });
     },
@@ -134,14 +134,12 @@ export default {
           coverPath: this.coverPath
         })
         .then(r => {
-          console.log(r);
           if (r.status == 200) {
             this.coverPath = "";
           }
         });
     },
     fileUpSuccess(r, file) {
-      console.log(r)
       if (r.status == 1) {
         this.coverPath = r.result;
       }else if(r.status == 401){

@@ -21,7 +21,7 @@ const router = require("./routers/router");
 
 app.use(cors({
     credentials: true,
-    // origin:"http://localhost:8890"
+    // origin:"http://localhost:8008"
 }));
 app.use(serve(path.resolve(__dirname, "public")))
 app.use(koaBody({
@@ -35,17 +35,17 @@ app.use(koaBody({
 
 app.use(router.routes());
 
-// nuxtConfig.dev = process.env.NODE_ENV === "production"
-// nuxtConfig.srcDir = path.resolve(__dirname, "../client");
-// const nuxt = new Nuxt(nuxtConfig)
+nuxtConfig.dev = process.env.NODE_ENV === "production"
+nuxtConfig.srcDir = path.resolve(__dirname, "../client");
+const nuxt = new Nuxt(nuxtConfig)
 
-// //当前为开发模式
+//当前为开发模式
 
-// if (!nuxtConfig.dev) {
-//     const builder = new Builder(nuxt)
-//     builder.build();
-// }
-// app.use(nuxt.render)
-app.listen(9091, () => [
-    console.log("server start at http://localhost:9091")
-]);
+if (!nuxtConfig.dev) {
+    const builder = new Builder(nuxt)
+    builder.build();
+}
+app.use(nuxt.render)
+app.listen(8009,"127.0.0.1",() => {
+    console.log("server start at http://127.0.0.1:8009")
+});

@@ -60,6 +60,9 @@ export default {
                 message: "登录成功！",
                 type: "success"
               });
+              // Cookie.set(r.data.result.tokenName,r.data.result.token,{
+              //   expires:1
+              // })
             } else {
               this.$message({
                 message: "登陆失败，请检查用户名与密码",

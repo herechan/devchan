@@ -9,7 +9,7 @@ export default {
     async userToken({ commit }, params) {
         commit("setUserToken", params.token)
     },
-    async goLogin({commit}){
+    async goLogin({ commit }) {
         commit("goLogin")
     }
 }

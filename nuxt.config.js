@@ -1,12 +1,12 @@
+const envUrl = require("./pro-env")();
 module.exports = {
   router: {
     middleware: "auth"
   },
   srcDir: "client/",
   env: {
-    frontUrl: process.env.FRONT_URL || 'http://localhost:8890',
-    serverUrl: process.env.SERVER_URL || 'http://localhost:9091',
-    baseUrl: process.env.BASE_URL || "http://localhost:9091"
+    baseUrl: envUrl.baseUrl,
+    staticUrl: envUrl.staticUrl
   },
   /*
   ** Headers of the page
@@ -48,7 +48,7 @@ module.exports = {
     }
   },
   css: [
-    'element-ui/lib/theme-chalk/index.css',
+    // 'element-ui/lib/theme-chalk/index.css',
     'element-ui/lib/theme-chalk/display.css',
     { src: "~/assets/common/common.scss", lang: "scss" }
   ],

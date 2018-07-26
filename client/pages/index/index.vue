@@ -3,7 +3,7 @@
   <div class="timeline-wrap">
     <div class="timeline-article timeline-item">
       <a href="">
-        <img src="~assets/img/article-cover.png" alt="" class="timeline-article-cover">
+        <!-- <img src="~assets/img/article-cover.png" alt="" class="timeline-article-cover"> -->
       </a>
       <p class="article-title" title="之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他">之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他</p>
       <ArticleMeta/>
