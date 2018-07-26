@@ -5,8 +5,8 @@ module.exports = {
   },
   srcDir: "client/",
   env: {
-    baseUrl: envUrl.baseUrl,
-    staticUrl: envUrl.staticUrl
+    staticUrl: envUrl.staticUrl,
+    baseUrl: envUrl.baseUrl
   },
   /*
   ** Headers of the page

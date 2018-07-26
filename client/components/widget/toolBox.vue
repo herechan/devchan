@@ -7,7 +7,7 @@
     <div class="tool-item" v-for="(item,index) in toolList" :key="index" @click="triggerTool(item)">
       <i class="iconfont" :class="{'last-icon':index == toolList.length -1}" v-html="item.code"></i>
     </div>
-    <el-dialog title="" :visible.sync="dialogVisible" :append-to-body="true" custom-class="tool-dialog">
+    <el-dialog title="" :visible.sync="dialogVisible" :append-to-body="true" custom-class="tool-dialog" @close="closeAricleDialog">
       <div class="dialog-content">
         <span v-html="icon" class="dialog-icon"></span>
         <span>{{dialogContent}}</span>
@@ -22,11 +22,14 @@
 <script>
 import axios from "axios";
 export default {
-  mounted() {},
+  mounted() {
+    
+  },
   data() {
     return {
       dialogVisible: false,
       showCancle: false,
+      saveSuccess:false,
       dialogTitle: "",
       icon: "",
       dialogContent: "",
@@ -47,6 +50,11 @@ export default {
     };
   },
   methods: {
+    closeAricleDialog(){
+      if(this.saveSuccess){
+        window.location.reload()
+      }
+    },
     triggerTool(item) {
       if (item.flag == "save" || item.flag == "draft") {
         this.showCancle = false;
@@ -76,7 +84,7 @@ export default {
         });
       } else {
         this.dialogVisible = true;
-        
+        this.saveSuccess = true;
       }
     }
   }

@@ -1,19 +1,16 @@
 <!--首页的timeline-->
 <template>
   <div class="timeline-wrap">
-    <div class="timeline-article timeline-item">
-      <a href="">
-        <!-- <img src="~assets/img/article-cover.png" alt="" class="timeline-article-cover"> -->
+    <div class="timeline-article timeline-item" v-for="(listItem, listIndex) in mainList" :key="listIndex">
+      <a href="" v-if="listItem.coverPath">
+        <img :src="staticUrl+listItem.coverPath" alt="" class="timeline-article-cover">
       </a>
-      <p class="article-title" title="之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他">之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他</p>
+      <div class="article-title-wrap clearfix">
+              <p class="article-title fl" :title="listItem.title">{{listItem.title}}</p>
+      </div>
       <ArticleMeta/>
-      <div class="article-section article-section-normal">
-        <p>
-          作为一部R级片，能够在中国上映，还真的是挺让人意外的。毕竟去年的《死侍》就有这先例。而且《金刚狼3》是受到《死侍》大卖 的情况才拍成的R级片。不过先不说片子的尺度和删减问题，光是能够上映，这个消息已经够我们嗨的了。
-        </p>
-        <p>
-          《金刚狼3》应该是我们最后一次看到休.杰克曼饰演的金刚狼了！其实狼叔的退休，早就应该预想到。他不只一次提出退出的要求。除了体能问题之外，漫画中的金刚狼之死也是原因之一，早在2014年，金刚狼就死在了漫画里。 的情况才拍成的R级片。不过先不说片子的尺度和删减问题，光是能够上映，这个消息已经够我们嗨的了。
-        </p>
+      <div class="article-section article-section-normal" v-html="listItem.intro">
+
       </div>
       <div class="article-more">查看全文</div>
       <div class="devider"></div>
@@ -34,10 +31,29 @@
 <script>
 import WebFooter from "~/components/weibo.vue";
 import ArticleMeta from "~/components/widget/articleMeta.vue";
+import axios from "~/plugins/axios";
+
 export default {
   components: {
     WebFooter,
     ArticleMeta
+  },
+  data(){
+    return{
+      mainList:[]
+    }
+  },
+  methods:{
+    
+  },
+  mounted() {
+  },
+  created() {
+    this.staticUrl = process.env.staticUrl
+    axios.get(`${this.baseUrl}/getArticleTwitterList`).then(r=>{
+      this.mainList = r.data.result;
+      // console.log(this.mainList)
+    })
   }
 };
 </script>
@@ -61,8 +77,12 @@ export default {
     .timeline-article-cover {
       width: 100%;
     }
+    .article-title-wrap{
+      padding: 0 20px;
+    }
     .article-title {
-      padding: 20px 20px 0;
+      padding-top:20px;
+      
       font-size: 28px;
       cursor: pointer;
       transition: 0.2s ease;

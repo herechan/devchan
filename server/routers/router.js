@@ -2,6 +2,7 @@ const Router = require('koa-router');
 const router = new Router();
 const admin = require("../controller/admin");
 const user = require("../controller/user");
+const page = require("../controller/page");
 const check_token = require("../middleware/check_user_token")
 //admin
 router.get("/api/articleTags", admin.ARTICLE_TAGS)
@@ -13,5 +14,11 @@ router.get("/api/articleTags", admin.ARTICLE_TAGS)
     .get("/api/auth", admin.CHECK_AUTH)
 
 //login
-router.post("/api/login", user.FIND_USER)
+router.post("/api/login", user.FIND_USER);
+
+
+//page
+router.get("/api/getArticleTwitterList",page.ARTICLE_AND_TWITTER);
+
+
 module.exports = router;

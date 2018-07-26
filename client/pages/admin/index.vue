@@ -120,7 +120,6 @@ export default {
         .then(r => {
           if (r.status == 200 && r.data.result) {
             var url = r.data.result.replace(/\\/g, "/");
-            
             this.$refs.md.$img2Url(filename, `${process.env.staticUrl}${url}`);
           }
         });
@@ -150,14 +149,14 @@ export default {
       console.log(this.editText);
     },
     checkFile(e) {},
-    validate() {
+    validate() {//该方法会用toolbox组件调用
       if (
         this.trim(this.intro) &&
         this.trim(this.title) &&
         this.trim(this.mdText) &&
         this.$store.state.articleTagsActive.join("")
       ) {
-        axios
+       return axios
           .post(`${process.env.baseUrl}/admin/saveArticle`, {
             intro: this.intro,
             mdText: this.mdText,
@@ -168,7 +167,6 @@ export default {
           .then(r => {
             console.log(r);
           });
-        // return true;
       } else {
         return false;
       }

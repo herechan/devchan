@@ -42,7 +42,7 @@ exports.ARTICLE_SAVE = async (ctx, next) => {
 
 //markdown页面登录权限验证
 exports.INDEX_CHECK = async (ctx, next) => {
-  console.log(888)
+  
   // ctx.body = resObj(1,"author confirm!","")
 }
 
