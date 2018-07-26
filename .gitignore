@@ -1,7 +1,8 @@
 # dependencies
 node_modules
 
-
+# images
+server/public/image
 
 # logs
 npm-debug.log
