@@ -2,7 +2,8 @@
 node_modules
 
 # images
-server/public/image
+server/public/image/article-image
+server/public/image/article-cover
 
 # logs
 npm-debug.log
