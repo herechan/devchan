@@ -12,7 +12,6 @@
             </div>
             <ArticleMeta/>
             <div class="article-section article-section-normal" v-html="essayItem.intro" v-if="isIndex">
-
             </div>
             <div class="article-more" v-if="isIndex">查看全文</div>
             <div class="devider"></div>
@@ -36,7 +35,7 @@ import ArticleMeta from "~/components/widget/articleMeta.vue";
  */
 export default {
   methods: {
-    toEssayMain(id) { 
+    toEssayMain(id) {
       if (!this.isIndex) {
         return;
       }
@@ -52,20 +51,17 @@ export default {
   components: {
     ArticleMeta
   },
-//   props: ["essayItem", "isIndex"],
-props:{
-    essayItem:{
-        type:Object, 
-        require:true,
-        validator(value){
-            
-        }
+  //   props: ["essayItem", "isIndex"],
+  props: {
+    essayItem: {
+      type: Object,
+      require: true
     },
-    isIndex:{
-        type:Boolean,
-        require:true
+    isIndex: {
+      type: Boolean,
+      require: true
     }
-},
+  },
   created() {
     this.staticUrl = process.env.staticUrl;
   }
