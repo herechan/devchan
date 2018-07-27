@@ -186,7 +186,7 @@ export default {
         },
         {
           name: "文章",
-          pathName: "essay"
+          pathName: "essayList"
         },
         {
           name: "推文",

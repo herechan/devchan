@@ -1,27 +1,14 @@
 <!--首页的timeline-->
 <template>
   <div class="timeline-wrap">
-    <div class="timeline-article timeline-item" v-for="(listItem, listIndex) in mainList" :key="listIndex">
-      <a href="" v-if="listItem.coverPath">
-        <img :src="staticUrl+listItem.coverPath" alt="" class="timeline-article-cover">
-      </a>
-      <div class="article-title-wrap clearfix">
-              <p class="article-title fl" :title="listItem.title">{{listItem.title}}</p>
-      </div>
-      <ArticleMeta/>
-      <div class="article-section article-section-normal" v-html="listItem.intro">
+    <ul>
+      <!-- 渲染首页的列表，li为文章的概况或者微博 -->
+      <li class="timeline-item" v-for="(item, index) in mainList" :key="index">
+        <essayItem :essayItem="item" :isIndex="true"/>
+        <!-- <Weibo/> -->
+      </li>
+    </ul>
 
-      </div>
-      <div class="article-more">查看全文</div>
-      <div class="devider"></div>
-      <div class="share-btn clearfix">
-        <div>
-          <i class="iconfont">&#xea87;</i>
-          <span>分享</span>
-        </div>
-      </div>
-    </div>
-    <WebFooter/>
     <div class="page-box">
       <el-pagination layout="prev, pager, next" :total="50">
       </el-pagination>
@@ -29,130 +16,37 @@
   </div>
 </template>
 <script>
-import WebFooter from "~/components/weibo.vue";
-import ArticleMeta from "~/components/widget/articleMeta.vue";
+import Weibo from "~/components/weibo.vue";
 import axios from "~/plugins/axios";
-
+import essayItem from "~/components/essayItem";
 export default {
   components: {
-    WebFooter,
-    ArticleMeta
+    Weibo,
+    essayItem
   },
-  data(){
-    return{
-      mainList:[]
-    }
+  data() {
+    return {
+      mainList: []
+    };
   },
-  methods:{
+  methods: {
     
   },
-  mounted() {
-  },
+  mounted() {},
   created() {
-    this.staticUrl = process.env.staticUrl
-    axios.get(`${this.baseUrl}/getArticleTwitterList`).then(r=>{
+    axios.get(`${this.baseUrl}/getArticleTwitterList`).then(r => {
       this.mainList = r.data.result;
-      // console.log(this.mainList)
-    })
+    });
   }
 };
 </script>
 
 <style lang="scss" scoped>
+
 .timeline-wrap {
   width: 100%;
   .timeline-item {
     margin-bottom: 45px;
-  }
-  .timeline-article {
-    background: #fff;
-    @include cardBorder;
-    padding-bottom: 20px;
-    a {
-      display: block;
-      .timeline-article-cover {
-        width: 100%;
-      }
-    }
-    .timeline-article-cover {
-      width: 100%;
-    }
-    .article-title-wrap{
-      padding: 0 20px;
-    }
-    .article-title {
-      padding-top:20px;
-      
-      font-size: 28px;
-      cursor: pointer;
-      transition: 0.2s ease;
-      user-select: none;
-      &:hover {
-        color: $mainColor;
-      }
-    }
-
-    .article-section-normal {
-      padding: 0 20px;
-      margin: 1.6em 0;
-      line-height: 1.7em;
-      p {
-        margin-bottom: 20px;
-      }
-    }
-    .article-more {
-      display: inline-block;
-      line-height: 1em;
-      padding: 6px 15px;
-      border-radius: 15px;
-      background: #f5f8f9;
-      font-size: 14px;
-      color: #999;
-      text-shadow: 0 1px #fff;
-      text-decoration: none;
-      margin-left: 15px;
-      cursor: pointer;
-      transition: 0.2s ease;
-      &:hover {
-        background: #38b7ea;
-        color: #fff;
-        text-decoration: none;
-        text-shadow: 0 1px #169cd2;
-      }
-    }
-    .devider {
-      height: 1px;
-      border-top: 1px solid $borderColor;
-      margin: 20px;
-    }
-    .share-btn {
-      padding: 0 20px;
-      div {
-        display: flex;
-        justify-content: flex-end;
-        float: right;
-        cursor: pointer;
-
-        &:hover {
-          span {
-            color: #565a5f;
-          }
-          i {
-            color: #565a5f;
-          }
-        }
-        span {
-          color: #999;
-          font-size: 12px;
-          margin-left: 5px;
-          transition: 0.2s ease;
-        }
-        i {
-          color: #999;
-          transition: 0.2s ease;
-        }
-      }
-    }
   }
 }
 
