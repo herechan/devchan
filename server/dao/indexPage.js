@@ -1,7 +1,7 @@
 var resObj = require("../common/resObj");
 var ArticleTagsModel = require("../model/articleTags")
 var ArticleModel = require("../model/article");
-
+const util = require("../common/util")
 exports.queryArticleAndTwitter = async (ctx) => {
     return new Promise((resolved, rejected) => {
         ArticleModel.find({}).exec((err, doc) => {
@@ -37,9 +37,13 @@ exports.queryArticleDetail = async (ctx,next) => {
                 })
             } 
             if (doc) {
+                var properArr = ["_id","tags","intro","coverPath",
+                "mdText","title","like","watch","time"]
+                var r = util.getProperty(properArr,doc);
+                r.time = util.dateFormat(r.time,"yyyy-MM-dd")
                 resolved({
                     msg: "success!",
-                    result: doc,
+                    result: r,
                     status: 1
                 })
             } else {

@@ -2,17 +2,34 @@
     <div class="article-meta">
         <p>
           <i class="iconfont">&#xe62e;</i>
-          <span style="font-size:14px"> 2018-6-12</span>
+          <span style="font-size:14px">{{metaTime}}</span>
         </p>
         <p>
           <i class="iconfont">&#xe663;</i>
-          <span>movie</span>
+          <span class="tag-item" v-for="(item, index) in tagArr" :key="index" v-if="item">{{item}}</span>
         </p>
       </div>
 </template>
 <script>
 export default {
-    
+    props:{
+      metaTime:{
+        requrie:true,
+        type:String
+      },
+      metaTags:{
+        requrie:true,
+        type:Array
+      }
+    },
+    computed:{
+      tagArr(){
+        return this.metaTags
+      }
+    },
+    mounted() {
+      var self = this;
+    },
 }
 </script>
 <style lang="scss" scoped>
@@ -29,6 +46,7 @@ export default {
         }
         span {
           margin-left: 3px;
+          cursor: pointer;
         }
       }
     }

@@ -7,6 +7,7 @@ let ArticleSchema = new Schema({
     coverPath: String,
     mdText: String,
     like: Number,
-    watch: Number
+    watch: Number,
+    time:Date
 })
 module.exports = mongoose.model("Article", ArticleSchema, "Articles");

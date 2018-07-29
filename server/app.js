@@ -40,7 +40,6 @@ nuxtConfig.srcDir = path.resolve(__dirname, "../client");
 const nuxt = new Nuxt(nuxtConfig)
 
 //当前为开发模式
-
 if (!nuxtConfig.dev) {
     const builder = new Builder(nuxt)
     builder.build();

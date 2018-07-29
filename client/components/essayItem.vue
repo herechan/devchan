@@ -2,27 +2,27 @@
     文章模块，包含文章的主体与首页展示的文章简介
  */
 <template>
-    <div class="container">
-        <div class="timeline-article">
-            <div class="article-item-cover" v-if="essayItem.coverPath" @click="toEssayMain(essayItem._id)">
-                <img :src="staticUrl+essayItem.coverPath" alt="" class="timeline-article-cover">
-            </div>
-            <div class="article-title-wrap clearfix">
-                <p class="article-title fl" :title="essayItem.title" @click="toEssayMain(essayItem._id)">{{essayItem.title}}</p>
-            </div>
-            <ArticleMeta/>
-            <div class="article-section article-section-normal" v-html="essayItem.intro" v-if="isIndex">
-            </div>
-            <div class="article-more" v-if="isIndex">查看全文</div>
-            <div class="devider"></div>
-            <div class="share-btn clearfix">
-                <div>
-                    <i class="iconfont">&#xea87;</i>
-                    <span>分享</span>
-                </div>
-            </div>
+  <div class="container">
+    <div class="timeline-article">
+      <div class="article-item-cover" v-if="essayItem.coverPath" @click="toEssayMain(essayItem._id)">
+        <img :src="staticUrl+essayItem.coverPath" alt="" class="timeline-article-cover" :class="isIndex?'':'cursor-none'">
+      </div>
+      <div class="article-title-wrap clearfix">
+        <p class="article-title fl" :title="essayItem.title" @click="toEssayMain(essayItem._id)" :class="isIndex?'':'cursor-none'">{{essayItem.title}}</p>
+      </div>
+      <ArticleMeta :metaTime="metaTime" :metaTags="metaTags" />
+      <div class="article-section article-section-normal" v-html="essayItem.intro" v-if="isIndex">
+      </div>
+      <div class="article-more" v-if="isIndex">查看全文</div>
+      <div class="devider"></div>
+      <div class="share-btn clearfix">
+        <div>
+          <i class="iconfont">&#xea87;</i>
+          <span>分享</span>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 <script>
 import ArticleMeta from "~/components/widget/articleMeta.vue";
@@ -34,6 +34,10 @@ import ArticleMeta from "~/components/widget/articleMeta.vue";
  * isIndex:当前是否为首页文章
  */
 export default {
+  data() {
+    return{
+    }
+  },
   methods: {
     toEssayMain(id) {
       if (!this.isIndex) {
@@ -47,11 +51,17 @@ export default {
       });
     }
   },
-
+  computed:{
+      metaTime(){
+        return this.essayItem.time
+      },
+      metaTags(){
+        return this.essayItem.tags
+      }
+  },
   components: {
     ArticleMeta
   },
-  //   props: ["essayItem", "isIndex"],
   props: {
     essayItem: {
       type: Object,
@@ -68,6 +78,13 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.cursor-none {
+  cursor: default !important;
+  &:hover {
+    color: $fontColor !important;
+    user-select: text !important;
+  }
+}
 .timeline-article-cover {
   cursor: pointer;
 }

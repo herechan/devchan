@@ -1,7 +1,7 @@
 var resObj = require("../common/resObj");
 var ArticleTagsModel = require("../model/articleTags");
 var ArticleModel = require("../model/article");
-
+var util = require("../common/util")
 exports.getArticleTags = (ctx) => {
     return new Promise((resolved, rejected) => {//在koa-router中，调用上下文需要包含在Promise中
         ArticleTagsModel.find({}).exec((err, doc) => {
@@ -27,7 +27,8 @@ exports.saveArticle = (ctx) => {
             tags: data.tags,
             title: data.title,
             like: 0,
-            watch: 0
+            watch: 0,
+            time:new Date()
         }, (err, doc) => {
             if (err) {
                 throw err;
