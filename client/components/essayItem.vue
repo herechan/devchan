@@ -4,7 +4,7 @@
 <template>
   <div class="container">
     <div class="timeline-article">
-      <div class="article-item-cover" v-if="essayItem.coverPath" >
+      <div class="article-item-cover" v-if="essayItem.coverPath">
         <img :src="staticUrl+essayItem.coverPath" alt="" class="timeline-article-cover" :class="isIndex?'':'cursor-none'">
       </div>
       <div class="article-title-wrap clearfix">
@@ -13,6 +13,8 @@
       <ArticleMeta :metaTime="metaTime" :metaTags="metaTags" />
       <div class="article-section article-section-normal" v-html="essayItem.intro" v-if="isIndex">
       </div>
+      <div class="md-wrap markdown-body" v-else v-html="mdText">
+       </div>
       <div class="article-more" v-if="isIndex" @click="toEssayMain(essayItem._id)">查看全文</div>
       <div class="devider"></div>
       <div class="share-btn clearfix">
@@ -26,8 +28,12 @@
 </template>
 <script>
 import ArticleMeta from "~/components/widget/articleMeta.vue";
+import 'mavon-editor/src/lib/css/markdown.css'
+const md = require("markdown-it")({
+  html:true
+});
 /**
- * 组件说明：
+ * 组件说明:
  * props的值可能为
  * essayItem:文章的内容对象，如果当前为文章的详情，则该对象为文章的所有字段；
  * 如果当前为首页文章的概况展示，则该对象仅有部分字段
@@ -35,8 +41,9 @@ import ArticleMeta from "~/components/widget/articleMeta.vue";
  */
 export default {
   data() {
-    return{
-    }
+    return {
+      
+    };
   },
   methods: {
     toEssayMain(id) {
@@ -51,16 +58,21 @@ export default {
       });
     }
   },
-  computed:{
-      metaTime(){
-        return this.essayItem.time
-      },
-      metaTags(){
-        return this.essayItem.tags
-      }
+  computed: {
+    metaTime() {
+      return this.essayItem.time;
+    },
+    metaTags() {
+      return this.essayItem.tags;
+    },
+    mdText(){
+      var mdText = this.essayItem.mdText || ""
+      var content = md.render(mdText);
+      return content;
+    }
   },
   components: {
-    ArticleMeta
+    ArticleMeta,
   },
   props: {
     essayItem: {
@@ -77,7 +89,26 @@ export default {
   }
 };
 </script>
+
 <style lang="scss" scoped>
+li{
+  list-style:	disc outside none ;
+}
+.md-wrap{
+  padding: 20px 20px 10px 20px;
+}
+.md-wrap /deep/  pre,
+.md-wrap  /deep/ pre {
+  background-color: rgba(27, 31, 35, 0.05)!important;
+}
+.md-wrap /deep/ .v-show-content {
+  background-color: #fff;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+.md-wrap /deep/ .v-note-wrapper .v-note-panel {
+  border: none;
+}
 .cursor-none {
   cursor: default !important;
   &:hover {

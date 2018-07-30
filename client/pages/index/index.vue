@@ -1,7 +1,7 @@
 <!--首页的timeline-->
 <template>
   <div class="timeline-wrap">
-    <ul>
+    <ul class="li-none">
       <!-- 渲染首页的列表，li为文章的概况或者微博 -->
       <li class="timeline-item" v-for="(item, index) in mainList" :key="index">
         <essayItem :essayItem="item" :isIndex="true"/>

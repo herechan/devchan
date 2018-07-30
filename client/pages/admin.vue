@@ -9,7 +9,7 @@
       <div class="search-box">
         <el-input v-model="search" class="search"></el-input>
       </div>
-      <ul class="aside-list">
+      <ul class="aside-list li-none">
         <li @click="triggerAside(item,index)" :class="{'aside-item-active':curIndex == index}" class="aside-item" v-for="(item, index) in asideList" :key="index">
           <i class="iconfont" v-html="item.icon"></i>{{item.name}}</li>
       </ul>

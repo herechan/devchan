@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="user-social">
-              <ul>
+              <ul class="li-none">
                 <li>
                   <a href="">
                     <i class="iconfont">&#xe7ab;</i>
@@ -84,7 +84,7 @@
           </div>
           <div class="aside-box">
             <p class="aside-title">文章归档</p>
-            <ul class="aside-list">
+            <ul class="aside-list li-none">
               <li class="elli">
                 <a href="#">
                   <i class="el-icon-caret-right"></i>
@@ -107,7 +107,7 @@
           </div>
           <div class="aside-box">
             <p class="aside-title">个人动态</p>
-            <ul class="aside-list">
+            <ul class="aside-list li-none">
               <li class="elli">
                 <a href="#">
                   <i class="el-icon-caret-right"></i>
@@ -130,7 +130,7 @@
           </div>
           <div class="aside-box">
             <p class="aside-title">标签分类</p>
-            <ul class="aside-list">
+            <ul class="aside-list li-none">
               <li class="elli">
                 <a href="#">
                   <i class="el-icon-caret-right"></i>
@@ -153,7 +153,7 @@
           </div>
           <div class="aside-box">
             <p class="aside-title">链接</p>
-            <ul class="aside-list">
+            <ul class="aside-list li-none">
               <li class="elli">
                 <a href="#">
                   <i class="el-icon-caret-right"></i>

@@ -1,6 +1,6 @@
 
 <template>
-  <ul class="filter-inner">
+  <ul class="filter-inner li-none">
     <li @click="tagTrigger(index,item)" :class="{'filter-active':tagArr[index]}" class="filter-item" v-for="(item, index) in tags" :key="index">{{item.name}}</li>
   </ul>
 </template>

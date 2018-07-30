@@ -7,9 +7,9 @@ exports.queryArticleAndTwitter = async (ctx) => {
         ArticleModel.find({}).exec((err, doc) => {
             if (err) ctx.throw("findUser error:" + err);
             if (doc.length > 0) {
-                var properArr = ["_id","tags","intro","coverPath",
-                ,"title","like","watch","time"]
-                var r = util.getProperty(properArr,doc);
+                var properArr = ["_id", "tags", "intro", "coverPath",
+                    , "title", "like", "watch", "time"]
+                var r = util.getProperty(properArr, doc);
                 resolved({
                     status: 1,
                     msg: "success!",
@@ -25,25 +25,24 @@ exports.queryArticleAndTwitter = async (ctx) => {
         })
     })
 }
-exports.queryArticleDetail = async (ctx,next) => {
+exports.queryArticleDetail = async (ctx, next) => {
     const id = ctx.request.body.id;
     return new Promise((resolved, rejected) => {
         ArticleModel.findOne({
             _id: id
         }).exec((err, doc) => {
-            if (err){
+            if (err) {
                 console.log(err)
                 resolved({
                     msg: "failed",
                     result: "",
                     status: 404
                 })
-            } 
+            }
             if (doc) {
-                var properArr = ["_id","tags","intro","coverPath",
-                "mdText","title","like","watch","time"]
-                var r = util.getProperty(properArr,doc);
-                console.log(r)
+                var properArr = ["_id", "tags", "intro", "coverPath",
+                    "mdText", "title", "like", "watch", "time"]
+                var r = util.getProperty(properArr, doc);
                 resolved({
                     msg: "success!",
                     result: r,
