@@ -7,10 +7,13 @@ exports.queryArticleAndTwitter = async (ctx) => {
         ArticleModel.find({}).exec((err, doc) => {
             if (err) ctx.throw("findUser error:" + err);
             if (doc.length > 0) {
+                var properArr = ["_id","tags","intro","coverPath",
+                ,"title","like","watch","time"]
+                var r = util.getProperty(properArr,doc);
                 resolved({
                     status: 1,
                     msg: "success!",
-                    result: doc
+                    result: r
                 })
             } else {
                 resolved({
@@ -40,7 +43,7 @@ exports.queryArticleDetail = async (ctx,next) => {
                 var properArr = ["_id","tags","intro","coverPath",
                 "mdText","title","like","watch","time"]
                 var r = util.getProperty(properArr,doc);
-                r.time = util.dateFormat(r.time,"yyyy-MM-dd")
+                console.log(r)
                 resolved({
                     msg: "success!",
                     result: r,

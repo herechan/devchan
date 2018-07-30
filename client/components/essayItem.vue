@@ -4,16 +4,16 @@
 <template>
   <div class="container">
     <div class="timeline-article">
-      <div class="article-item-cover" v-if="essayItem.coverPath" @click="toEssayMain(essayItem._id)">
+      <div class="article-item-cover" v-if="essayItem.coverPath" >
         <img :src="staticUrl+essayItem.coverPath" alt="" class="timeline-article-cover" :class="isIndex?'':'cursor-none'">
       </div>
       <div class="article-title-wrap clearfix">
-        <p class="article-title fl" :title="essayItem.title" @click="toEssayMain(essayItem._id)" :class="isIndex?'':'cursor-none'">{{essayItem.title}}</p>
+        <p class="article-title fl" :title="essayItem.title" :class="isIndex?'':'cursor-none'">{{essayItem.title}}</p>
       </div>
       <ArticleMeta :metaTime="metaTime" :metaTags="metaTags" />
       <div class="article-section article-section-normal" v-html="essayItem.intro" v-if="isIndex">
       </div>
-      <div class="article-more" v-if="isIndex">查看全文</div>
+      <div class="article-more" v-if="isIndex" @click="toEssayMain(essayItem._id)">查看全文</div>
       <div class="devider"></div>
       <div class="share-btn clearfix">
         <div>
@@ -86,7 +86,7 @@ export default {
   }
 }
 .timeline-article-cover {
-  cursor: pointer;
+  user-select: none;
 }
 .timeline-article {
   background: #fff;
@@ -106,14 +106,7 @@ export default {
   }
   .article-title {
     padding-top: 20px;
-
     font-size: 28px;
-    cursor: pointer;
-    transition: 0.2s ease;
-    user-select: none;
-    &:hover {
-      color: $mainColor;
-    }
   }
 
   .article-section-normal {
