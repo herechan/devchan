@@ -35,11 +35,13 @@ export default {
 <style lang="scss" scoped>
 .article-meta {
   padding: 0 20px;
-  margin-top: 15px;
+  margin-top: 5px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-start;
   p {
     align-items: center;
+    padding-top: 10px;
     display: flex;
     &:first-child {
       margin-right: 15px;
@@ -49,6 +51,7 @@ export default {
     }
     .tag-item{
       cursor: pointer;
+      margin-right: 5px;
     }
   }
 }

@@ -42,7 +42,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+ul{
+  padding: 0;
+}
 .timeline-wrap {
   width: 100%;
   .timeline-item {

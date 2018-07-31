@@ -60,7 +60,7 @@
           <div slot="article">
             <div class="md-editor-box">
               <no-ssr>
-                <mavonEditor ref="md" :imageClick="imageClick" @imgDel="imgDel" @imgAdd="addImg" :ishljs="true" :boxShadow="false" placeholder="write something..." v-model="mdText"></mavonEditor>
+                <mavonEditor :toolbars="toolbars" ref="md" :imageClick="imageClick" @imgDel="imgDel" @imgAdd="addImg" :ishljs="true" :boxShadow="false" placeholder="write something..." v-model="mdText"></mavonEditor>
               </no-ssr>
             </div>
           </div>
@@ -92,7 +92,25 @@ export default {
       mdText: "",
       title: "",
       coverPath: "",
-      cardList: [{}]
+      cardList: [{}],
+      toolbars: {
+        bold: true, // 粗体
+        italic: true, // 斜体
+        header: true, // 标题
+        strikethrough: true, // 中划线
+        quote: true, // 引用
+        ol: true, // 有序列表
+        ul: true, // 无序列表
+        link: true, // 链接
+        imagelink: true, // 图片链接
+        code: true, // code
+        readmodel: true, // 沉浸式阅读
+        undo: true, // 上一步
+        redo: true, // 下一步
+        navigation: true, // 导航目录
+        subfield: true, // 单双栏模式
+        preview: true // 预览
+      }
     };
   },
   mounted() {
@@ -141,22 +159,23 @@ export default {
     fileUpSuccess(r, file) {
       if (r.status == 1) {
         this.coverPath = r.result;
-      }else if(r.status == 401){
-        this.$router.push("/login")
+      } else if (r.status == 401) {
+        this.$router.push("/login");
       }
     },
     showText() {
       console.log(this.editText);
     },
     checkFile(e) {},
-    validate() {//该方法会用toolbox组件调用
+    validate() {
+      //该方法会用toolbox组件调用
       if (
         this.trim(this.intro) &&
         this.trim(this.title) &&
         this.trim(this.mdText) &&
         this.$store.state.articleTagsActive.join("")
       ) {
-       return axios
+        return axios
           .post(`${process.env.baseUrl}/admin/saveArticle`, {
             intro: this.intro,
             mdText: this.mdText,
@@ -175,6 +194,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
 .cover-fade-enter-active {
   transition: opacity 0.3s;
   transition-delay: 0.5s;
@@ -283,17 +303,17 @@ export default {
 }
 </style>
 <style lang="scss">
-body /deep/ .markdown-body .v-show-content {
-  ul {
-    li {
-      list-style-type: disc;
-    }
-  }
-  ol {
-    li {
-      list-style-type: decimal;
-    }
-  }
-}
+// body /deep/ .markdown-body .v-show-content {
+//   ul {
+//     li {
+//       list-style-type: disc;
+//     }
+//   }
+//   ol {
+//     li {
+//       list-style-type: decimal;
+//     }
+//   }
+// }
 </style>
 

@@ -66,7 +66,7 @@ export default {
       return this.essayItem.tags;
     },
     mdText(){
-      var mdText = this.essayItem.mdText || ""
+      var mdText = this.essayItem.mdText || "";
       var content = md.render(mdText);
       return content;
     }
@@ -86,7 +86,7 @@ export default {
   },
   created() {
     this.staticUrl = process.env.staticUrl;
-  }
+  },
 };
 </script>
 
