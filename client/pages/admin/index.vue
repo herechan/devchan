@@ -215,6 +215,9 @@ export default {
     }
   }
 }
+.edit-text /deep/ textarea{
+  font-family: Microsoft Yahei;
+}
 .card {
   margin-right: 20px;
 }

@@ -432,8 +432,10 @@ main {
         height: 80px;
         width: 80px;
         overflow: hidden;
-        background-image: url("~assets/img/article-cover.png");
-        background-size: cover;
+        background-image: url("~assets/img/parcel.png");
+        // border: 1px solid #eceff2;
+        background-size: 100%;
+        background-repeat: no-repeat;
         background-position: center;
         display: block;
         margin-right: 15px;

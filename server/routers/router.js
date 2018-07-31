@@ -18,6 +18,7 @@ router.post("/api/login", user.FIND_USER);
 
 //page
 router.get("/api/getArticleTwitterList",page.ARTICLE_AND_TWITTER);
-router.post("/api/getArticleDetail",page.GET_ARTICLE_DETAIL)
+router.post("/api/getArticleDetail",page.GET_ARTICLE_DETAIL);
+router.post("/api/getArticleList",page.GET_ARTICLE_LIST);
 
 module.exports = router;

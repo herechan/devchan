@@ -45,6 +45,9 @@ export default {
 <style lang="scss" scoped>
 .container {
   padding-left: 30px;
+  /deep/ .filter-inner{
+    min-height: 46px;
+  }
   .timeline-wrap {
     border-left: 2px solid $borderColor;
     padding-left: 25px;
@@ -84,6 +87,9 @@ export default {
       margin-top: 20px;
       background-color: #fff;
       @include cardBorder;
+      /deep/ .article-meta p{
+        padding-top: 0;
+      }
       .essay-dot {
         height: 12px;
         width: 12px;

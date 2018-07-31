@@ -8,7 +8,7 @@ exports.queryArticleAndTwitter = async (ctx) => {
             if (err) ctx.throw("findUser error:" + err);
             if (doc.length > 0) {
                 var properArr = ["_id", "tags", "intro", "coverPath",
-                    , "title", "like", "watch", "time"]
+                    , "title", "like", "watch", "time", "miniImagePath"]
                 var r = util.getProperty(properArr, doc);
                 resolved({
                     status: 1,
@@ -54,6 +54,30 @@ exports.queryArticleDetail = async (ctx, next) => {
                     result: "",
                     status: 404
                 })
+            }
+        })
+    })
+}
+
+exports.queryArticleList = async (ctx, next) => {
+    return new Promise((resolved, rejected) => {
+        ArticleModel.find({}).exec((err, doc) => {
+            if (err) ctx.throw("findUser error:" + err);
+            if (doc.length > 0) {
+                var properArr = ["_id", "tags",
+                    , "title", "time", "miniImagePath"]
+                var r = util.getProperty(properArr, doc);
+                resolved({
+                    status: 1,
+                    msg: "success!",
+                    result: r
+                })
+            } else {
+                resolved({
+                    status: 0,
+                    msg: "no data!",
+                    result: ""
+                });
             }
         })
     })

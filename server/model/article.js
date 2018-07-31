@@ -8,6 +8,7 @@ let ArticleSchema = new Schema({
     mdText: String,
     like: Number,
     watch: Number,
-    time:Date
+    time:Date,
+    miniImagePath:String
 })
 module.exports = mongoose.model("Article", ArticleSchema, "Articles");

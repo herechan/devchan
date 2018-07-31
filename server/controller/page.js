@@ -8,3 +8,8 @@ exports.GET_ARTICLE_DETAIL = async (ctx,next)=>{
     var result = await indexPage.queryArticleDetail(ctx,next);
     ctx.body = result;
 }
+
+exports.GET_ARTICLE_LIST = async (ctx,next)=>{
+    var result = await indexPage.queryArticleList(ctx,next);
+    ctx.body = result;
+}

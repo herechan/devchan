@@ -8,7 +8,7 @@
         <img :src="staticUrl+essayItem.coverPath" alt="" class="timeline-article-cover" :class="isIndex?'':'cursor-none'">
       </div>
       <div class="article-title-wrap clearfix">
-        <p class="article-title fl" :title="essayItem.title" :class="isIndex?'':'cursor-none'">{{essayItem.title}}</p>
+        <p class="article-title fl"  @click="toEssayMain(essayItem._id)" :title="essayItem.title" :class="isIndex?'':'cursor-none'">{{essayItem.title}}</p>
       </div>
       <ArticleMeta :metaTime="metaTime" :metaTags="metaTags" />
       <div class="article-section article-section-normal" v-html="essayItem.intro" v-if="isIndex">
@@ -138,6 +138,12 @@ li{
   .article-title {
     padding-top: 20px;
     font-size: 28px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    user-select: none;
+    &:hover {
+      color: $mainColor;
+    }
   }
 
   .article-section-normal {
