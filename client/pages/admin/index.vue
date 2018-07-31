@@ -164,7 +164,6 @@ export default {
       }
     },
     showText() {
-      console.log(this.editText);
     },
     checkFile(e) {},
     validate() {

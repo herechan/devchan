@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <FilterCard class="filter-card"/>
+    <FilterCard class="filter-card" />
     <div class="timeline-wrap">
       <div class="timeline-year">
         <div class="year-icon">
@@ -35,17 +35,36 @@
 <script>
 import EssayInner from "~/components/essayInner.vue";
 import FilterCard from "~/components/filterCard.vue";
+import axios from "~/plugins/axios";
 export default {
   components: {
     EssayInner,
     FilterCard
+  },
+  mounted() {
+    axios
+      .get(`${this.baseUrl}/getArticleList`, {
+        params: {
+          pageNumber: this.pageNumber
+        }
+      })
+      .then(r => {
+        if (r.data.status == 1) {
+          console.log(r);
+        }
+      });
+  },
+  data() {
+    return {
+      pageNumber: 0
+    };
   }
 };
 </script>
 <style lang="scss" scoped>
 .container {
   padding-left: 30px;
-  /deep/ .filter-inner{
+  /deep/ .filter-inner {
     min-height: 46px;
   }
   .timeline-wrap {
@@ -87,7 +106,7 @@ export default {
       margin-top: 20px;
       background-color: #fff;
       @include cardBorder;
-      /deep/ .article-meta p{
+      /deep/ .article-meta p {
         padding-top: 0;
       }
       .essay-dot {
@@ -117,8 +136,8 @@ export default {
     padding-left: 20px;
   }
 }
-@media screen and(max-width: 1199px){
-  .filter-card{
+@media screen and(max-width: 1199px) {
+  .filter-card {
     width: calc(100% + 20px);
     margin-left: -20px;
   }

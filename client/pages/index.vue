@@ -64,20 +64,12 @@
           <div class="aside-box">
             <p class="aside-title">近期文章</p>
             <div class="recent-article">
-              <div class="recent-article-item">
-                <a href="" class="recent-article-cover"></a>
+              <div class="recent-article-item" v-for="(item, index) in recentArticle" :key="index">
+                <a href="" class="recent-article-cover" :style="'background-image: url('+staticUrl+item.miniImagePath+');'"></a>
                 <div class="recent-article-info">
-                  <a href="" class="recent-article-tag">电影</a>
-                  <a href="" class="recent-article-title" title="之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他">之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他</a>
-                  <p class="recent-article-time">2018-6-13</p>
-                </div>
-              </div>
-              <div class="recent-article-item">
-                <a href="" class="recent-article-cover"></a>
-                <div class="recent-article-info">
-                  <a href="" class="recent-article-tag">电影</a>
-                  <a href="" class="recent-article-title" title="之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他">之后所有金刚狼都是在扮演休杰克曼，从今往后谈论起金刚狼，我们也只会想到他</a>
-                  <p class="recent-article-time">2018-6-13</p>
+                  <a href="" class="recent-article-tag elli">{{item.tags.join(" / ")}}</a>
+                  <a href="" class="recent-article-title" :title="item.title">{{item.title}}</a>
+                  <p class="recent-article-time">{{item.time}}</p>
                 </div>
               </div>
             </div>
@@ -185,6 +177,7 @@
 import WebHeader from "~/components/webHeader.vue";
 import WebFooter from "~/components/webFooter.vue";
 import HomeBody from "~/pages/index/index.vue";
+import axios from "~/plugins/axios";
 export default {
   components: {
     WebHeader,
@@ -193,6 +186,15 @@ export default {
   },
   mounted() {
     this.document = document;
+  },
+  created() {
+    this.staticUrl = process.env.staticUrl;
+    axios.get(`${process.env.baseUrl}/getRecentArticle`).then(r => {
+      if (r.data.status == 1) {
+        var data = r.data.result;
+        this.recentArticle = r.data.result;
+      }
+    });
   },
   computed: {
     userBanner() {
@@ -213,6 +215,8 @@ export default {
   data() {
     return {
       document: "",
+      recentArticle: [],
+      staticUrl:""
     };
   },
   methods: {
@@ -432,7 +436,7 @@ main {
         height: 80px;
         width: 80px;
         overflow: hidden;
-        background-image: url("~assets/img/parcel.png");
+
         // border: 1px solid #eceff2;
         background-size: 100%;
         background-repeat: no-repeat;
@@ -468,8 +472,6 @@ main {
     }
   }
 }
-
-
 
 @media screen and (max-width: 700px) {
   main .aside-col {

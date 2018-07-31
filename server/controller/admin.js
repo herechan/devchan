@@ -54,8 +54,6 @@ function writeArticleImage(ctx) {
   return new Promise((reso, reje) => {
     form.parse(ctx.req, async (err, file, files) => {
       if (err) throw err;
-      console.log(file)
-      console.log(files)
     })
   })
 }

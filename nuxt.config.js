@@ -4,7 +4,6 @@ module.exports = {
     middleware: "auth",
     scrollBehavior(to, from, savedPosition) {
       if (savedPosition) {
-        // console.log(savedPosition)
         return savedPosition
       } else {
         let position = {}

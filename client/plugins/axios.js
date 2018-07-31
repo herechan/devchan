@@ -2,7 +2,7 @@ import axios from "axios";
 axios.interceptors.response.use(function (response) {
   if (response.data.status == 401) {
     $nuxt._router.push("/login");
-  }else if(response.data.status == 404){
+  } else if (response.data.status == 404) {
     $nuxt._router.push("/lost");
   }
   return response;

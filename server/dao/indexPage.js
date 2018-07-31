@@ -61,11 +61,48 @@ exports.queryArticleDetail = async (ctx, next) => {
 
 exports.queryArticleList = async (ctx, next) => {
     return new Promise((resolved, rejected) => {
-        ArticleModel.find({}).exec((err, doc) => {
+        var pageNumber = Number(ctx.request.query.pageNumber)
+        if(!pageNumber && pageNumber!=0){
+            resolved({
+                status:404,
+                msg:"faild!",
+                result:""
+            })
+        }
+        
+        ArticleModel.find({}).limit(10).skip(pageNumber*10).sort({
+            time:-1
+        }).exec((err, doc) => {
             if (err) ctx.throw("findUser error:" + err);
             if (doc.length > 0) {
                 var properArr = ["_id", "tags",
                     , "title", "time", "miniImagePath"]
+                var r = util.getProperty(properArr, doc);
+                resolved({
+                    status: 1,
+                    msg: "success!",
+                    result: r
+                })
+            } else {
+                resolved({
+                    status: 0,
+                    msg: "no data!",
+                    result: ""
+                });
+            }
+        })
+    })
+}
+
+exports.queryRecentArticle = async (ctx, next) => {
+    return new Promise((resolved, rejected) => {
+        ArticleModel.find({}).limit(3).sort({
+            time:-1
+        }).exec((err, doc) => {
+            if (err) ctx.throw("findUser error:" + err);
+            if (doc.length > 0) {
+                var properArr = ["_id", "tags",
+                    , "title", "miniImagePath","time"]
                 var r = util.getProperty(properArr, doc);
                 resolved({
                     status: 1,

@@ -19,7 +19,6 @@ export default {
         state.userToken = token;
     },
     goLogin(store){
-        // store.router
-        console.log($nuxt)
+        
     }
 }
