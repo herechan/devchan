@@ -61,7 +61,8 @@ exports.queryArticleDetail = async (ctx, next) => {
 
 exports.queryArticleList = async (ctx, next) => {
     return new Promise((resolved, rejected) => {
-        var pageNumber = Number(ctx.request.query.pageNumber)
+        var pageNumber = Number(ctx.request.query.pageNumber);
+
         if(!pageNumber && pageNumber!=0){
             resolved({
                 status:404,
