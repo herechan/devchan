@@ -12,10 +12,15 @@ export default {
       // essayObj: new Object()
     };
   },
-  computed:{
-    essayObj(){
-      var obj = this.$store.state.essayMessage
-      return obj ? obj : new Object()
+  watch: {
+    $route(to, from) {
+      this.renderEassyBody()
+    }
+  },
+  computed: {
+    essayObj() {
+      var obj = this.$store.state.essayMessage;
+      return obj ? obj : new Object();
     }
   },
   components: {
@@ -23,15 +28,16 @@ export default {
   },
   scrollToTop: true,
   mounted() {
-    const id = this.$route.query.essayId;
-     var essayMessage = this.$store.state.essayMessage;
-     if(!essayMessage){
-       this.$store.dispatch("getEssayMessage",{
-         id:id
-       })
-     }
+    this.renderEassyBody()
   },
-  
+  methods: {
+    renderEassyBody() {
+      const id = this.$route.query.essayId;
+        this.$store.dispatch("getEssayMessage", {
+          id: id
+        });
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

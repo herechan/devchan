@@ -1,13 +1,13 @@
 <!--文章页面的主体内容-->
 <template>
-    <div class="essay-article">
-        <div class="essay-inner">
-            <p class="essay-title">
-                <span @click="goDetail(essayItem._id)">{{essayItem.title}}</span>
-            </p>
-        </div>
-        <ArticleMeta :metaTime="essayItem.time" :metaTags="essayItem.tags"/>
+  <div class="essay-article">
+    <div class="essay-inner">
+      <p class="essay-title">
+        <span @click="goDetail(essayItem._id)">{{essayItem.title}}</span>
+      </p>
     </div>
+    <ArticleMeta :metaTime="essayItem.time" :metaTags="essayItem.tags" />
+  </div>
 </template>
 <style lang="scss" scoped>
 .essay-article {
@@ -31,8 +31,8 @@
     padding-bottom: 10px;
   }
 }
-@media screen and (max-width:768px){
-  .essay-article .essay-inner .essay-title span{
+@media screen and (max-width: 768px) {
+  .essay-article .essay-inner .essay-title span {
     font-weight: 700;
   }
 }
@@ -43,23 +43,23 @@ export default {
   components: {
     ArticleMeta
   },
-  props:{
-    essayItem:{
-      require:true,
-      type:Object
+  props: {
+    essayItem: {
+      require: true,
+      type: Object
     }
   },
   created() {
     // console.log(this.essayItem)
   },
-  methods:{
-    goDetail(id){
+  methods: {
+    goDetail(id) {
       this.$router.push({
-        path:"essayMain",
-        query:{
-          essayId:id
+        path: "essayMain",
+        query: {
+          essayId: id
         }
-      })
+      });
     }
   }
 };

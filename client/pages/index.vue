@@ -226,18 +226,12 @@ export default {
       }
     },
     goDetail(id) {
-      this.$store
-        .dispatch("getEssayMessage", {
-          id: id
-        })
-        .then(r => {
-          this.$router.push({
-            path: "essayMain",
-            query: {
-              essayId: id
-            }
-          });
-        });
+      this.$router.push({
+        path: "essayMain",
+        query: {
+          essayId: id
+        }
+      });
     }
   }
 };

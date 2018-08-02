@@ -13,24 +13,8 @@ export default {
   },
   
   methods:{
-    go(){
-      this.$router.push({
-        path:"/essayIndex/25"
-      })
-    }
   },
   mounted() {
-    // axios
-    //   .get(`${this.baseUrl}/getArticleList`, {
-    //     params: {
-    //       pageNumber: this.pageNumber
-    //     }
-    //   })
-    //   .then(r => {
-    //     if (r.data.status == 1) {
-    //       // console.log(r);
-    //     }
-    //   });
   },
   data() {
     return {
