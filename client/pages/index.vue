@@ -216,7 +216,7 @@ export default {
     return {
       document: "",
       recentArticle: [],
-      staticUrl:""
+      staticUrl: ""
     };
   },
   methods: {
@@ -225,16 +225,19 @@ export default {
         this.$store.commit("removeUserBannerClass");
       }
     },
-    goDetail(id){
-      // this.$router.push({
-      //   path:"essayMain",
-      //   query:{
-      //     essayId:id
-      //   }
-      // })
-      this.$store.dispatch("getEssayMessage",{
-        id:id
-      })
+    goDetail(id) {
+      this.$store
+        .dispatch("getEssayMessage", {
+          id: id
+        })
+        .then(r => {
+          this.$router.push({
+            path: "essayMain",
+            query: {
+              essayId: id
+            }
+          });
+        });
     }
   }
 };

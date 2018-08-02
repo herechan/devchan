@@ -27,7 +27,6 @@ export default {
         //     }
         //   });
         // const id = essayObj.id;
-        
         const r = await axios.post(`${process.env.baseUrl}/getArticleDetail`,{
             id:essayObj.id
         });

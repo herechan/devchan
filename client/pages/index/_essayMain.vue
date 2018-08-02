@@ -9,8 +9,14 @@ import essayItem from "~/components/essayItem";
 export default {
   data() {
     return {
-      essayObj: new Object()
+      // essayObj: new Object()
     };
+  },
+  computed:{
+    essayObj(){
+      var obj = this.$store.state.essayMessage
+      return obj ? obj : new Object()
+    }
   },
   components: {
     essayItem
@@ -18,15 +24,12 @@ export default {
   scrollToTop: true,
   mounted() {
     const id = this.$route.query.essayId;
-    // axios
-    //   .post(`${process.env.baseUrl}/getArticleDetail`, {
-    //     id: id
-    //   })
-    //   .then(r => {
-    //     if (r.data.status == 1) {
-    //       this.essayObj = r.data.result;
-    //     }
-    //   });
+     var essayMessage = this.$store.state.essayMessage;
+     if(!essayMessage){
+       this.$store.dispatch("getEssayMessage",{
+         id:id
+       })
+     }
   },
   
 };
