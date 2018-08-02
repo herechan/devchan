@@ -9,10 +9,10 @@
       </li>
     </ul>
 
-    <div class="page-box">
+    <!-- <div class="page-box">
       <el-pagination layout="prev, pager, next" :total="50">
       </el-pagination>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

@@ -6,33 +6,14 @@
           <div class="year-icon">
             <i class="iconfont">&#xe62e;</i>
           </div>
-          <span class="year-text">2018</span>
+          <span class="year-text">{{item.year}}</span>
         </div>
-        <div class="essay-item">
+        <div class="essay-item" v-for="(essayItem,essayIndex) in item.list"  :key="essayIndex">
           <div class="essay-dot"></div>
           <div class="essay-triangle"></div>
-          <EssayInner/>
-        </div>
-        <div class="essay-item">
-          <div class="essay-dot"></div>
-          <div class="essay-triangle"></div>
-          <EssayInner/>
+          <EssayInner :essayItem="essayItem"/>
         </div>
       </div>
-      <!-- <div class="timeline-item">
-        <div class="timeline-year">
-          <div class="year-icon">
-            <i class="iconfont">&#xe62e;</i>
-          </div>
-          <span class="year-text">2017</span>
-        </div>
-        <div class="essay-item">
-          <div class="essay-dot"></div>
-          <div class="essay-triangle"></div>
-          <EssayInner/>
-        </div>
-      </div> -->
-
     </div>
   </div>
 </template>
@@ -58,23 +39,28 @@ export default {
         }
       })
       .then(r => {
+        var self = this;
         if (r.data.status == 1 && r.data.result.length > 0) {
           var list = r.data.result;
-          var timeObj = {
-            date: list[0].time.split("-")[0],
-            list: []
-          };
+          var yearList = [];
           list.forEach(element => {
-            var curDate = element.time;
-
-            var dateReg = new RegExp(timeObj.date);
-            timeObj.list.push(element);
-            if (!element.time.match(dateReg)) {
-              timeObj.date = curDate.split("-")[0];
-            } else {
+            var year = element.time.split("-")[0];
+            if (!yearList.includes(year)) {
+              yearList.push(year);
             }
           });
-          console.log(this.essayList);
+          yearList.forEach(element => {
+            var timeObj = {
+              year: element,
+              list: []
+            };
+            list.forEach(listElement => {
+              if (listElement.time.match(timeObj.year)) {
+                timeObj.list.push(listElement);
+              }
+            });
+            self.essayList.push(timeObj);
+          });
         }
       });
   },
@@ -148,6 +134,11 @@ export default {
       top: 11px;
       transform: rotate(133deg);
     }
+  }
+}
+@media screen and(max-width: 1200px) {
+  .container{
+    margin-left: -20px;
   }
 }
 </style>

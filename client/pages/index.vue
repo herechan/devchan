@@ -65,7 +65,7 @@
             <p class="aside-title">近期文章</p>
             <div class="recent-article">
               <div class="recent-article-item" v-for="(item, index) in recentArticle" :key="index">
-                <a href="" class="recent-article-cover" :style="'background-image: url('+staticUrl+item.miniImagePath+');'"></a>
+                <a class="recent-article-cover" @click="goDetail(item._id)" :style="'background-image: url('+staticUrl+item.miniImagePath+');'"></a>
                 <div class="recent-article-info">
                   <a href="" class="recent-article-tag elli">{{item.tags.join(" / ")}}</a>
                   <a href="" class="recent-article-title" :title="item.title">{{item.title}}</a>
@@ -224,6 +224,14 @@ export default {
       if (this.$store.state.userBannerClass) {
         this.$store.commit("removeUserBannerClass");
       }
+    },
+    goDetail(id){
+      this.$router.push({
+        path:"essayMain",
+        query:{
+          essayId:id
+        }
+      })
     }
   }
 };

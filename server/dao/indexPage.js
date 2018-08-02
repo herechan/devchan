@@ -4,7 +4,9 @@ var ArticleModel = require("../model/article");
 const util = require("../common/util")
 exports.queryArticleAndTwitter = async (ctx) => {
     return new Promise((resolved, rejected) => {
-        ArticleModel.find({}).exec((err, doc) => {
+        ArticleModel.find({}).sort({
+            time:-1
+        }).exec((err, doc) => {
             if (err) ctx.throw("findUser error:" + err);
             if (doc.length > 0) {
                 var properArr = ["_id", "tags", "intro", "coverPath",

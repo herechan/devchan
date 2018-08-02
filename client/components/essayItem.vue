@@ -96,6 +96,7 @@ li{
 }
 .md-wrap{
   padding: 20px 20px 10px 20px;
+  min-height: 330px;
 }
 .md-wrap /deep/  pre,
 .md-wrap  /deep/ pre {
@@ -121,6 +122,7 @@ li{
 }
 .timeline-article {
   background: #fff;
+  min-height: 200px;
   @include cardBorder;
   padding-bottom: 20px;
   a {
@@ -206,6 +208,14 @@ li{
         transition: 0.2s ease;
       }
     }
+  }
+}
+@media screen and (max-width:768px){
+  .md-wrap{
+    min-height: 200px;
+  }
+  .timeline-article .article-title{
+    padding-top: 5px;
   }
 }
 </style>
