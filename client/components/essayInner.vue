@@ -22,7 +22,7 @@
       span {
         cursor: pointer;
         font-weight: 600;
-        font-size: 16px;
+        font-size: 15px;
       }
     }
   }

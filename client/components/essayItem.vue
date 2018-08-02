@@ -96,7 +96,7 @@ li{
 }
 .md-wrap{
   padding: 20px 20px 10px 20px;
-  min-height: 330px;
+  min-height: 303px;
 }
 .md-wrap /deep/  pre,
 .md-wrap  /deep/ pre {
@@ -143,6 +143,7 @@ li{
     cursor: pointer;
     transition: 0.2s ease;
     user-select: none;
+    min-height: 57px;
     &:hover {
       color: $mainColor;
     }
@@ -215,7 +216,8 @@ li{
     min-height: 200px;
   }
   .timeline-article .article-title{
-    padding-top: 5px;
+    padding-top: 15px;
+    min-height: 42px;
   }
 }
 </style>

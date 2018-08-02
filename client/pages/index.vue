@@ -67,8 +67,8 @@
               <div class="recent-article-item" v-for="(item, index) in recentArticle" :key="index">
                 <a class="recent-article-cover" @click="goDetail(item._id)" :style="'background-image: url('+staticUrl+item.miniImagePath+');'"></a>
                 <div class="recent-article-info">
-                  <a href="" class="recent-article-tag elli">{{item.tags.join(" / ")}}</a>
-                  <a href="" class="recent-article-title" :title="item.title">{{item.title}}</a>
+                  <a  class="recent-article-tag elli">{{item.tags.join(" / ")}}</a>
+                  <a  class="recent-article-title" @click="goDetail(item._id)" :title="item.title">{{item.title}}</a>
                   <p class="recent-article-time">{{item.time}}</p>
                 </div>
               </div>
@@ -252,6 +252,9 @@ main {
     opacity: 0.4;
     z-index: 99;
   }
+  .timeline-col{
+    min-height: 100vh;
+  }
   .user-banner-col {
     padding-right: 15px;
     .user-banner {
@@ -429,7 +432,9 @@ main {
     .recent-article-item {
       height: 102px;
       padding: 10px 0;
-
+      a{
+        cursor: pointer;
+      }
       &:hover {
         .recent-article-cover {
           opacity: 0.8;

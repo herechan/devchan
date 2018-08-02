@@ -45,6 +45,6 @@ if (!nuxtConfig.dev) {
     builder.build();
 }
 app.use(nuxt.render)
-app.listen(8009,"127.0.0.1",() => {
+app.listen(8009,"192.168.10.68",() => {
     console.log("server start at http://127.0.0.1:8009")
 });
