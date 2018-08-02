@@ -226,11 +226,14 @@ export default {
       }
     },
     goDetail(id){
-      this.$router.push({
-        path:"essayMain",
-        query:{
-          essayId:id
-        }
+      // this.$router.push({
+      //   path:"essayMain",
+      //   query:{
+      //     essayId:id
+      //   }
+      // })
+      this.$store.dispatch("getEssayMessage",{
+        id:id
       })
     }
   }

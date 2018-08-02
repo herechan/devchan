@@ -20,5 +20,8 @@ export default {
     },
     goLogin(store){
         
+    },
+    getEssayMessage(state,essayMessage){
+        state.essayMessage = essayMessage
     }
 }

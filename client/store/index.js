@@ -11,7 +11,8 @@ export default () => {
             userBannerClass: "",
             bodyScroll: true,
             shadow: false,
-            userToken:""
+            userToken:"",
+            essayMessage:""
         },
         getters,
         mutations,

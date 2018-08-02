@@ -36,10 +36,6 @@ export default {
 .article-meta {
   padding: 0 20px;
   margin-top: 5px;
-  // padding-left: 17px;
-  // display: flex;
-  // flex-wrap: wrap;
-  // justify-content: flex-start;
   p {
     float: left;
     align-items: center;

@@ -18,16 +18,17 @@ export default {
   scrollToTop: true,
   mounted() {
     const id = this.$route.query.essayId;
-    axios
-      .post(`${process.env.baseUrl}/getArticleDetail`, {
-        id: id
-      })
-      .then(r => {
-        if (r.data.status == 1) {
-          this.essayObj = r.data.result;
-        }
-      });
-  }
+    // axios
+    //   .post(`${process.env.baseUrl}/getArticleDetail`, {
+    //     id: id
+    //   })
+    //   .then(r => {
+    //     if (r.data.status == 1) {
+    //       this.essayObj = r.data.result;
+    //     }
+    //   });
+  },
+  
 };
 </script>
 <style lang="scss" scoped>
