@@ -24,17 +24,25 @@ export default {
     }
   },
   methods: {
-    tagTrigger(index, item) {
+    async tagTrigger(index, item) {
       var arr = this.tagArr;
       if (arr[index]) {
         this.$set(arr, index, null);
       } else {
         this.$set(arr, index, item.name);
       }
-      this.$store.commit(
+      this.setSortState()
+    },
+    async setSortState() {
+      var list = await this.$store.dispatch(
         "setArticleTagsActive",
         this.tagArr.slice(0)
       );
+      var pageNumber = this.$route.query.page;
+      this.$store.dispatch("setEassayList", {
+        essaySortList: list,
+        pageNumber: pageNumber ? pageNumber : 0
+      });
     }
   },
   mounted() {
@@ -43,9 +51,9 @@ export default {
         this.$store.commit("getArticleTags", r.data.result);
       }
     });
-
     //清空标签选中状态
     this.$store.commit("setArticleTagsActive", []);
+    this.setSortState()
   }
 };
 </script>

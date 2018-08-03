@@ -14,27 +14,38 @@ export default {
         commit("goLogin")
     },
     async getEssayMessage({ commit }, essayObj) {//根据ID获取文章的详情
-        if(!essayObj){
+        if (!essayObj) {
             return console.error("Arguments must be defined! such as essayId")
         }
-        // axios
-        //   .post(`${process.env.baseUrl}/getArticleDetail`, {
-        //     id: id
-        //   })
-        //   .then(r => {
-        //     if (r.data.status == 1) {
-        //       this.essayObj = r.data.result;
-        //     }
-        //   });
-        // const id = essayObj.id;
-        const r = await axios.post(`${process.env.baseUrl}/getArticleDetail`,{
-            id:essayObj.id
+        const r = await axios.post(`${process.env.baseUrl}/getArticleDetail`, {
+            id: essayObj.id
         });
-        if(r.data.status == 1)
-        {
+        if (r.data.status == 1) {
             const essayMessage = r.data.result;
             commit("getEssayMessage", essayMessage)
         }
-        
+
+    },
+    async setEassayList({ commit }, queryObj) {//根据查询条件获取文章的列表
+        const r = await axios.post(`${process.env.baseUrl}/getArticleList`,{
+                essaySortList:queryObj.essaySortList,
+                pageNumber:queryObj.pageNumber
+        });
+        if(r.data.status == 1){
+            commit("setEssayList",r.data.result)
+        }
+    },
+    async setEssaySort({ commit }, essaySort) {
+        commit("setEssaySort", essaySort)
+    },
+    async setArticleTagsActive({ commit, state }, arr) {
+        commit("setArticleTagsActive", arr);
+        var list = [];
+        state.articleTagsActive.forEach(element => {
+            if(element){
+                list.push(element)
+            }
+        });
+        return list;
     }
 }

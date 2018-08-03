@@ -1,17 +1,17 @@
 <template>
   <div class="container">
     <div class="timeline-wrap">
-      <div class="timeline-item" v-for="(item, index) in essayList" :key="index">
+      <div class="timeline-item" v-if="essayList.length>0"  v-for="(item, index) in essayList" :key="index">
         <div class="timeline-year">
           <div class="year-icon">
             <i class="iconfont">&#xe62e;</i>
           </div>
           <span class="year-text">{{item.year}}</span>
         </div>
-        <div class="essay-item" v-for="(essayItem,essayIndex) in item.list"  :key="essayIndex">
+        <div class="essay-item" v-for="(essayItem,essayIndex) in item.list" :key="essayIndex">
           <div class="essay-dot"></div>
           <div class="essay-triangle"></div>
-          <EssayInner :essayItem="essayItem"/>
+          <EssayInner :essayItem="essayItem" />
         </div>
       </div>
     </div>
@@ -24,45 +24,45 @@ export default {
   components: {
     EssayInner
   },
-  methods: {},
-  data() {
-    return {
-      pageNumber: 0,
-      essayList: []
-    };
-  },
-  mounted() {
-    axios
-      .get(`${this.baseUrl}/getArticleList`, {
-        params: {
-          pageNumber: this.pageNumber
-        }
-      })
-      .then(r => {
-        var self = this;
-        if (r.data.status == 1 && r.data.result.length > 0) {
-          var list = r.data.result;
-          var yearList = [];
-          list.forEach(element => {
-            var year = element.time.split("-")[0];
-            if (!yearList.includes(year)) {
-              yearList.push(year);
-            }
-          });
-          yearList.forEach(element => {
-            var timeObj = {
-              year: element,
-              list: []
-            };
-            list.forEach(listElement => {
-              if (listElement.time.match(timeObj.year)) {
-                timeObj.list.push(listElement);
-              }
-            });
-            self.essayList.push(timeObj);
-          });
+  methods: {
+    setTimeline() {
+      var list = this.$store.state.essayList;
+      if(list.length == 0) return [];
+      var yearList = [];
+      var tempArr = [];
+      list.forEach(element => {
+        var year = element.time.split("-")[0];
+        if (!yearList.includes(year)) {
+          yearList.push(year);
         }
       });
+      yearList.forEach(element => {
+        var timeObj = {
+          year: element,
+          list: []
+        };
+        list.forEach(listElement => {
+          if (listElement.time.match(timeObj.year)) {
+            timeObj.list.push(listElement);
+          }
+        });
+        tempArr.push(timeObj);
+      });
+      return tempArr;
+    }
+  },
+  data() {
+    return {
+      pageNumber: 0
+    };
+  },
+  computed:{
+    essayList(){
+      return this.setTimeline();
+    }
+  },
+  mounted() {
+
   },
   created() {
     this.pageNumber = this.$route.params.page ? this.$route.params.page : 0;
@@ -137,7 +137,7 @@ export default {
   }
 }
 @media screen and(max-width: 1200px) {
-  .container{
+  .container {
     margin-left: -20px;
   }
 }

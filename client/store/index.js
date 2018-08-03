@@ -12,7 +12,9 @@ export default () => {
             bodyScroll: true,
             shadow: false,
             userToken:"",
-            essayMessage:""
+            essayMessage:"",
+            essayList:[],
+            essaySort:[],
         },
         getters,
         mutations,

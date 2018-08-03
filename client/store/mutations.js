@@ -15,13 +15,19 @@ export default {
         state.bodyScroll = true;
         state.shadow = false;
     },
-    setUserToken(state,token){
+    setUserToken(state, token) {
         state.userToken = token;
     },
-    goLogin(store){
-        
+    goLogin(store) {
+
     },
-    getEssayMessage(state,essayMessage){
+    getEssayMessage(state, essayMessage) {
         state.essayMessage = essayMessage
+    },
+    setEssayList(state, list) {
+        state.essayList = list;
+    },
+    setEssaySort(state,essaySort){
+        state.essaySort = essaySort
     }
 }

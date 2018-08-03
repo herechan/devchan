@@ -5,7 +5,7 @@ const util = require("../common/util")
 exports.queryArticleAndTwitter = async (ctx) => {
     return new Promise((resolved, rejected) => {
         ArticleModel.find({}).sort({
-            time:-1
+            time: -1
         }).exec((err, doc) => {
             if (err) ctx.throw("findUser error:" + err);
             if (doc.length > 0) {
@@ -63,18 +63,25 @@ exports.queryArticleDetail = async (ctx, next) => {
 
 exports.queryArticleList = async (ctx, next) => {
     return new Promise((resolved, rejected) => {
-        var pageNumber = Number(ctx.request.query.pageNumber);
-
-        if(!pageNumber && pageNumber!=0){
+        var pageNumber = Number(ctx.request.body.pageNumber);
+        var essaySortList = ctx.request.body.essaySortList;
+        var essaySortExpre = {};
+        if(essaySortList.length > 0){
+            essaySortExpre = {
+                tags:{
+                    $all:essaySortList
+                }
+            }
+        }
+        if (!pageNumber && pageNumber != 0) {
             resolved({
-                status:404,
-                msg:"faild!",
-                result:""
+                status: 404,
+                msg: "faild!",
+                result: ""
             })
         }
-        
-        ArticleModel.find({}).limit(10).skip(pageNumber*10).sort({
-            time:-1
+        ArticleModel.find(essaySortExpre).limit(10).skip(pageNumber * 10).sort({
+            time: -1
         }).exec((err, doc) => {
             if (err) ctx.throw("findUser error:" + err);
             if (doc.length > 0) {
@@ -88,8 +95,8 @@ exports.queryArticleList = async (ctx, next) => {
                 })
             } else {
                 resolved({
-                    status: 0,
-                    msg: "no data!",
+                    status: 1,
+                    msg: "success! but no result",
                     result: ""
                 });
             }
@@ -100,12 +107,12 @@ exports.queryArticleList = async (ctx, next) => {
 exports.queryRecentArticle = async (ctx, next) => {
     return new Promise((resolved, rejected) => {
         ArticleModel.find({}).limit(3).sort({
-            time:-1
+            time: -1
         }).exec((err, doc) => {
             if (err) ctx.throw("findUser error:" + err);
             if (doc.length > 0) {
                 var properArr = ["_id", "tags",
-                    , "title", "miniImagePath","time"]
+                    , "title", "miniImagePath", "time"]
                 var r = util.getProperty(properArr, doc);
                 resolved({
                     status: 1,
