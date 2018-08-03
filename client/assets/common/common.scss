@@ -81,3 +81,6 @@ $page404:#EAE9E8;
   .page-enter, .page-leave-active {
     opacity: 0;
   }
+  .filter-blur {
+    filter: blur(4px);
+  }

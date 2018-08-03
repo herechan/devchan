@@ -31,7 +31,7 @@ export default {
       } else {
         this.$set(arr, index, item.name);
       }
-      this.setSortState()
+      this.setSortState();
     },
     async setSortState() {
       var list = await this.$store.dispatch(
@@ -53,7 +53,7 @@ export default {
     });
     //清空标签选中状态
     this.$store.commit("setArticleTagsActive", []);
-    this.setSortState()
+    this.setSortState();
   }
 };
 </script>

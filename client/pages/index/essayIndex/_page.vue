@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="timeline-wrap">
-      <div class="timeline-item" v-if="essayList.length>0"  v-for="(item, index) in essayList" :key="index">
+    <div class="timeline-wrap"  v-if="essayList.length > 0">
+      <div class="timeline-item" v-for="(item, index) in essayList" :key="index">
         <div class="timeline-year">
           <div class="year-icon">
             <i class="iconfont">&#xe62e;</i>
@@ -15,19 +15,22 @@
         </div>
       </div>
     </div>
+    <noData v-if="essayList.length == 0"></noData>
   </div>
 </template>
 <script>
 import EssayInner from "~/components/essayInner.vue";
+import noData from "~/components/widget/noData.vue";
 import axios from "~/plugins/axios";
 export default {
   components: {
-    EssayInner
+    EssayInner,
+    noData
   },
   methods: {
     setTimeline() {
       var list = this.$store.state.essayList;
-      if(list.length == 0) return [];
+      if (list.length == 0) return [];
       var yearList = [];
       var tempArr = [];
       list.forEach(element => {
@@ -56,23 +59,29 @@ export default {
       pageNumber: 0
     };
   },
-  computed:{
-    essayList(){
+  computed: {
+    essayList() {
       return this.setTimeline();
     }
   },
-  mounted() {
-
-  },
+  mounted() {},
   created() {
     this.pageNumber = this.$route.params.page ? this.$route.params.page : 0;
   }
 };
 </script>
 <style lang="scss" scoped>
+.container{
+  .no-data{
+    height: 150px;
+    margin-right: -10px;
+  }
+}
 .timeline-wrap {
   border-left: 2px solid $borderColor;
   padding-left: 25px;
+  min-height: auto!important;
+
   .timeline-item {
     margin-bottom: 20px;
   }

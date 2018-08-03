@@ -252,7 +252,7 @@ main {
     opacity: 0.4;
     z-index: 99;
   }
-  .timeline-col{
+  .timeline-col .timeline-wrap{
     min-height: 100vh;
   }
   .user-banner-col {
@@ -486,7 +486,7 @@ main {
   }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 750px) {
   main .aside-col {
     margin-top: 20px;
     padding-left: 0;
@@ -497,6 +497,9 @@ main {
   }
   main .user-banner-col-active {
     top: -81px;
+  }
+  main .timeline-col{
+    // min-height: auto;
   }
 }
 

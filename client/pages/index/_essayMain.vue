@@ -1,6 +1,5 @@
 <template>
   <div class="container essay-main-wrap" :class="dataReady?'':'filter-blur'">
-    <!-- <div class="opacity-box"></div> -->
     <essayItem :essayItem="essayObj" :isIndex="false" />
   </div>
 </template>
@@ -71,7 +70,5 @@ export default {
   position: relative;
   transition: all 0.3s;
 }
-.filter-blur {
-  filter: blur(4px);
-}
+
 </style>
