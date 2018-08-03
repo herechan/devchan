@@ -81,7 +81,6 @@ export default {
   border-left: 2px solid $borderColor;
   padding-left: 25px;
   min-height: auto!important;
-
   .timeline-item {
     margin-bottom: 20px;
   }

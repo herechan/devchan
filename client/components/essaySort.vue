@@ -1,7 +1,7 @@
 
 <template>
   <ul class="filter-inner li-none">
-    <li @click="tagTrigger(index,item)" :class="{'filter-active':tagArr[index]}" class="filter-item" v-for="(item, index) in tags" :key="index">{{item.name}}</li>
+    <li @click="tagTrigger(index,item)" :class="{'filter-active':setTypeActive(item)}" class="filter-item" v-for="(item, index) in tags" :key="index">{{item.name}}</li>
   </ul>
 </template>
 <script>
@@ -15,6 +15,12 @@ export default {
       tagArr: []
     };
   },
+  watch: {
+    $route() {
+      this.getRouteParamsFunc();
+      this.setTypeState();
+    }
+  },
   computed: {
     isActive(index) {
       return this.tagArr[index];
@@ -24,6 +30,13 @@ export default {
     }
   },
   methods: {
+    setTypeActive(item) {
+      if (this.$store.state.articleTagsActive.includes(item.name)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     async tagTrigger(index, item) {
       var arr = this.tagArr;
       if (arr[index]) {
@@ -31,29 +44,54 @@ export default {
       } else {
         this.$set(arr, index, item.name);
       }
-      this.setSortState();
+      this.$store.dispatch("setArticleTagsActive", this.tagArr.slice(0));
+      this.setTypeState();
     },
-    async setSortState() {
-      var list = await this.$store.dispatch(
-        "setArticleTagsActive",
-        this.tagArr.slice(0)
-      );
+    async setTypeState() {
+      var list = [];
+      this.$store.state.articleTagsActive.forEach(element => {
+        if (element) list.push(element);
+      });
       var pageNumber = this.$route.query.page;
+      if (this.isPage()) {
+        this.$router.push({
+          path: "essayIndex",
+          query: {
+            type: list.join(",")
+          }
+        });
+      }
       this.$store.dispatch("setEassayList", {
         essaySortList: list,
         pageNumber: pageNumber ? pageNumber : 0
       });
+    },
+    isPage() {
+      return this.$route.path.match(/\/essayIndex/);
+    },
+    getRouteParamsFunc() {
+      var typeList,
+        handledList = [];
+      if (this.$route.query.type) {
+        typeList = this.$route.query.type.split(",");
+        typeList.forEach(element => {
+          if (element) handledList.push(element);
+        });
+      }
+      this.$store.commit("setArticleTagsActive", handledList);
     }
   },
   mounted() {
+    console.log(this.$route)
+    console.log(this.$router)
     axios.get(`${process.env.baseUrl}/articleTags`).then(r => {
       if (r.status == 200 && r.data.result.length > 0) {
         this.$store.commit("getArticleTags", r.data.result);
       }
     });
-    //清空标签选中状态
-    this.$store.commit("setArticleTagsActive", []);
-    this.setSortState();
+    //moutend page,first get route parameter and then setTypeState
+    this.getRouteParamsFunc();
+    this.setTypeState();
   }
 };
 </script>
