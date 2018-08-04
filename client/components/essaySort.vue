@@ -1,7 +1,10 @@
 
 <template>
   <ul class="filter-inner li-none">
-    <li @click="tagTrigger(index,item)" :class="{'filter-active':setTypeActive(item)}" class="filter-item" v-for="(item, index) in tags" :key="index">{{item.name}}</li>
+    <li class="filter-skeleton" v-if="typeSkeleton">
+      <div class="filter-skeleton-line"></div>
+    </li>
+    <li v-else @click="tagTrigger(index,item)" :class="{'filter-active':setTypeActive(item)}" class="filter-item" v-for="(item, index) in tags" :key="index">{{item.name}}</li>
   </ul>
 </template>
 <script>
@@ -12,11 +15,13 @@ import axios from "~/plugins/axios";
 export default {
   data() {
     return {
-      tagArr: []
+      tagArr: [],
+      activeTagsList: [],
+      typeSkeleton:true
     };
   },
   watch: {
-    $route() {
+    $route(to, from, next) {
       this.getRouteParamsFunc();
       this.setTypeState();
     }
@@ -38,33 +43,42 @@ export default {
       }
     },
     async tagTrigger(index, item) {
-      var arr = this.tagArr;
-      if (arr[index]) {
-        this.$set(arr, index, null);
+      this.$store.commit("setEssaySortLoading", true);
+      if (!this.tagArr.includes(item.name)) {
+        this.tagArr.push(item.name);
       } else {
-        this.$set(arr, index, item.name);
+        const index = this.tagArr.indexOf(item.name);
+        this.tagArr.splice(index, 1);
       }
       this.$store.dispatch("setArticleTagsActive", this.tagArr.slice(0));
-      this.setTypeState();
-    },
-    async setTypeState() {
-      var list = [];
-      this.$store.state.articleTagsActive.forEach(element => {
-        if (element) list.push(element);
-      });
-      var pageNumber = this.$route.query.page;
+      this.setTypeState("trigger");
+      //点击标签的同时，在地址栏加上参数
       if (this.isPage()) {
         this.$router.push({
           path: "essayIndex",
           query: {
-            type: list.join(",")
+            type: this.activeTagsList.join(",")
           }
         });
       }
-      this.$store.dispatch("setEassayList", {
-        essaySortList: list,
-        pageNumber: pageNumber ? pageNumber : 0
+    },
+    async setTypeState(e) {
+      this.activeTagsList = [];
+      this.$store.state.articleTagsActive.forEach(element => {
+        if (element) this.activeTagsList.push(element);
       });
+      var pageNumber = this.$route.query.page;
+      if (e != "trigger") {
+        //避免两次提交请求
+        await this.$store.dispatch("setEassayList", {
+          essaySortList: this.activeTagsList,
+          pageNumber: pageNumber ? pageNumber : 0
+        });
+        setTimeout(() => {
+          this.$store.commit("setEssaySortLoading",false)
+        }, 500);
+        
+      }
     },
     isPage() {
       return this.$route.path.match(/\/essayIndex/);
@@ -82,14 +96,18 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route)
-    console.log(this.$router)
     axios.get(`${process.env.baseUrl}/articleTags`).then(r => {
       if (r.status == 200 && r.data.result.length > 0) {
+
         this.$store.commit("getArticleTags", r.data.result);
+        this.typeSkeleton = false;
       }
     });
-    //moutend page,first get route parameter and then setTypeState
+
+    if (this.$route.query.type) {
+      this.tagArr = this.$route.query.type.split(",");
+    }
+    //mounted page,first get route parameter and then setTypeState
     this.getRouteParamsFunc();
     this.setTypeState();
   }
@@ -108,6 +126,20 @@ ul {
   padding-bottom: 8px;
   width: calc(100% + 26px);
   flex-wrap: wrap;
+  .filter-skeleton{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 28px;
+    padding-right: 20px;
+    .filter-skeleton-line{
+      height: 22px;
+      border-radius: 4px;
+      background-color: $page404;
+      width: 100%;
+    }
+  }
   .filter-item {
     padding: 0 8px;
     cursor: pointer;

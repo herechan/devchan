@@ -15,6 +15,7 @@ export default () => {
             essayMessage:"",
             essayList:[],
             essaySort:[],
+            essaySortLoading:true,
         },
         getters,
         mutations,

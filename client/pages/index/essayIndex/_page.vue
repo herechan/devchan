@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="timeline-wrap"  v-if="essayList.length > 0">
+    <div class="timeline-wrap" v-if="essayList.length > 0" :class="$store.state.essaySortLoading?'filter-blur':''">
       <div class="timeline-item" v-for="(item, index) in essayList" :key="index">
         <div class="timeline-year">
           <div class="year-icon">
@@ -14,23 +14,37 @@
           <EssayInner :essayItem="essayItem" />
         </div>
       </div>
+      <div class="timeLine-loading" v-if="$store.state.essaySortLoading">
+      </div>
     </div>
-    <noData v-if="essayList.length == 0"></noData>
+    <!-- <Loading v-if="$store.state.essaySortLoading" class="loading-icon" style=""></Loading> -->
+    <Loading v-if="loadingFlag"></Loading>
+    <noData v-else-if="noResult"></noData>
+
   </div>
 </template>
 <script>
 import EssayInner from "~/components/essayInner.vue";
 import noData from "~/components/widget/noData.vue";
 import axios from "~/plugins/axios";
+import Loading from "~/components/widget/loading";
 export default {
   components: {
     EssayInner,
-    noData
+    noData,
+    Loading
   },
   methods: {
     setTimeline() {
       var list = this.$store.state.essayList;
-      if (list.length == 0) return [];
+      if (list.length == 0) {
+        this.noResult = true;
+        return [];
+      } else {
+        this.noResult = false;
+      }
+      this.loadingFlag = false;
+      // this.$store.commit("setEssaySortLoading",false)
       var yearList = [];
       var tempArr = [];
       list.forEach(element => {
@@ -56,13 +70,19 @@ export default {
   },
   data() {
     return {
-      pageNumber: 0
+      pageNumber: 0,
+      noResult: false,
+      loadingFlag: true
     };
   },
   computed: {
     essayList() {
       return this.setTimeline();
     }
+    // loadingFlag(){
+    //   const state = this.$store.state.essaySortLoading
+    //   return state;
+    // }
   },
   mounted() {},
   created() {
@@ -71,16 +91,37 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.container{
-  .no-data{
+.container {
+  position: relative;
+  .no-data {
     height: 150px;
     margin-right: -10px;
+  }
+  .loading-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  .loading-wrap {
+    margin-left: 10px;
+  }
+  .timeLine-loading {
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 99;
   }
 }
 .timeline-wrap {
   border-left: 2px solid $borderColor;
   padding-left: 25px;
-  min-height: auto!important;
+  position: relative;
+  min-height: auto !important;
+  transition: all 0.3s;
   .timeline-item {
     margin-bottom: 20px;
   }

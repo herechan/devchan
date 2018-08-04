@@ -29,5 +29,11 @@ export default {
     },
     setEssaySort(state,essaySort){
         state.essaySort = essaySort
+    },
+    setEssaySortLoading(state,status){
+        console.log(status)
+        // setTimeout(() => {
+            state.essaySortLoading = status
+        // }, 500);
     }
 }
