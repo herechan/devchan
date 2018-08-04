@@ -66,7 +66,10 @@ module.exports = {
     },
     styleResources: {
       scss: './client/assets/common/*.scss',
-    }
+    },
+    vendor:[
+      "./client/assets/common/common.scss"
+    ]
   },
   css: [
     // 'element-ui/lib/theme-chalk/index.css',
