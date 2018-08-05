@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <div class="timeline-wrap" v-if="essayList.length > 0" :class="$store.state.essaySortLoading?'filter-blur':''">
+    <!-- <div class="timeline-wrap" v-if="essayList.length > 0" :class="$store.state.essaySortLoading?'filter-blur':''"> -->
+    <div class="timeline-wrap" v-if="false" :class="$store.state.essaySortLoading?'filter-blur':''">
       <div class="timeline-item" v-for="(item, index) in essayList" :key="index">
         <div class="timeline-year">
           <div class="year-icon">
@@ -18,9 +19,9 @@
       </div>
     </div>
     <!-- <Loading v-if="$store.state.essaySortLoading" class="loading-icon" style=""></Loading> -->
-    <Loading v-if="loadingFlag"></Loading>
-    <noData v-else-if="noResult"></noData>
-
+    <!-- <Loading v-if="loadingFlag"></Loading>
+    <noData v-else-if="noResult"></noData> -->
+    <EssaySkeleton></EssaySkeleton>
   </div>
 </template>
 <script>
@@ -28,11 +29,13 @@ import EssayInner from "~/components/essayInner.vue";
 import noData from "~/components/widget/noData.vue";
 import axios from "~/plugins/axios";
 import Loading from "~/components/widget/loading";
+import EssaySkeleton from "~/components/skeleton/essayList"
 export default {
   components: {
     EssayInner,
     noData,
-    Loading
+    Loading,
+    EssaySkeleton
   },
   methods: {
     setTimeline() {

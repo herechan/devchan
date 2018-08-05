@@ -18,11 +18,11 @@
             </div>
             <div class="article-info">
               <div class="article-info-item">
-                <p>15</p>
+                <p>{{$store.state.essayList.length}}</p>
                 <p>POSTS</p>
               </div>
               <div class="article-info-item">
-                <p>5</p>
+                <p>{{$store.state.articleTags.length}}</p>
                 <p>TAGS</p>
               </div>
             </div>
@@ -33,11 +33,11 @@
                     <i class="iconfont">&#xe7ab;</i>
                   </a>
                 </li>
-                <li>
+                <!-- <li>
                   <a href="">
                     <i class="iconfont">&#xe641;</i>
                   </a>
-                </li>
+                </li> -->
                 <li>
                   <a href="">
                     <i class="iconfont">&#xe6b6;</i>
@@ -48,11 +48,11 @@
                     <i class="iconfont">&#xe749;</i>
                   </a>
                 </li>
-                <li>
+                <!-- <li>
                   <a href="">
                     <i class="iconfont">&#xe719;</i>
                   </a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
