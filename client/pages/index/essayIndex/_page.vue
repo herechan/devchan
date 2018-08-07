@@ -16,7 +16,7 @@
       </div>
     </div>
     <EssaySkeleton v-if="loadingFlag"></EssaySkeleton>
-    <noData v-else-if="noResult"></noData>
+    <noData v-else-if="$store.state.essayList==0"></noData>
   </div>
 </template>
 <script>
@@ -32,16 +32,18 @@ export default {
     Loading,
     EssaySkeleton
   },
+  watch:{
+    "$store.state.essayList"(){
+      this.loadingFlag = false;
+    }
+  },
   methods: {
     setTimeline() {
       var list = this.$store.state.essayList;
       if (list.length == 0) {
         this.noResult = true;
-        return [];
-      } else {
-        this.noResult = false;
       }
-      this.loadingFlag = false;
+      
       var yearList = [];
       var tempArr = [];
       list.forEach(element => {
@@ -69,7 +71,7 @@ export default {
     return {
       pageNumber: 0,
       noResult: false,
-      loadingFlag: true
+      loadingFlag: true,
     };
   },
   computed: {

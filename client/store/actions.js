@@ -27,14 +27,15 @@ export default {
 
     },
     async setEassayList({ commit }, queryObj) {//根据查询条件获取文章的列表
-        queryObj.pageNumber = queryObj.pageNumber > 0 ? queryObj.pageNumber:1
-        const r = await axios.post(`${process.env.baseUrl}/getArticleList`,{
-                essaySortList:queryObj.essaySortList,
-                pageNumber:queryObj.pageNumber
+        queryObj.pageNumber = queryObj.pageNumber > 0 ? queryObj.pageNumber : 1
+        const r = await axios.post(`${process.env.baseUrl}/getArticleList`, {
+            essaySortList: queryObj.essaySortList,
+            pageNumber: queryObj.pageNumber
         });
-        if(r.data.status == 1){
-            commit("setEssayList",r.data.result);
-            commit("setEssayPageSize",r.data.length);
+        if (r.data.status == 1) {
+            const list = r.data.result ? r.data.result : []
+            commit("setEssayList", list);
+            commit("setEssayPageSize", r.data.length);
         }
     },
     async setEssaySort({ commit }, essaySort) {
@@ -45,7 +46,7 @@ export default {
         commit("setArticleTagsActive", arr);
         var list = [];
         state.articleTagsActive.forEach(element => {
-            if(element){
+            if (element) {
                 list.push(element)
             }
         });

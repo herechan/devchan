@@ -2,27 +2,29 @@
 <template>
   <div class="timeline-wrap">
     <ul class="li-none">
+      <li v-if="mainList.length == 0">
+        <skeletonItem v-for="(item, index) in 3" :key="index"></skeletonItem>
+      </li>
+
       <!-- 渲染首页的列表，li为文章的概况或者微博 -->
-      <li class="timeline-item" v-for="(item, index) in mainList" :key="index">
-        <essayItem :essayItem="item" :isIndex="true"/>
+      <li v-else class="timeline-item" v-for="(item, index) in mainList" :key="index">
+        <essayItem :essayItem="item" :isIndex="true" />
         <!-- <Weibo/> -->
       </li>
     </ul>
-
-    <!-- <div class="page-box">
-      <el-pagination layout="prev, pager, next" :total="50">
-      </el-pagination>
-    </div> -->
   </div>
 </template>
 <script>
 import Weibo from "~/components/weibo.vue";
 import axios from "~/plugins/axios";
 import essayItem from "~/components/essayItem";
+import skeletonItem from "~/components/skeleton/indexItem";
 export default {
   components: {
     Weibo,
-    essayItem
+    essayItem,
+    skeletonItem,
+    page: 1
   },
   data() {
     return {
@@ -30,19 +32,29 @@ export default {
     };
   },
   methods: {
-    
+    getMessage() {
+      axios
+        .get(`${this.baseUrl}/getArticleTwitterList`, {
+          params: {
+            page: this.page
+          }
+        })
+        .then(r => {
+          this.mainList = r.data.result;
+        });
+    }
   },
-  mounted() {},
+  mounted() {
+    this.getMessage();
+  },
   created() {
-    axios.get(`${this.baseUrl}/getArticleTwitterList`).then(r => {
-      this.mainList = r.data.result;
-    });
+    
   }
 };
 </script>
 
 <style lang="scss" scoped>
-ul{
+ul {
   padding: 0;
 }
 .timeline-wrap {

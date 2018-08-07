@@ -18,3 +18,8 @@ exports.GET_RECENT_ARTICLE = async (ctx, next) => {
     var result = await indexPage.queryRecentArticle(ctx, next);
     ctx.body = result;
 }
+
+exports.GET_INDEX_PAGE = async (ctx,next)=>{
+    var result = await indexPage.queryIndexPage(ctx, next);
+    ctx.body = result;
+}

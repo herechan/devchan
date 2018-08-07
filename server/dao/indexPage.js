@@ -4,7 +4,8 @@ var ArticleModel = require("../model/article");
 const util = require("../common/util")
 exports.queryArticleAndTwitter = async (ctx) => {
     return new Promise((resolved, rejected) => {
-        ArticleModel.find({}).sort({
+        const page = Number(ctx.query.page) - 1;
+        ArticleModel.find({}).limit(9).skip(page * 9).sort({
             time: -1
         }).exec((err, doc) => {
             if (err) ctx.throw("findUser error:" + err);
@@ -96,7 +97,7 @@ exports.queryArticleList = async (ctx, next) => {
                     status: 1,
                     msg: "success!",
                     result: r,
-                    length:resultLength
+                    length: resultLength
                 })
             } else {
                 resolved({
@@ -134,6 +135,19 @@ exports.queryRecentArticle = async (ctx, next) => {
         })
     })
 }
+exports.queryIndexPage = async (ctx, next) => {
+    return new Promise(async (resolved, rejected) => {
+        const postLength = await getResultLength({})//获取文档的数量
+        resolved({
+            msg: "success!",
+            result: {
+                postLength: postLength
+            },
+            status: 1
+        })
+
+    })
+}
 
 function getResultLength(expression) {
     return new Promise((resolved, rejected) => {
@@ -151,3 +165,4 @@ function getResultLength(expression) {
         })
     })
 }
+

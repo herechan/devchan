@@ -3,7 +3,7 @@
     <!-- <div class="essay-skeleton-timeline">
         </div> -->
     <div class="essay-skeleton-inner">
-      <div class="skeleton-item" v-for="(item, index) in timeline" :key="index" :ref="'time'" v-if="state()">
+      <div class="skeleton-item" v-for="(item, index) in timeline" :key="index" :ref="'time'">
         <div class="skeletion-time"></div>
         <div class="skeleton-line" v-for="(timeItem, timeIndex) in item.number" :key="timeIndex"></div>
       </div>
@@ -52,9 +52,9 @@
 <script>
 export default {
   mounted() {
-    window.onresize = () => {
-      this.initElement();
-    };
+    // window.onresize = () => {
+    //   this.initElement();
+    // };
   },
   created() {},
   computed: {},
@@ -84,14 +84,12 @@ export default {
       return true;
     },
     initElement() {
-      
       this.$refs.time.forEach(element => {
         element.style.visibility = "hidden"
         if (
           element.offsetTop + element.offsetHeight <=
           this.$refs.wrap.offsetHeight
         ) {
-          
           element.style.visibility = "visible";
         }
       });

@@ -18,7 +18,7 @@
             </div>
             <div class="article-info">
               <div class="article-info-item">
-                <p>{{$store.state.essayList.length}}</p>
+                <p>{{postLength}}</p>
                 <p>POSTS</p>
               </div>
               <div class="article-info-item">
@@ -72,9 +72,8 @@
                   <p class="recent-article-time">{{item.time}}</p>
                 </div>
               </div>
-              
+
               <div class="recent-skeleton-wrap" v-if="recentArticle.length == 0">
-                
                 <RecentSkeleton v-for="(item, index) in 3" :key="index"></RecentSkeleton>
               </div>
             </div>
@@ -193,6 +192,7 @@ export default {
   },
   mounted() {
     this.document = document;
+    this.getPostLength()
   },
   created() {
     this.staticUrl = process.env.staticUrl;
@@ -223,7 +223,8 @@ export default {
     return {
       document: "",
       recentArticle: [],
-      staticUrl: ""
+      staticUrl: "",
+      postLength: 0
     };
   },
   methods: {
@@ -237,6 +238,14 @@ export default {
         path: "essayMain",
         query: {
           essayId: id
+        }
+      });
+    },
+    getPostLength() {
+      axios.post(`${process.env.baseUrl}/getIndexPage`).then(r => {
+        if (r.data.status == 1) {
+          const data = r.data.result;
+          this.postLength = data.postLength;
         }
       });
     }

@@ -17,7 +17,7 @@ export default () => {
             essaySort:[],
             essaySortLoading:true,
             essayPageSize:0,
-            essayCurrentPage:1
+            essayCurrentPage:1,
         },
         getters,
         mutations,
