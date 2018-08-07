@@ -1,7 +1,6 @@
 <template>
   <div class="container">
-    <!-- <div class="timeline-wrap" v-if="essayList.length > 0" :class="$store.state.essaySortLoading?'filter-blur':''"> -->
-    <div class="timeline-wrap" v-if="false" :class="$store.state.essaySortLoading?'filter-blur':''">
+    <div class="timeline-wrap" v-if="essayList.length > 0" :class="$store.state.essaySortLoading?'filter-blur':''">
       <div class="timeline-item" v-for="(item, index) in essayList" :key="index">
         <div class="timeline-year">
           <div class="year-icon">
@@ -15,13 +14,9 @@
           <EssayInner :essayItem="essayItem" />
         </div>
       </div>
-      <div class="timeLine-loading" v-if="$store.state.essaySortLoading">
-      </div>
     </div>
-    <!-- <Loading v-if="$store.state.essaySortLoading" class="loading-icon" style=""></Loading> -->
-    <!-- <Loading v-if="loadingFlag"></Loading>
-    <noData v-else-if="noResult"></noData> -->
-    <EssaySkeleton></EssaySkeleton>
+    <EssaySkeleton v-if="loadingFlag"></EssaySkeleton>
+    <noData v-else-if="noResult"></noData>
   </div>
 </template>
 <script>
@@ -29,7 +24,7 @@ import EssayInner from "~/components/essayInner.vue";
 import noData from "~/components/widget/noData.vue";
 import axios from "~/plugins/axios";
 import Loading from "~/components/widget/loading";
-import EssaySkeleton from "~/components/skeleton/essayList"
+import EssaySkeleton from "~/components/skeleton/essayList";
 export default {
   components: {
     EssayInner,
@@ -47,7 +42,6 @@ export default {
         this.noResult = false;
       }
       this.loadingFlag = false;
-      // this.$store.commit("setEssaySortLoading",false)
       var yearList = [];
       var tempArr = [];
       list.forEach(element => {
@@ -82,10 +76,6 @@ export default {
     essayList() {
       return this.setTimeline();
     }
-    // loadingFlag(){
-    //   const state = this.$store.state.essaySortLoading
-    //   return state;
-    // }
   },
   mounted() {},
   created() {
@@ -108,15 +98,6 @@ export default {
   }
   .loading-wrap {
     margin-left: 10px;
-  }
-  .timeLine-loading {
-    height: 100%;
-    width: 100%;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    position: absolute;
-    z-index: 99;
   }
 }
 .timeline-wrap {

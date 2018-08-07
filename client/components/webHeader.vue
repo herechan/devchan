@@ -202,7 +202,10 @@ export default {
   methods: {
     go: function(item) {
       this.$router.push({
-        path:`/${item.pathName}`
+        path:`/${item.pathName}`,
+        // query:{
+        //   page:0
+        // }
       })
       
     },

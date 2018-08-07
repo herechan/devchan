@@ -1,7 +1,11 @@
 <template>
   <div class="container">
-    <FilterCard class="filter-card"/>
+    <FilterCard class="filter-card" />
     <nuxt-child/>
+    <div class="page-box" v-if="$store.state.essayPageSize > 9">
+      <el-pagination @current-change="pageChange" :current-page="$store.state.essayCurrentPage" :page-size="9" layout="prev, pager, next" :total="$store.state.essayPageSize">
+      </el-pagination>
+    </div>
   </div>
 </template>
 <script>
@@ -11,15 +15,32 @@ export default {
   components: {
     FilterCard
   },
-  
-  methods:{
+  methods: {
+    pageChange(number) {
+      this.$store.commit("setEssayCurrentPage",number);
+      this.$store.commit("setEssaySortLoading",true);
+      var type = this.$route.query.type
+        ? this.$route.query.type
+        : "";
+      this.$router.push({
+        path: "essayIndex",
+        query: {
+          type: type,
+          page: number
+        }
+      });
+    }
   },
-  mounted() {
-  },
+  created() {},
   data() {
     return {
       pageNumber: 0
     };
+  },
+  computed:{
+    // pageSize(){
+    //   return this.$store.state.
+    // }
   }
 };
 </script>
@@ -29,8 +50,11 @@ export default {
   /deep/ .filter-inner {
     min-height: 46px;
   }
-  
+  /deep/ .el-pagination button {
+    background-color: $bgColor;
+  }
 }
+
 @media screen and(max-width: 768px) {
   .container {
     padding-left: 20px;

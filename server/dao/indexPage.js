@@ -62,25 +62,29 @@ exports.queryArticleDetail = async (ctx, next) => {
 }
 
 exports.queryArticleList = async (ctx, next) => {
-    return new Promise((resolved, rejected) => {
-        var pageNumber = Number(ctx.request.body.pageNumber);
+    return new Promise(async (resolved, rejected) => {
+        var pageNumber = Number(ctx.request.body.pageNumber) - 1;
         var essaySortList = ctx.request.body.essaySortList;
         var essaySortExpre = {};
-        if(essaySortList.length > 0){
+        if (essaySortList.length > 0) {
             essaySortExpre = {
-                tags:{
-                    $all:essaySortList
+                tags: {
+                    $all: essaySortList
                 }
             }
         }
-        if (!pageNumber && pageNumber != 0) {
+        if (!pageNumber && pageNumber < 0) {
             resolved({
                 status: 404,
                 msg: "faild!",
                 result: ""
             })
         }
-        ArticleModel.find(essaySortExpre).limit(10).skip(pageNumber * 10).sort({
+
+
+        var resultLength = await getResultLength(essaySortExpre)
+
+        ArticleModel.find(essaySortExpre).limit(9).skip(pageNumber * 9).sort({
             time: -1
         }).exec((err, doc) => {
             if (err) ctx.throw("findUser error:" + err);
@@ -91,7 +95,8 @@ exports.queryArticleList = async (ctx, next) => {
                 resolved({
                     status: 1,
                     msg: "success!",
-                    result: r
+                    result: r,
+                    length:resultLength
                 })
             } else {
                 resolved({
@@ -123,6 +128,23 @@ exports.queryRecentArticle = async (ctx, next) => {
                 resolved({
                     status: 0,
                     msg: "no data!",
+                    result: ""
+                });
+            }
+        })
+    })
+}
+
+function getResultLength(expression) {
+    return new Promise((resolved, rejected) => {
+        ArticleModel.find(expression).exec((err, doc) => {
+            if (err) ctx.throw("findUser error:" + err);
+            if (doc.length > 0) {
+                resolved(doc.length)
+            } else {
+                resolved({
+                    status: 1,
+                    msg: "success! but no result",
                     result: ""
                 });
             }

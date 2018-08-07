@@ -64,13 +64,18 @@
           <div class="aside-box">
             <p class="aside-title">近期文章</p>
             <div class="recent-article">
-              <div class="recent-article-item" v-for="(item, index) in recentArticle" :key="index">
+              <div class="recent-article-item" v-for="(item, index) in recentArticle" :key="index" v-if="recentArticle.length > 0">
                 <a class="recent-article-cover" @click="goDetail(item._id)" :style="'background-image: url('+staticUrl+item.miniImagePath+');'"></a>
                 <div class="recent-article-info">
-                  <a  class="recent-article-tag elli">{{item.tags.join(" / ")}}</a>
-                  <a  class="recent-article-title" @click="goDetail(item._id)" :title="item.title">{{item.title}}</a>
+                  <a class="recent-article-tag elli">{{item.tags.join(" / ")}}</a>
+                  <a class="recent-article-title" @click="goDetail(item._id)" :title="item.title">{{item.title}}</a>
                   <p class="recent-article-time">{{item.time}}</p>
                 </div>
+              </div>
+              
+              <div class="recent-skeleton-wrap" v-if="recentArticle.length == 0">
+                
+                <RecentSkeleton v-for="(item, index) in 3" :key="index"></RecentSkeleton>
               </div>
             </div>
           </div>
@@ -178,11 +183,13 @@ import WebHeader from "~/components/webHeader.vue";
 import WebFooter from "~/components/webFooter.vue";
 import HomeBody from "~/pages/index/index.vue";
 import axios from "~/plugins/axios";
+import RecentSkeleton from "~/components/skeleton/recentArticle";
 export default {
   components: {
     WebHeader,
     WebFooter,
-    HomeBody
+    HomeBody,
+    RecentSkeleton
   },
   mounted() {
     this.document = document;
@@ -252,7 +259,7 @@ main {
     opacity: 0.4;
     z-index: 99;
   }
-  .timeline-col .timeline-wrap{
+  .timeline-col .timeline-wrap {
     min-height: 100vh;
   }
   .user-banner-col {
@@ -432,7 +439,7 @@ main {
     .recent-article-item {
       height: 102px;
       padding: 10px 0;
-      a{
+      a {
         cursor: pointer;
       }
       &:hover {
@@ -498,7 +505,7 @@ main {
   main .user-banner-col-active {
     top: -81px;
   }
-  main .timeline-col{
+  main .timeline-col {
     // min-height: auto;
   }
 }

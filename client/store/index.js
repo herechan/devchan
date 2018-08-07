@@ -16,6 +16,8 @@ export default () => {
             essayList:[],
             essaySort:[],
             essaySortLoading:true,
+            essayPageSize:0,
+            essayCurrentPage:1
         },
         getters,
         mutations,

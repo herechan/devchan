@@ -1,21 +1,17 @@
 <template>
-    <div class="essay-skeleton" ref="wrap">
-        <!-- <div class="essay-skeleton-timeline">
+  <div class="essay-skeleton" ref="wrap">
+    <!-- <div class="essay-skeleton-timeline">
         </div> -->
-        <div class="essay-skeleton-inner">
-            <div class="skeleton-item" v-for="(item, index) in timeline" :key="index" :ref="'time'" v-if="state(index)">
-                <div class="skeletion-time"></div>
-                <div class="skeleton-line" v-for="(timeItem, timeIndex) in item.number" :key="timeIndex"></div>
-            </div>
-        </div>
+    <div class="essay-skeleton-inner">
+      <div class="skeleton-item" v-for="(item, index) in timeline" :key="index" :ref="'time'" v-if="state()">
+        <div class="skeletion-time"></div>
+        <div class="skeleton-line" v-for="(timeItem, timeIndex) in item.number" :key="timeIndex"></div>
+      </div>
     </div>
+  </div>
 </template>
 <style lang="scss" scoped>
 .essay-skeleton {
-  // padding: $cardPadding;
-  // @include cardBorder;
-  // background-color: $cardBg;
-  // margin-left: -30px;
   height: calc(100vh - 320px);
   position: relative;
   .essay-skeleton-timeline {
@@ -28,7 +24,6 @@
     background-color: $page404;
   }
   .essay-skeleton-inner {
-    // padding-left: 30px;
     padding-right: 20px;
     .skeletion-time {
       height: 40px;
@@ -43,6 +38,9 @@
       margin-top: 20px;
       margin-bottom: 20px;
     }
+    .skeleton-item {
+      // visibility: hidden;
+    }
   }
 }
 @media screen and (max-width: 750px) {
@@ -54,10 +52,12 @@
 <script>
 export default {
   mounted() {
-    var wrap = document.querySelector(".essay-skeleton");
+    window.onresize = () => {
+      this.initElement();
+    };
   },
-  computed: {
-  },
+  created() {},
+  computed: {},
   data() {
     return {
       timeline: [
@@ -65,28 +65,36 @@ export default {
           number: 2
         },
         {
-          number: 3
-        },
-        {
-          number: 3
-        },
-        {
           number: 2
-        }
+        },
+        // {
+        //   number: 3
+        // },
+        // {
+        //   number: 2
+        // }
       ]
     };
   },
   methods: {
-    state(index) {
-        this.$nextTick(()=>{
-            var cur = this.$refs.time[index];
-            console.log(cur.offsetTop,this.$refs.wrap.offsetHeight)
-            if(cur.offsetTop + cur.offsetHeight>this.$refs.wrap.offsetHeight){
-                
-                cur.style.display = "none"
-            }
-        })
+    state() {
+      this.$nextTick(() => {
+        this.initElement();
+      });
       return true;
+    },
+    initElement() {
+      
+      this.$refs.time.forEach(element => {
+        element.style.visibility = "hidden"
+        if (
+          element.offsetTop + element.offsetHeight <=
+          this.$refs.wrap.offsetHeight
+        ) {
+          
+          element.style.visibility = "visible";
+        }
+      });
     }
   }
 };

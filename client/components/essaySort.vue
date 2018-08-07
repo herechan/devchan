@@ -1,4 +1,3 @@
-
 <template>
   <ul class="filter-inner li-none">
     <li class="filter-skeleton" v-if="typeSkeleton">
@@ -44,6 +43,7 @@ export default {
     },
     async tagTrigger(index, item) {
       this.$store.commit("setEssaySortLoading", true);
+      this.$store.commit("setEssayCurrentPage",1)
       if (!this.tagArr.includes(item.name)) {
         this.tagArr.push(item.name);
       } else {
@@ -54,10 +54,12 @@ export default {
       this.setTypeState("trigger");
       //点击标签的同时，在地址栏加上参数
       if (this.isPage()) {
+        // const page = this.$route.query.page ? this.$route.query.page:1
         this.$router.push({
           path: "essayIndex",
           query: {
-            type: this.activeTagsList.join(",")
+            type: this.activeTagsList.join(","),
+            page:1
           }
         });
       }
@@ -72,12 +74,11 @@ export default {
         //避免两次提交请求
         await this.$store.dispatch("setEassayList", {
           essaySortList: this.activeTagsList,
-          pageNumber: pageNumber ? pageNumber : 0
+          pageNumber: pageNumber ? pageNumber : 1
         });
         setTimeout(() => {
           this.$store.commit("setEssaySortLoading",false)
         }, 500);
-        
       }
     },
     isPage() {
@@ -92,13 +93,14 @@ export default {
           if (element) handledList.push(element);
         });
       }
+      var page = this.$route.query.page ? this.$route.query.page : 1;
       this.$store.commit("setArticleTagsActive", handledList);
+      this.$store.commit("setEssayCurrentPage",page)
     }
   },
   mounted() {
     axios.get(`${process.env.baseUrl}/articleTags`).then(r => {
       if (r.status == 200 && r.data.result.length > 0) {
-
         this.$store.commit("getArticleTags", r.data.result);
         this.typeSkeleton = false;
       }
@@ -108,6 +110,7 @@ export default {
       this.tagArr = this.$route.query.type.split(",");
     }
     //mounted page,first get route parameter and then setTypeState
+    // this.$store.commit("setEssaySortLoading", true);
     this.getRouteParamsFunc();
     this.setTypeState();
   }
@@ -134,7 +137,7 @@ ul {
     height: 28px;
     padding-right: 20px;
     .filter-skeleton-line{
-      height: 22px;
+      height: 15px;
       border-radius: 4px;
       background-color: $page404;
       width: 100%;

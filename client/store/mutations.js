@@ -27,13 +27,16 @@ export default {
     setEssayList(state, list) {
         state.essayList = list;
     },
-    setEssaySort(state,essaySort){
+    setEssaySort(state, essaySort) {
         state.essaySort = essaySort
     },
-    setEssaySortLoading(state,status){
-        console.log(status)
-        // setTimeout(() => {
-            state.essaySortLoading = status
-        // }, 500);
+    setEssaySortLoading(state, status) {
+        state.essaySortLoading = status
+    },
+    setEssayPageSize(state,length){
+        state.essayPageSize = length
+    },
+    setEssayCurrentPage(state,page){
+        state.essayCurrentPage = Number(page)
     }
 }
