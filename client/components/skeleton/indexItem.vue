@@ -4,6 +4,7 @@
         <p class="msg"></p>
         <p class="intro"></p>
         <p class="intro intro-last"></p>
+        <slot name="article"></slot>
         <p class="button"></p>
         <div class="share clearfix">
             <p class="share-btn fr"></p>

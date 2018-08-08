@@ -1,27 +1,27 @@
 <template>
-  <div class="container essay-main-wrap" :class="dataReady?'':'filter-blur'">
-    <essayItem :essayItem="essayObj" :isIndex="false" />
+  <div class="container essay-main-wrap">
+    <div class="essay-main-inner" :class="dataReady?'':'filter-blur'" v-if="!isInit">
+      <essayItem :essayItem="essayObj" :isIndex="false" />
+    </div>
+    <essaySkeleton v-else></essaySkeleton>
   </div>
 </template>
 <script>
 import axios from "~/plugins/axios";
 import essayItem from "~/components/essayItem";
+import essaySkeleton from "~/components/skeleton/essayBody";
 export default {
   data() {
     return {
-      dataReady: false
+      dataReady: false,
+      isInit:true
     };
   },
   watch: {
     $route(to, from) {
       this.dataReady = false;
-        this.renderEassyBody();
+      this.renderEassyBody();
     }
-  },
-  beforeRouteLeave(to, from, next) {
-    this.$store.state.essayMessage = "";
-    this.dataReady = false;
-    next();
   },
   computed: {
     essayObj() {
@@ -29,8 +29,12 @@ export default {
       return obj ? obj : new Object();
     }
   },
+  updated() {
+    
+  },
   components: {
-    essayItem
+    essayItem,
+    essaySkeleton
   },
   scrollToTop: true,
   mounted() {
@@ -45,10 +49,10 @@ export default {
           id: id
         })
         .then(r => {
+          this.isInit = false;
           setTimeout(() => {
             this.dataReady = true;
           }, 300);
-          
         });
     }
   }
@@ -65,10 +69,9 @@ export default {
   height: 100%;
   width: 100%;
 }
-.essay-main-wrap {
+.essay-main-inner {
   width: 100%;
   position: relative;
   transition: all 0.3s;
 }
-
 </style>

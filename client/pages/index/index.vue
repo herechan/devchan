@@ -12,7 +12,7 @@
         <!-- <Weibo/> -->
       </li>
     </ul>
-    <Loading v-if="!loadingFlag"></Loading>
+    <Loading v-if="loadingFlag"></Loading>
   </div>
 </template>
 <script>
@@ -31,11 +31,9 @@ export default {
   data() {
     return {
       mainList: [],
-      loadingFlag: true,
+      loadingFlag: false,
       page: 1,
-      isEnd: false,
-      isLoading:true,
-      totalLength:0
+      totalLength: 0
     };
   },
   methods: {
@@ -50,11 +48,6 @@ export default {
           this.mainList = this.mainList.concat(r.data.result.articleList);
           this.totalLength = r.data.result.articleLength;
           this.loadingFlag = false;
-          // if(r.data.result < 9){
-          //   this.isLoading = false;
-          // }else{
-          //   this.isLoading = true; 
-          // }
         });
     }
   },
@@ -64,17 +57,16 @@ export default {
   updated() {
     const timelineList = document.querySelectorAll(".timeline-item");
     const last = timelineList[timelineList.length - 1];
-    
+
     window.onscroll = () => {
       if (
         document.documentElement.scrollTop + window.innerHeight >=
           last.offsetTop + last.offsetHeight / 2 &&
-        this.isLoading && this.page < Math.ceil(this.totalLength/9)
+        this.page < Math.ceil(this.totalLength / 9)
       ) {
         this.loadingFlag = true;
-        // this.isLoading = false;
         this.page++;
-        this.getMessage()
+        this.getMessage();
       }
     };
   },
