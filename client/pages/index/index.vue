@@ -1,17 +1,18 @@
 <!--首页的timeline-->
 <template>
-  <div class="timeline-wrap">
+  <div class="timeline-wrap" ref="wrap">
     <ul class="li-none">
       <li v-if="mainList.length == 0">
         <skeletonItem v-for="(item, index) in 3" :key="index"></skeletonItem>
       </li>
 
-      <!-- 渲染首页的列表，li为文章的概况或者微博 -->
-      <li v-else class="timeline-item" v-for="(item, index) in mainList" :key="index">
+      <!-- 渲染首页的列表，li为文章的概况或微博 -->
+      <li v-else ref="li" class="timeline-item" v-for="(item, index) in mainList" :key="index">
         <essayItem :essayItem="item" :isIndex="true" />
         <!-- <Weibo/> -->
       </li>
     </ul>
+    <Loading v-if="!loadingFlag"></Loading>
   </div>
 </template>
 <script>
@@ -19,16 +20,22 @@ import Weibo from "~/components/weibo.vue";
 import axios from "~/plugins/axios";
 import essayItem from "~/components/essayItem";
 import skeletonItem from "~/components/skeleton/indexItem";
+import Loading from "~/components/widget/loading";
 export default {
   components: {
     Weibo,
     essayItem,
     skeletonItem,
-    page: 1
+    Loading
   },
   data() {
     return {
-      mainList: []
+      mainList: [],
+      loadingFlag: true,
+      page: 1,
+      isEnd: false,
+      isLoading:true,
+      totalLength:0
     };
   },
   methods: {
@@ -40,16 +47,38 @@ export default {
           }
         })
         .then(r => {
-          this.mainList = r.data.result;
+          this.mainList = this.mainList.concat(r.data.result.articleList);
+          this.totalLength = r.data.result.articleLength;
+          this.loadingFlag = false;
+          // if(r.data.result < 9){
+          //   this.isLoading = false;
+          // }else{
+          //   this.isLoading = true; 
+          // }
         });
     }
   },
   mounted() {
     this.getMessage();
   },
-  created() {
+  updated() {
+    const timelineList = document.querySelectorAll(".timeline-item");
+    const last = timelineList[timelineList.length - 1];
     
-  }
+    window.onscroll = () => {
+      if (
+        document.documentElement.scrollTop + window.innerHeight >=
+          last.offsetTop + last.offsetHeight / 2 &&
+        this.isLoading && this.page < Math.ceil(this.totalLength/9)
+      ) {
+        this.loadingFlag = true;
+        // this.isLoading = false;
+        this.page++;
+        this.getMessage()
+      }
+    };
+  },
+  created() {}
 };
 </script>
 

@@ -3,8 +3,9 @@ var ArticleTagsModel = require("../model/articleTags")
 var ArticleModel = require("../model/article");
 const util = require("../common/util")
 exports.queryArticleAndTwitter = async (ctx) => {
-    return new Promise((resolved, rejected) => {
+    return new Promise(async (resolved, rejected) => {
         const page = Number(ctx.query.page) - 1;
+        const articleLength = await getResultLength({})
         ArticleModel.find({}).limit(9).skip(page * 9).sort({
             time: -1
         }).exec((err, doc) => {
@@ -16,7 +17,10 @@ exports.queryArticleAndTwitter = async (ctx) => {
                 resolved({
                     status: 1,
                     msg: "success!",
-                    result: r
+                    result: {
+                        articleList:r,
+                        articleLength:articleLength
+                    }
                 })
             } else {
                 resolved({
