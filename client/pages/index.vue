@@ -7,14 +7,15 @@
         <el-col :lg="5" class="user-banner-col" :class="userBanner" @click.stop.native>
           <div class="user-banner">
             <div class="user-info">
-              <img src="~assets/img/user.png" alt="">
+              <div class="user-box skeleton-bg" v-html="userImageObj" ref="userImage">
+              </div>
+
               <p class="username">Chan</p>
               <p class="career">Web Developer</p>
               <p class="user-location">
                 <i class="el-icon-location"></i> Chengdu, China
               </p>
               <div class="follow-btn">FOLLOW</div>
-
             </div>
             <div class="article-info">
               <div class="article-info-item">
@@ -33,11 +34,6 @@
                     <i class="iconfont">&#xe7ab;</i>
                   </a>
                 </li>
-                <!-- <li>
-                  <a href="">
-                    <i class="iconfont">&#xe641;</i>
-                  </a>
-                </li> -->
                 <li>
                   <a href="">
                     <i class="iconfont">&#xe6b6;</i>
@@ -48,11 +44,6 @@
                     <i class="iconfont">&#xe749;</i>
                   </a>
                 </li>
-                <!-- <li>
-                  <a href="">
-                    <i class="iconfont">&#xe719;</i>
-                  </a>
-                </li> -->
               </ul>
             </div>
           </div>
@@ -193,7 +184,8 @@ export default {
   mounted() {
     this.document = document;
     this.getPostLength();
-    this.getTags()
+    this.getTags();
+    this.getLargeUser();
   },
   created() {
     this.staticUrl = process.env.staticUrl;
@@ -225,15 +217,22 @@ export default {
       document: "",
       recentArticle: [],
       staticUrl: "",
-      postLength: 0
+      postLength: 0,
+      userImageObj: ""
     };
   },
   methods: {
+    getLargeUser() {
+      var image = new Image();
+      image.src = "/img-static/user.png";
+      image.onload = () => {
+        this.$refs.userImage.appendChild(image);
+      };
+    },
     getTags() {
       axios.get(`${process.env.baseUrl}/articleTags`).then(r => {
         if (r.status == 200 && r.data.result.length > 0) {
           this.$store.commit("getArticleTags", r.data.result);
-          // this.typeSkeleton = false;
         }
       });
     },
@@ -263,6 +262,9 @@ export default {
 </script>
 
 <style lang="scss" scope>
+.skeleton-bg {
+  background-color: $page404;
+}
 main {
   max-width: 1360px;
   margin: auto;
@@ -287,11 +289,16 @@ main {
       @include cardBorder;
       .user-info {
         padding: 20px;
-        img {
-          display: block;
-          max-width: 135px;
+        .user-box {
+          height: 135px;
+          width: 135px;
           margin: auto;
           border-radius: 50%;
+          overflow: hidden;
+          img {
+            height: 100%;
+            border-radius: 50%;
+          }
         }
         p {
           text-align: center;

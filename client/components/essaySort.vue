@@ -15,7 +15,7 @@ export default {
   data() {
     return {
       tagArr: [],
-      activeTagsList: [],
+      activeTagsList: []
     };
   },
   watch: {
@@ -98,6 +98,15 @@ export default {
     }
   },
   mounted() {
+    if (!this.isPage()) {
+      axios.get(`${process.env.baseUrl}/articleTags`).then(r => {
+        if (r.status == 200 && r.data.result.length > 0) {
+          this.$store.commit("getArticleTags", r.data.result);
+          this.$store.state.articleTags;
+        }
+      });
+    }
+
     if (this.$route.query.type) {
       this.tagArr = this.$route.query.type.split(",");
     }

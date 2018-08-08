@@ -5,8 +5,8 @@
         <el-row>
           <el-col :span="14">
             <div class="header-left">
-              <div class="logo">
-                <img src="~assets/img/logo.png" alt="">
+              <div class="logo" ref="logo">
+                <!-- <img src="~assets/img/logo.png" alt=""> -->
               </div>
               <span class="logo-name">Chan</span>
               <div class="header-nav hidden-sm-and-down">
@@ -20,8 +20,8 @@
                 <i slot="suffix" class="el-input__icon el-icon-search"></i>
               </el-input>
               <div class="user-mini hidden-lg-and-up" @click.stop="triggerUserHeader ">
-                <div class="user-mini-portrait">
-                  <img src="~assets/img/user.png" alt="">
+                <div class="user-mini-portrait" ref="userMiniImage">
+                  <!-- <img src="~assets/img/user.png" alt=""> -->
                 </div>
                 <i class="el-icon-caret-bottom"></i>
               </div>
@@ -78,7 +78,7 @@ header {
         width: 44px;
         overflow: hidden;
         border-radius: 50%;
-
+        background-color: $page404;
         img {
           width: 100%;
         }
@@ -119,9 +119,10 @@ header {
           width: 40px;
           overflow: hidden;
           border-radius: 50%;
-
+          background-color: $page404;
           img {
             width: 100%;
+            height: 100%;
           }
         }
         .el-icon-caret-bottom {
@@ -176,7 +177,10 @@ header {
 </style>
 <script>
 export default {
-  mounted() {},
+  mounted() {
+    this.getMiniImage()
+    this.getLogoImage()
+  },
   data() {
     return {
       navList: [
@@ -186,7 +190,7 @@ export default {
         },
         {
           name: "文章",
-          pathName: "essayIndex",
+          pathName: "essayIndex"
         },
         {
           name: "推文",
@@ -202,12 +206,8 @@ export default {
   methods: {
     go: function(item) {
       this.$router.push({
-        path:`/${item.pathName}`,
-        // query:{
-        //   page:0
-        // }
-      })
-      
+        path: `/${item.pathName}`
+      });
     },
     triggerUserHeader() {
       var userHeaderState = this.$store.state.userBannerClass;
@@ -216,6 +216,25 @@ export default {
       } else {
         this.$store.commit("setUserBannerClass");
       }
+    },
+    getMiniImage() {
+      var image = new Image();
+      image.src = "/img-static/user.png";
+      image.height = 40
+      image.width = 40
+      image.onload = () => {
+        this.$refs.userMiniImage.appendChild(image)
+      };
+    },
+    getLogoImage(){
+      var image = new Image();
+      image.src = "/img-static/logo.png";
+      image.height = 44
+      image.width = 44
+      image.onload = () => {
+        this.$refs.logo.appendChild(image);
+        this.$refs.logo.style.background = "#fff"
+      };
     }
   }
 };
