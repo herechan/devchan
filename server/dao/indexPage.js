@@ -142,6 +142,7 @@ exports.queryRecentArticle = async (ctx, next) => {
 exports.queryIndexPage = async (ctx, next) => {
     return new Promise(async (resolved, rejected) => {
         const postLength = await getResultLength({})//获取文档的数量
+        
         resolved({
             msg: "success!",
             result: {
@@ -169,4 +170,3 @@ function getResultLength(expression) {
         })
     })
 }
-

@@ -1,6 +1,6 @@
 <template>
   <ul class="filter-inner li-none">
-    <li class="filter-skeleton" v-if="typeSkeleton">
+    <li class="filter-skeleton" v-if="$store.state.articleTags.length==0">
       <div class="filter-skeleton-line"></div>
     </li>
     <li v-else @click="tagTrigger(index,item)" :class="{'filter-active':setTypeActive(item)}" class="filter-item" v-for="(item, index) in tags" :key="index">{{item.name}}</li>
@@ -16,7 +16,6 @@ export default {
     return {
       tagArr: [],
       activeTagsList: [],
-      typeSkeleton:true
     };
   },
   watch: {
@@ -43,7 +42,7 @@ export default {
     },
     async tagTrigger(index, item) {
       this.$store.commit("setEssaySortLoading", true);
-      this.$store.commit("setEssayCurrentPage",1)
+      this.$store.commit("setEssayCurrentPage", 1);
       if (!this.tagArr.includes(item.name)) {
         this.tagArr.push(item.name);
       } else {
@@ -59,7 +58,7 @@ export default {
           path: "essayIndex",
           query: {
             type: this.activeTagsList.join(","),
-            page:1
+            page: 1
           }
         });
       }
@@ -77,7 +76,7 @@ export default {
           pageNumber: pageNumber ? pageNumber : 1
         });
         setTimeout(() => {
-          this.$store.commit("setEssaySortLoading",false)
+          this.$store.commit("setEssaySortLoading", false);
         }, 500);
       }
     },
@@ -95,22 +94,14 @@ export default {
       }
       var page = this.$route.query.page ? this.$route.query.page : 1;
       this.$store.commit("setArticleTagsActive", handledList);
-      this.$store.commit("setEssayCurrentPage",page)
+      this.$store.commit("setEssayCurrentPage", page);
     }
   },
   mounted() {
-    axios.get(`${process.env.baseUrl}/articleTags`).then(r => {
-      if (r.status == 200 && r.data.result.length > 0) {
-        this.$store.commit("getArticleTags", r.data.result);
-        this.typeSkeleton = false;
-      }
-    });
-
     if (this.$route.query.type) {
       this.tagArr = this.$route.query.type.split(",");
     }
     //mounted page,first get route parameter and then setTypeState
-    // this.$store.commit("setEssaySortLoading", true);
     this.getRouteParamsFunc();
     this.setTypeState();
   }
@@ -129,14 +120,14 @@ ul {
   padding-bottom: 8px;
   width: calc(100% + 26px);
   flex-wrap: wrap;
-  .filter-skeleton{
+  .filter-skeleton {
     height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
     height: 28px;
     padding-right: 20px;
-    .filter-skeleton-line{
+    .filter-skeleton-line {
       height: 15px;
       border-radius: 4px;
       background-color: $page404;

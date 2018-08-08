@@ -192,7 +192,8 @@ export default {
   },
   mounted() {
     this.document = document;
-    this.getPostLength()
+    this.getPostLength();
+    this.getTags()
   },
   created() {
     this.staticUrl = process.env.staticUrl;
@@ -228,6 +229,14 @@ export default {
     };
   },
   methods: {
+    getTags() {
+      axios.get(`${process.env.baseUrl}/articleTags`).then(r => {
+        if (r.status == 200 && r.data.result.length > 0) {
+          this.$store.commit("getArticleTags", r.data.result);
+          // this.typeSkeleton = false;
+        }
+      });
+    },
     removeShadow() {
       if (this.$store.state.userBannerClass) {
         this.$store.commit("removeUserBannerClass");
