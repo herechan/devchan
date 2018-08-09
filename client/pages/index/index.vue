@@ -49,6 +49,15 @@ export default {
           this.totalLength = r.data.result.articleLength;
           this.loadingFlag = false;
         });
+    },
+    scrollLoad(action, wait = 50) {
+      var time = Date.now();
+      return () => {
+        if (time + wait - Date.now() < 0) {
+          action();
+          time = Date.now();
+        }
+      };
     }
   },
   mounted() {
@@ -57,18 +66,18 @@ export default {
   updated() {
     const timelineList = document.querySelectorAll(".timeline-item");
     const last = timelineList[timelineList.length - 1];
-
-    window.onscroll = () => {
+    var self = this;
+    window.onscroll = this.scrollLoad(() => {
       if (
         document.documentElement.scrollTop + window.innerHeight >=
           last.offsetTop + last.offsetHeight / 2 &&
-        this.page < Math.ceil(this.totalLength / 9)
+        self.page < Math.ceil(self.totalLength / 9)
       ) {
         this.loadingFlag = true;
-        this.page++;
-        this.getMessage();
+        self.page++;
+        self.getMessage();
       }
-    };
+    });
   },
   created() {}
 };

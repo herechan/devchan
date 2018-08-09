@@ -101,6 +101,10 @@ li{
 .md-wrap /deep/  pre,
 .md-wrap  /deep/ pre {
   background-color: rgba(27, 31, 35, 0.05)!important;
+  margin: 25px 0;
+}
+.md-wrap /deep/  p{
+  margin: 15px 0 20px 0;
 }
 .md-wrap /deep/ .v-show-content {
   background-color: #fff;

@@ -9,7 +9,6 @@
             <div class="user-info">
               <div class="user-box skeleton-bg" v-html="userImageObj" ref="userImage">
               </div>
-
               <p class="username">Chan</p>
               <p class="career">Web Developer</p>
               <p class="user-location">
@@ -530,14 +529,10 @@ main {
   main .user-banner-col-active {
     top: -81px;
   }
-  main .timeline-col {
-    // min-height: auto;
-  }
 }
 
 @media screen and (max-width: 1200px) {
   .user-banner-col {
-    // display: none;
     height: 0;
     width: 0;
     overflow: hidden;
