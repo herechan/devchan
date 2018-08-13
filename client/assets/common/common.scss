@@ -17,6 +17,7 @@ $asideDevider:#eee;
 $red:#F44336;
 $yellow:#fdd835;
 $green:#67C23A;
+$searchBg:#F7F7F7;
 $page404:#EAE9E8;
 @mixin cardBorder {
     border: 1px solid #eceff2;
@@ -32,11 +33,11 @@ $page404:#EAE9E8;
   }
   @font-face {
     font-family: 'iconfont';  /* project id 705325 */
-    src: url('//at.alicdn.com/t/font_705325_fe4q1qpaf9r.eot');
-    src: url('//at.alicdn.com/t/font_705325_fe4q1qpaf9r.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_705325_fe4q1qpaf9r.woff') format('woff'),
-    url('//at.alicdn.com/t/font_705325_fe4q1qpaf9r.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_705325_fe4q1qpaf9r.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_705325_nnhyywkuxl.eot');
+    src: url('//at.alicdn.com/t/font_705325_nnhyywkuxl.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_705325_nnhyywkuxl.woff') format('woff'),
+    url('//at.alicdn.com/t/font_705325_nnhyywkuxl.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_705325_nnhyywkuxl.svg#iconfont') format('svg');
   }
   .iconfont {
     font-family: "iconfont" !important;

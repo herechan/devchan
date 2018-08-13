@@ -58,7 +58,6 @@ export default {
           }
           this.mainList = this.mainList.concat(r.data.result.articleList);
           this.totalLength = r.data.result.articleLength;
-          console.log(r.data.result)
           if (r.data.result.articleList.length < 9) this.loadMoreFlag = false;
           this.loadingFlag = false;
         });
@@ -68,35 +67,11 @@ export default {
       this.loadingFlag = true;
       this.getMessage();
     }
-    // scrollLoad(action, wait = 50) {
-    //   var time = Date.now();
-    //   return () => {
-    //     if (time + wait - Date.now() < 0) {
-    //       action();
-    //       time = Date.now();
-    //     }
-    //   };
-    // }
   },
   mounted() {
     this.getMessage();
   },
-  updated() {
-    // const timelineList = document.querySelectorAll(".timeline-item");
-    // const last = timelineList[timelineList.length - 1];
-    // var self = this;
-    // window.onscroll = this.scrollLoad(() => {
-    //   if (
-    //     document.documentElement.scrollTop + window.innerHeight >=
-    //       last.offsetTop + last.offsetHeight / 2 &&
-    //     self.page < Math.ceil(self.totalLength / 9)
-    //   ) {
-    //     this.loadingFlag = true;
-    //     self.page++;
-    //     self.getMessage();
-    //   }
-    // });
-  },
+  updated() {},
   created() {}
 };
 </script>

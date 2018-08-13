@@ -16,7 +16,7 @@
           </el-col>
           <el-col :span="10">
             <div class="header-right">
-              <el-input placeholder="Search" class="header-search hidden-xs-only">
+              <el-input placeholder="Search" :readonly="true" @click.native="showSearchModal" class="header-search hidden-xs-only">
                 <i slot="suffix" class="el-input__icon el-icon-search"></i>
               </el-input>
               <div class="user-mini hidden-lg-and-up" @click.stop="triggerUserHeader ">
@@ -39,14 +39,50 @@
             <i slot="suffix" class="el-input__icon el-icon-search"></i>
           </el-input>
         </div>
-
       </div>
     </header>
+    <el-dialog title="" :visible.sync="searchModal" width="30%" :lock-scroll="true" @open="searchModalOpen" @close="searchModalClose">
+      <div class="search-content">
+        <el-input :autofocus="true" class="search-input" v-model="searchText" placeholder="请输入搜索内容"></el-input>
+        <div class="search-inner">
+          <p class="search-item search-item-title">文章</p>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <style lang="scss" scoped>
+#container {
+  /deep/ .el-dialog__header{
+    padding-bottom: auto;
+  }
+  /deep/ .search-content {
+    input {
+      border: none;
+      font-size: 16px;
+      border-bottom: 1px solid #ccc;
+      border-radius: 0;
+      padding: 0 20px;
+    }
+  }
+
+  /deep/ .el-dialog__body {
+    padding: 0;
+  }
+  .search-inner{
+    background: $searchBg;
+    .search-item{
+      padding: 0 20px;
+
+    }
+    .search-item-title{
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+  }
+}
+
 header {
-  // box-shadow: 0 2px 3px -1px rgba(0, 0, 0, .06);
   position: relative;
   z-index: 100;
   box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2);
@@ -103,12 +139,12 @@ header {
         border-radius: 25px;
       }
       .user-mini {
-        .iconfont{
-          transition:all .3s;
+        .iconfont {
+          transition: all 0.3s;
         }
         &:hover {
           .iconfont {
-            color: $mainColor!important;
+            color: $mainColor !important;
           }
         }
         height: 100%;
@@ -179,10 +215,14 @@ header {
 }
 </style>
 <script>
+// import SearchModal from "~/components/searchModal";
 export default {
   mounted() {
-    this.getMiniImage()
-    this.getLogoImage()
+    this.getMiniImage();
+    this.getLogoImage();
+  },
+  components: {
+    // SearchModal
   },
   data() {
     return {
@@ -203,10 +243,22 @@ export default {
           name: "关于",
           pathName: ""
         }
-      ]
+      ],
+      searchModal: false,
+      searchText: ""
     };
   },
   methods: {
+    searchModalClose() {
+      // document.body.style.overflow = "auto";
+      // this.searchModal = true;
+    },
+    searchModalOpen() {
+      // document.body.style.overflow = "hidden"
+    },
+    showSearchModal() {
+      this.searchModal = true;
+    },
     go: function(item) {
       this.$router.push({
         path: `/${item.pathName}`
@@ -223,20 +275,20 @@ export default {
     getMiniImage() {
       var image = new Image();
       image.src = "/img-static/user.png";
-      image.height = 40
-      image.width = 40
+      image.height = 40;
+      image.width = 40;
       image.onload = () => {
-        this.$refs.userMiniImage.appendChild(image)
+        this.$refs.userMiniImage.appendChild(image);
       };
     },
-    getLogoImage(){
+    getLogoImage() {
       var image = new Image();
       image.src = "/img-static/logo.png";
-      image.height = 44
-      image.width = 44
+      image.height = 44;
+      image.width = 44;
       image.onload = () => {
         this.$refs.logo.appendChild(image);
-        this.$refs.logo.style.background = "#fff"
+        this.$refs.logo.style.background = "#fff";
       };
     }
   }

@@ -166,13 +166,15 @@ import WebHeader from "~/components/webHeader.vue";
 import WebFooter from "~/components/webFooter.vue";
 import HomeBody from "~/pages/index/index.vue";
 import axios from "~/plugins/axios";
+
 import RecentSkeleton from "~/components/skeleton/recentArticle";
 export default {
   components: {
     WebHeader,
     WebFooter,
     HomeBody,
-    RecentSkeleton
+    RecentSkeleton,
+    
   },
   mounted() {
     this.document = document;
