@@ -102,6 +102,7 @@ li{
 .md-wrap  /deep/ pre {
   background-color: rgba(27, 31, 35, 0.05)!important;
   margin: 25px 0;
+  border: 1px solid #ccc;
 }
 .md-wrap /deep/  p{
   margin: 15px 0 20px 0;
