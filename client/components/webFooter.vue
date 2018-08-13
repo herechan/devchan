@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <p>© 2018 Chan</p>
+        <p>Powered by Nuxt © {{new Date().getFullYear()}} Chan</p>
     </footer>
 </template>
 <style lang="scss" scoped>

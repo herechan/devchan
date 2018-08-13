@@ -72,19 +72,19 @@
             <p class="aside-title">文章归档</p>
             <ul class="aside-list li-none">
               <li class="elli">
-                <a href="#">
+                <a>
                   <i class="iconfont">&#xe8fa;</i>
                   电影影评 (3)
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a>
                   <i class="iconfont">&#xe8fa;</i>
                   技术文章
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a>
                   <i class="iconfont">&#xe8fa;</i>
                   心灵鸡汤
                 </a>
@@ -94,23 +94,17 @@
           <div class="aside-box">
             <p class="aside-title">个人动态</p>
             <ul class="aside-list li-none">
-              <li class="elli">
-                <a href="#">
+              <li class="elli" v-for="(item, index) in recentActive" :key="index">
+                <a @click="switchRecentActive($event)">
                   <i class="iconfont">&#xe8fa;</i>
-                  2018年6月 (3)
+                  {{item.date.split("-")[0]}}年{{parseInt(item.date.split("-")[1])}}月 ({{item.list.length}})
                 </a>
+                <div class="aside-sub">
+                  <p @click="goDetail(subItem._id)" class="elli" :title="subItem.title" v-for="(subItem, subIndex) in item.list" :key="subIndex">{{subItem.title}}</p>
+                </div>
               </li>
-              <li>
-                <a href="#">
-                  <i class="iconfont">&#xe8fa;</i>
-                  2018年5月 (5)
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="iconfont">&#xe8fa;</i>
-                  2018年2月 (6)
-                </a>
+              <li class="elli" v-if="recentActive.length == 0" v-for="(item, index) in 3" :key="index">
+                <div class="recent-skeleton clearfix"></div>
               </li>
             </ul>
           </div>
@@ -118,19 +112,19 @@
             <p class="aside-title">标签分类</p>
             <ul class="aside-list li-none">
               <li class="elli">
-                <a href="#">
+                <a>
                   <i class="iconfont">&#xe8fa;</i>
                   音乐
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a>
                   <i class="iconfont">&#xe8fa;</i>
                   电影
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a>
                   <i class="iconfont">&#xe8fa;</i>
                   技术
                 </a>
@@ -141,19 +135,19 @@
             <p class="aside-title">链接</p>
             <ul class="aside-list li-none">
               <li class="elli">
-                <a href="#">
+                <a>
                   <!-- <i class="iconfont">&#xe8fa;</i> -->
                   element-ui
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a>
                   <!-- <i class="iconfont">&#xe8fa;</i> -->
                   nuxt
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a>
                   <!-- <i class="iconfont">&#xe8fa;</i> -->
                   Echo Js
                 </a>
@@ -185,6 +179,7 @@ export default {
     this.getPostLength();
     this.getTags();
     this.getLargeUser();
+    this.getRecentActive();
   },
   created() {
     this.staticUrl = process.env.staticUrl;
@@ -217,10 +212,19 @@ export default {
       recentArticle: [],
       staticUrl: "",
       postLength: 0,
-      userImageObj: ""
+      userImageObj: "",
+      recentActive: []
     };
   },
   methods: {
+    switchRecentActive(event) {
+      const ele = event.currentTarget.parentNode;
+      if (ele.className.match("aside-active")) {
+        ele.className = "elli";
+      } else {
+        ele.className += " aside-active ";
+      }
+    },
     getLargeUser() {
       var image = new Image();
       image.src = "/img-static/user.png";
@@ -253,6 +257,14 @@ export default {
         if (r.data.status == 1) {
           const data = r.data.result;
           this.postLength = data.postLength;
+        }
+      });
+    },
+    getRecentActive() {
+      axios.get(`${process.env.baseUrl}/getDateRecentActive`).then(r => {
+        if (r.data.status == 1) {
+          const data = r.data.result;
+          this.recentActive = data;
         }
       });
     }
@@ -311,7 +323,7 @@ main {
         .user-location {
           font-size: 12px;
           margin-top: 2px;
-          .iconfont{
+          .iconfont {
             font-size: 10px;
           }
         }
@@ -439,14 +451,36 @@ main {
           color: $targetColor;
           width: auto;
           margin-bottom: 15px;
+          .recent-skeleton {
+            background-color: $page404;
+            height: 15px;
+            width: 95px;
+            border-radius: 4px;
+          }
+          .aside-sub {
+            padding: 8px 20px 0 35px;
+            height: 0;
+            overflow: hidden;
+            // transition: all 5s;
+            display: none;
+            p {
+              cursor: pointer;
+              transition: 0.2s;
+              margin-bottom: 12px;
+              &:hover {
+                color: $mainColor;
+              }
+            }
+          }
           a {
             font-size: 12px;
             color: $asideColor;
             transition: 0.2s ease;
+            cursor: pointer;
             i {
               font-size: 12px;
               color: $ccc;
-              transition: 0.2s ease;
+              transition: 0.1s ease;
               margin-right: 2px;
               display: inline-block;
             }
@@ -457,6 +491,16 @@ main {
               color: $asideHoverColor;
             }
           }
+        }
+        .aside-active {
+          i {
+            transform: rotate(90deg);
+          }
+          .aside-sub {
+            height: auto;
+            display: block;
+          }
+          margin-bottom: 0;
         }
       }
     }

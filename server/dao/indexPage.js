@@ -18,8 +18,8 @@ exports.queryArticleAndTwitter = async (ctx) => {
                     status: 1,
                     msg: "success!",
                     result: {
-                        articleList:r,
-                        articleLength:articleLength
+                        articleList: r,
+                        articleLength: articleLength
                     }
                 })
             } else {
@@ -142,7 +142,6 @@ exports.queryRecentArticle = async (ctx, next) => {
 exports.queryIndexPage = async (ctx, next) => {
     return new Promise(async (resolved, rejected) => {
         const postLength = await getResultLength({})//获取文档的数量
-        
         resolved({
             msg: "success!",
             result: {
@@ -155,10 +154,61 @@ exports.queryIndexPage = async (ctx, next) => {
 }
 
 
-exports.queryDateRecentActive = async(ctx,next)=>{
+exports.queryDateRecentActive = async (ctx, next) => {
     return new Promise(async (resolved, rejected) => {
-        
-    }
+        var article = ArticleModel.aggregate([
+            {
+                $project: {
+                    title: true,
+                    time: {
+                        $dateToString: {
+                            format: "%Y-%m",
+                            date: "$time"
+                        }
+                    },
+                }
+            }, {
+                $sort: {
+                    time: -1
+                }
+            }
+        ])
+        article.exec((err, doc) => {
+            if (err) ctx.throw("findArticle error:" + err);
+            if (doc) {
+                let dataArr = [];
+                let dataCollection = [];
+                for (let i = 0; i < doc.length; i++) {
+                    const element = doc[i];
+                    if (!dataArr.includes(element.time)) {
+                        if (dataArr.length == 3) {
+                            break;
+                        }
+                        dataArr.push(element.time);
+                    }
+                };
+                for (let i = 0; i < dataArr.length; i++) {
+                    const date = dataArr[i];
+                    var temp = {
+                        date: date,
+                        list: []
+                    }
+                    for (let k = 0; k < doc.length; k++) {
+                        const ele = doc[k];
+                        if (date == ele.time) {
+                            temp.list.push(ele)
+                        }
+                    }
+                    dataCollection.push(temp)
+                }
+                resolved({
+                    msg: "ok",
+                    result: dataCollection,
+                    status: 1
+                })
+            }
+        })
+    })
 }
 
 function getResultLength(expression) {
