@@ -22,5 +22,6 @@ router.get("/api/getArticleTwitterList", page.ARTICLE_AND_TWITTER)
 .post("/api/getArticleList", page.GET_ARTICLE_LIST)
 .get("/api/getRecentArticle", page.GET_RECENT_ARTICLE)
 .post("/api/getIndexPage",page.GET_INDEX_PAGE)
+.get("/api/getDateRecentActive",page.GET_DATE_RECENT_ACTIVE)//获取个人动态日期
 
 module.exports = router;

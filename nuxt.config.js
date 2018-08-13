@@ -37,7 +37,7 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1,user-scalable=no"' },
-      { hid: 'description', name: 'description', content: 'Nuxt.js project' }
+      { hid: 'chan', name: 'chan', content: 'It`s Chan`s personal website' }
     ],
     link: [
       {
@@ -45,7 +45,14 @@ module.exports = {
         type: 'image/x-icon',
         href: '/img-static/logo.png',
       },
-    ]
+      // {
+      //   ref: "stylesheet",
+      //   href: "https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css"
+      // }
+    ],
+    // script: [{
+    //   src: "https://cdn.bootcss.com/element-ui/2.4.0/index.js"
+    // }]
   },
   /*
   ** Customize the progress bar color
@@ -55,6 +62,14 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    // postcss: [
+    //   require('postcss-nested')(),
+    //   require('postcss-responsive-type')(),
+    //   require('postcss-hexrgba')(),
+    //   require('autoprefixer')({
+    //     browsers: ['last 3 versions']
+    //   })
+    // ],
     /*
     ** Run ESLint on save
     */
@@ -67,10 +82,21 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
+      
     },
+    loaders: [{
+      test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+      loader: 'url-loader',
+      query: {
+        limit: 1000, // 1 KO
+        name: 'fonts/[name].[hash:7].[ext]'
+      }
+    }],
     styleResources: {
       scss: './client/assets/common/*.scss',
+      
     },
+    publicPath: "http://pd8g1xewq.bkt.clouddn.com/dist/",
     vendor: [
       "./client/assets/common/common.scss"
     ]
@@ -80,13 +106,15 @@ module.exports = {
     'element-ui/lib/theme-chalk/display.css',
     { src: "~/assets/common/common.scss", lang: "scss" }
   ],
-  plugins: [{
-    src: '@/plugins/element-ui',
-    ssr: true
-  }, {
-    src: "~/plugins/mavon-editor",
-    ssr: false
-  }, {
-    src: "~/plugins/site.config.js",
-  }],
+  plugins: [
+    {
+      src: '@/plugins/element-ui',
+      ssr: true
+    },
+    {
+      src: "~/plugins/mavon-editor",
+      ssr: false
+    }, {
+      src: "~/plugins/site.config.js",
+    }],
 }

@@ -23,7 +23,7 @@
                 <div class="user-mini-portrait" ref="userMiniImage">
                   <!-- <img src="~assets/img/user.png" alt=""> -->
                 </div>
-                <i class="el-icon-caret-bottom"></i>
+                <i style="font-size:20px;color:#ccc" class="iconfont">&#xe600;</i>
               </div>
             </div>
           </el-col>
@@ -103,9 +103,12 @@ header {
         border-radius: 25px;
       }
       .user-mini {
+        .iconfont{
+          transition:all .3s;
+        }
         &:hover {
-          .el-icon-caret-bottom {
-            color: $mainColor;
+          .iconfont {
+            color: $mainColor!important;
           }
         }
         height: 100%;

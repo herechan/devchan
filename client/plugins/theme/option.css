@@ -251,5 +251,3 @@
   .el-select-dropdown__item.selected {
     color: #38b7ea;
     font-weight: bold; }
-  .el-select-dropdown__item span {
-    line-height: 34px !important; }

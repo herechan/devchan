@@ -23,3 +23,8 @@ exports.GET_INDEX_PAGE = async (ctx,next)=>{
     var result = await indexPage.queryIndexPage(ctx, next);
     ctx.body = result;
 }
+
+exports.GET_DATE_RECENT_ACTIVE = async(ctx,next)=>{
+    const result = await indexPage.queryDateRecentActive(ctx,next);
+    ctx.body = result;
+}

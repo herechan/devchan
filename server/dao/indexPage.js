@@ -154,6 +154,13 @@ exports.queryIndexPage = async (ctx, next) => {
     })
 }
 
+
+exports.queryDateRecentActive = async(ctx,next)=>{
+    return new Promise(async (resolved, rejected) => {
+        
+    }
+}
+
 function getResultLength(expression) {
     return new Promise((resolved, rejected) => {
         ArticleModel.find(expression).exec((err, doc) => {

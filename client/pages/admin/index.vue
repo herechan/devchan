@@ -39,7 +39,7 @@
               <p class="card-row-name" @click="showText">cover</p>
               <el-upload :with-credentials="true" :on-remove="removeCover" :limit="1" :on-success="fileUpSuccess" list-type="picture" class="upload-demo" :multiple="false" :action="baseUrl+'/admin/articleCover'">
                 <el-button size="small" type="primary">upload
-                  <i class="el-icon-upload el-icon--right"></i>
+                  <i class="iconfont">&#xe690;</i>
                 </el-button>
               </el-upload>
               <transition name="cover-fade">

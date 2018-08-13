@@ -12,7 +12,7 @@
               <p class="username">Chan</p>
               <p class="career">Web Developer</p>
               <p class="user-location">
-                <i class="el-icon-location"></i> Chengdu, China
+                <i class="iconfont">&#xe615;</i> Chengdu, China
               </p>
               <div class="follow-btn">FOLLOW</div>
             </div>
@@ -73,19 +73,19 @@
             <ul class="aside-list li-none">
               <li class="elli">
                 <a href="#">
-                  <i class="el-icon-caret-right"></i>
+                  <i class="iconfont">&#xe8fa;</i>
                   电影影评 (3)
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <i class="el-icon-caret-right"></i>
+                  <i class="iconfont">&#xe8fa;</i>
                   技术文章
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <i class="el-icon-caret-right"></i>
+                  <i class="iconfont">&#xe8fa;</i>
                   心灵鸡汤
                 </a>
               </li>
@@ -96,19 +96,19 @@
             <ul class="aside-list li-none">
               <li class="elli">
                 <a href="#">
-                  <i class="el-icon-caret-right"></i>
+                  <i class="iconfont">&#xe8fa;</i>
                   2018年6月 (3)
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <i class="el-icon-caret-right"></i>
+                  <i class="iconfont">&#xe8fa;</i>
                   2018年5月 (5)
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <i class="el-icon-caret-right"></i>
+                  <i class="iconfont">&#xe8fa;</i>
                   2018年2月 (6)
                 </a>
               </li>
@@ -119,19 +119,19 @@
             <ul class="aside-list li-none">
               <li class="elli">
                 <a href="#">
-                  <i class="el-icon-caret-right"></i>
+                  <i class="iconfont">&#xe8fa;</i>
                   音乐
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <i class="el-icon-caret-right"></i>
+                  <i class="iconfont">&#xe8fa;</i>
                   电影
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <i class="el-icon-caret-right"></i>
+                  <i class="iconfont">&#xe8fa;</i>
                   技术
                 </a>
               </li>
@@ -142,19 +142,19 @@
             <ul class="aside-list li-none">
               <li class="elli">
                 <a href="#">
-                  <i class="el-icon-caret-right"></i>
+                  <!-- <i class="iconfont">&#xe8fa;</i> -->
                   element-ui
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <i class="el-icon-caret-right"></i>
+                  <!-- <i class="iconfont">&#xe8fa;</i> -->
                   nuxt
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <i class="el-icon-caret-right"></i>
+                  <!-- <i class="iconfont">&#xe8fa;</i> -->
                   Echo Js
                 </a>
               </li>
@@ -311,6 +311,9 @@ main {
         .user-location {
           font-size: 12px;
           margin-top: 2px;
+          .iconfont{
+            font-size: 10px;
+          }
         }
         .follow-btn {
           color: #fff;
@@ -445,6 +448,7 @@ main {
               color: $ccc;
               transition: 0.2s ease;
               margin-right: 2px;
+              display: inline-block;
             }
             &:hover {
               i {
