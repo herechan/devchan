@@ -378,7 +378,7 @@ export default {
         this.searchArticles();
       } else {
         this.$message({
-          message: "这手速好像有点快啊！！！",
+          message: "搜索间隔时间太短，请稍等几秒再试",
           type: "warning"
         });
       }
