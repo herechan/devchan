@@ -211,11 +211,15 @@ exports.queryDateRecentActive = async (ctx, next) => {
     })
 }
 
-exports.searchArticleTags = async (ctx, next) => {
+exports.searchArticle = async (ctx, next) => {
     return new Promise(async (resolved, rejected) => {
         const articleQuery = ctx.request.body.articleQuery;
-        // const tagText = ctx.request.body.tagText;
-        searchArticle(articleQuery)
+        const articleList = await searchArticle(articleQuery);
+        resolved({
+            msg: "ok",
+            result: articleList,
+            status: 1
+        })
     })
 }
 
@@ -225,11 +229,15 @@ function searchArticle(val) {
         ArticleModel.aggregate([
             {
                 $match: {
-                    $or: {
-                        title: valReg,
-                        mdText: valReg,
-                        intro: valReg
-                    }
+                    $or: [
+                        {
+                            title: valReg
+                        }, {
+                            mdText: valReg
+                        }, {
+                            intro: valReg
+                        }
+                    ]
                 }
             }, {
                 $project: {
@@ -239,11 +247,7 @@ function searchArticle(val) {
             }
         ]).exec((err, doc) => {
             if (err) console.log("searchArticle error! " + err);
-            resolved({
-                status: 1,
-                msg: "ok",
-                result: doc
-            })
+            resolved(doc)
         })
     })
 }
