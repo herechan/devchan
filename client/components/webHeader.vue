@@ -16,10 +16,10 @@
           </el-col>
           <el-col :span="10">
             <div class="header-right">
-              <el-input placeholder="Search" :readonly="true" @click.native="showSearchModal" class="header-search hidden-xs-only">
+              <el-input :readonly="true" placeholder="Search" @focus="showSearchModal" class="header-search hidden-xs-only">
                 <i slot="suffix" class="el-input__icon el-icon-search"></i>
               </el-input>
-              <div class="user-mini hidden-lg-and-up" @click.stop="triggerUserHeader ">
+              <div class="user-mini hidden-lg-and-up" @click.stop="triggerUserHeader">
                 <div class="user-mini-portrait" ref="userMiniImage">
                   <!-- <img src="~assets/img/user.png" alt=""> -->
                 </div>
@@ -35,17 +35,30 @@
           <span @click="go(item)" v-for="(item,index) in navList" :key="index">{{item.name}}</span>
         </div>
         <div class="header-coll-input">
-          <el-input placeholder="Search" class="header-coll-search fr">
+          <el-input placeholder="Search" class="header-coll-search fr" :readonly="true" @focus="showSearchModal">
             <i slot="suffix" class="el-input__icon el-icon-search"></i>
           </el-input>
         </div>
       </div>
     </header>
-    <el-dialog title="" :visible.sync="searchModal" width="30%" :lock-scroll="true" @open="searchModalOpen" @close="searchModalClose">
+    <el-dialog title="" :visible.sync="searchModal" width="30%" :show-close="false" :lock-scroll="false" @open="searchModalOpen" @close="searchModalClose">
       <div class="search-content">
-        <el-input :autofocus="true" class="search-input" v-model="searchText" placeholder="请输入搜索内容"></el-input>
+        <div class="search-header">
+          <el-input :autofocus="true" class="search-input" v-model="searchText" placeholder="请输入搜索内容"></el-input>
+          <i class="el-icon-circle-close" @click="searchModal = false"></i>
+        </div>
         <div class="search-inner">
-          <p class="search-item search-item-title">文章</p>
+          <div class="search-panel">
+            <p class="search-item search-item-title">文章</p>
+            <ul class="search-result li-none">
+              <li>
+                <p>
+                  <i class="el-icon-document"></i>
+                  <span class="search-text">文章title文章title文章title</span>
+                </p>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </el-dialog>
@@ -53,31 +66,77 @@
 </template>
 <style lang="scss" scoped>
 #container {
-  /deep/ .el-dialog__header{
-    padding-bottom: auto;
+  /deep/ .el-dialog {
+    min-width: 320px;
+  }
+  /deep/ .el-dialog__header {
+    display: none;
   }
   /deep/ .search-content {
     input {
       border: none;
       font-size: 16px;
-      border-bottom: 1px solid #ccc;
       border-radius: 0;
       padding: 0 20px;
+      padding-right: 45px;
+    }
+  }
+  .search-header {
+    .search-input /deep/ input {
+      font-size: 15px;
+    }
+    .search-text {
+      font-size: 15px;
+    }
+    padding: 5px 0;
+    position: relative;
+    border-bottom: 1px solid #ccc;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    .el-icon-circle-close {
+      position: absolute;
+      right: 14px;
+      top: 15px;
+      font-size: 18px;
+      cursor: pointer;
     }
   }
 
   /deep/ .el-dialog__body {
     padding: 0;
   }
-  .search-inner{
-    background: $searchBg;
-    .search-item{
-      padding: 0 20px;
-
+  .search-inner {
+    .search-result {
+      padding-left: 0;
+      li {
+        padding: 8px 20px;
+        cursor: pointer;
+        &:hover {
+          background-color: $mainColor;
+          i {
+            color: #fff;
+          }
+          .search-text {
+            color: #fff;
+          }
+        }
+        i {
+          font-size: 16px;
+          margin-right: 8px;
+        }
+      }
     }
-    .search-item-title{
-      padding-top: 5px;
-      padding-bottom: 5px;
+    background: $searchBg;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    .search-item {
+      padding: 0 20px;
+      border-bottom: 1px solid #ccc;
+    }
+    .search-item-title {
+      padding-top: 6px;
+      padding-bottom: 6px;
+      font-size: 15px;
     }
   }
 }

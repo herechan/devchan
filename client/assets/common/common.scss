@@ -25,11 +25,11 @@ $page404:#EAE9E8;
     box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2);
   }
   body {
-    // font-size: 14]
     color: #565a5f;
     min-height: 100vh;
     background-color: $bgColor;
     font-size: 14px;
+    padding-right: 0!important;
   }
   @font-face {
     font-family: 'iconfont';  /* project id 705325 */
