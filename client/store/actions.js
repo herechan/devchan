@@ -51,5 +51,13 @@ export default {
             }
         });
         return list;
+    },
+    async setRecentArticles({ commit }) {
+        axios.get(`${process.env.baseUrl}/getRecentArticle`).then(r => {
+            if (r.data.status == 1) {
+                const data = r.data.result;
+                commit("setRecentArticles", data)
+            }
+        });
     }
 }

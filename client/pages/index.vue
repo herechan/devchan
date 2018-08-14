@@ -54,7 +54,7 @@
           <div class="aside-box">
             <p class="aside-title">近期文章</p>
             <div class="recent-article">
-              <div class="recent-article-item" v-for="(item, index) in recentArticle" :key="index" v-if="recentArticle.length > 0">
+              <div class="recent-article-item" v-for="(item, index) in $store.state.recentArticles" :key="index" v-if="$store.state.recentArticles.length > 0">
                 <a class="recent-article-cover" @click="goDetail(item._id)" :style="'background-image: url('+staticUrl+item.miniImagePath+');'"></a>
                 <div class="recent-article-info">
                   <a class="recent-article-tag elli">{{item.tags.join(" / ")}}</a>
@@ -63,7 +63,7 @@
                 </div>
               </div>
 
-              <div class="recent-skeleton-wrap" v-if="recentArticle.length == 0">
+              <div class="recent-skeleton-wrap" v-if="$store.state.recentArticles.length == 0">
                 <RecentSkeleton v-for="(item, index) in 3" :key="index"></RecentSkeleton>
               </div>
             </div>
@@ -173,8 +173,7 @@ export default {
     WebHeader,
     WebFooter,
     HomeBody,
-    RecentSkeleton,
-    
+    RecentSkeleton
   },
   mounted() {
     this.document = document;
@@ -182,15 +181,10 @@ export default {
     this.getTags();
     this.getLargeUser();
     this.getRecentActive();
+    this.$store.dispatch("setRecentArticles");
   },
   created() {
     this.staticUrl = process.env.staticUrl;
-    axios.get(`${process.env.baseUrl}/getRecentArticle`).then(r => {
-      if (r.data.status == 1) {
-        var data = r.data.result;
-        this.recentArticle = r.data.result;
-      }
-    });
   },
   computed: {
     userBanner() {

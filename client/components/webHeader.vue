@@ -44,34 +44,26 @@
     <el-dialog title="" :fullscreen="isFull" :visible.sync="searchModal" width="30%" :show-close="false" :lock-scroll="false" @open="searchModalOpen" @close="searchModalClose">
       <div class="search-content">
         <div class="search-header">
-          <el-input :autofocus="true" class="search-input" v-model="searchText" placeholder="请输入搜索内容"></el-input>
+          <el-input :autofocus="true" @keydown.native.enter="searchTrigger" class="search-input" v-model="searchText" placeholder="键入Enter进行搜索"></el-input>
           <i class="el-icon-circle-close" @click="searchModal = false"></i>
         </div>
         <div class="search-inner">
           <div class="search-panel">
-
             <p class="search-item search-item-title">文章</p>
-            <Loading v-if="searchArticleList.length == 0" />
-            <ul class="search-result li-none" v-else>
-              <li>
+            <Loading v-if="searchArticleListResult.length == 0" />
+            <ul class="search-result li-none search-article-box" v-else>
+              <li v-for="(item, index) in searchArticleListResult" :key="index">
                 <p class="elli">
                   <i class="el-icon-document"></i>
-                  <span class="search-text">文章title文章title文章title文章title文章title文章title文章title文章title文章title</span>
+                  <span class="search-text">{{item.title}}</span>
                 </p>
-                <p class="search-item-sub elli">subsubsubsub</p>
-              </li>
-              <li>
-                <p class="elli">
-                  <i class="el-icon-document"></i>
-                  <span class="search-text">文章title文章title文章title文章title文章title文章title文章title文章title文章title</span>
-                </p>
-                <p class="search-item-sub elli">subsubsubsub</p>
+                <p class="search-item-sub elli">{{item.intro}}</p>
               </li>
             </ul>
           </div>
           <div class="search-panel">
             <p class="search-item search-item-title">标签</p>
-            <Loading v-if="searchTagList.length == 0" />
+            <!-- <Loading v-if="searchTagList.length == 0" />
             <ul class="search-result li-none" v-else>
               <li>
                 <p class="elli">
@@ -87,7 +79,7 @@
                 </p>
                 <p class="search-item-sub elli">subsubsubsub</p>
               </li>
-            </ul>
+            </ul> -->
           </div>
         </div>
       </div>
@@ -138,6 +130,10 @@
     padding: 0;
   }
   .search-inner {
+    .search-article-box {
+      overflow: auto;
+      height: 295px;
+    }
     .search-result {
       padding-left: 0;
       li {
@@ -169,7 +165,7 @@
         }
       }
     }
-    
+
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     .search-item {
@@ -318,13 +314,29 @@ header {
 </style>
 <script>
 import Loading from "~/components/widget/loading";
+import axios from "~/plugins/axios";
 export default {
   mounted() {
     this.getMiniImage();
     this.getLogoImage();
+    // console.log(document.documentElement.clientWidth < 768)
+    if (document.documentElement.clientWidth < 330) {
+      this.isFull = true;
+    } else {
+      this.isFull = false;
+    }
   },
   components: {
     Loading
+  },
+  computed: {
+    searchArticleListResult() {
+      var list =
+        this.searchArticleList.length > 0
+          ? this.searchArticleList
+          : this.$store.state.recentArticles;
+      return list;
+    }
   },
   data() {
     return {
@@ -350,17 +362,41 @@ export default {
       searchText: "",
       searchArticleList: [],
       searchTagList: [],
-      isFull: false
+      isFull: false,
+      lastSearchTime: ""
     };
   },
+
   methods: {
     searchModalClose() {},
     searchModalOpen() {},
+    searchTrigger() {
+      if (!this.lastSearchTime) {
+        this.lastSearchTime = Date.now();
+        this.searchArticles();
+      } else if (Date.now() - this.lastSearchTime > 3000) {
+        this.searchArticles();
+      } else {
+        this.$message({
+          message: "这手速好像有点快啊！！！",
+          type: "warning"
+        });
+      }
+    },
+    searchArticles() {
+      axios
+        .post(`${process.env.baseUrl}/searchArticle`, {
+          articleQuery: this.searchText
+        })
+        .then(r => {
+          if (r.data.status == 1) {
+            this.lastSearchTime = Date.now();
+            this.searchArticleList = r.data.result;
+          }
+        });
+    },
     showSearchModal() {
       this.searchModal = true;
-      if (document.documentElement.clientWidth < 768) {
-        this.isFull = true;
-      }
     },
     go: function(item) {
       this.$router.push({

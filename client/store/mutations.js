@@ -38,5 +38,8 @@ export default {
     },
     setEssayCurrentPage(state,page){
         state.essayCurrentPage = Number(page)
+    },
+    setRecentArticles(state,list){
+        state.recentArticles = list
     }
 }

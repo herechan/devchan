@@ -122,7 +122,7 @@ exports.queryRecentArticle = async (ctx, next) => {
             if (err) ctx.throw("findUser error:" + err);
             if (doc.length > 0) {
                 var properArr = ["_id", "tags",
-                    , "title", "miniImagePath", "time"]
+                    , "title", "miniImagePath", "time","intro"]
                 var r = util.getProperty(properArr, doc);
                 resolved({
                     status: 1,
@@ -243,6 +243,10 @@ function searchArticle(val) {
                 $project: {
                     intro: 1,
                     title: 1
+                }
+            },{
+                $sort:{
+                    time:-1
                 }
             }
         ]).exec((err, doc) => {
