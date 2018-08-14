@@ -52,10 +52,18 @@
             <p class="search-item search-item-title">文章</p>
             <ul class="search-result li-none">
               <li>
-                <p>
+                <p class="elli">
                   <i class="el-icon-document"></i>
-                  <span class="search-text">文章title文章title文章title</span>
+                  <span class="search-text">文章title文章title文章title文章title文章title文章title文章title文章title文章title</span>
                 </p>
+                <p class="search-item-sub elli">subsubsubsub</p>
+              </li>
+              <li>
+                <p class="elli">
+                  <i class="el-icon-document"></i>
+                  <span class="search-text">文章title文章title文章title文章title文章title文章title文章title文章title文章title</span>
+                </p>
+                <p class="search-item-sub elli">subsubsubsub</p>
               </li>
             </ul>
           </div>
@@ -112,6 +120,9 @@
         padding: 8px 20px;
         cursor: pointer;
         &:hover {
+          p{
+            color: #fff;
+          }
           background-color: $mainColor;
           i {
             color: #fff;
@@ -119,11 +130,20 @@
           .search-text {
             color: #fff;
           }
+          .search-item-sub{
+            color: #fff;
+          }
         }
+        .search-item-sub{
+            margin-left: 23px;
+            margin-top: 5px;
+            color: $searchSub;
+          }
         i {
           font-size: 16px;
           margin-right: 8px;
         }
+
       }
     }
     background: $searchBg;
