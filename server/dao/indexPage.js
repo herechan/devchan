@@ -211,10 +211,47 @@ exports.queryDateRecentActive = async (ctx, next) => {
     })
 }
 
+exports.searchArticleTags = async (ctx, next) => {
+    return new Promise(async (resolved, rejected) => {
+        const articleQuery = ctx.request.body.articleQuery;
+        // const tagText = ctx.request.body.tagText;
+        searchArticle(articleQuery)
+    })
+}
+
+function searchArticle(val) {
+    const valReg = new RegExp(val);
+    return new Promise((resolved, rejected) => {
+        ArticleModel.aggregate([
+            {
+                $match: {
+                    $or: {
+                        title: valReg,
+                        mdText: valReg,
+                        intro: valReg
+                    }
+                }
+            }, {
+                $project: {
+                    intro: 1,
+                    title: 1
+                }
+            }
+        ]).exec((err, doc) => {
+            if (err) console.log("searchArticle error! " + err);
+            resolved({
+                status: 1,
+                msg: "ok",
+                result: doc
+            })
+        })
+    })
+}
+
 function getResultLength(expression) {
     return new Promise((resolved, rejected) => {
         ArticleModel.find(expression).exec((err, doc) => {
-            if (err) ctx.throw("findUser error:" + err);
+            // if (err) ctx.throw("findUser error:" + err);
             if (doc.length > 0) {
                 resolved(doc.length)
             } else {

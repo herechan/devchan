@@ -23,5 +23,6 @@ router.get("/api/getArticleTwitterList", page.ARTICLE_AND_TWITTER)
 .get("/api/getRecentArticle", page.GET_RECENT_ARTICLE)
 .post("/api/getIndexPage",page.GET_INDEX_PAGE)
 .get("/api/getDateRecentActive",page.GET_DATE_RECENT_ACTIVE)//获取个人动态日期
+.post("/api/searchArticleTags",page.SEARCH_ARTICLE_TAGS)
 
 module.exports = router;

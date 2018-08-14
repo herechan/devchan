@@ -28,3 +28,7 @@ exports.GET_DATE_RECENT_ACTIVE = async(ctx,next)=>{
     const result = await indexPage.queryDateRecentActive(ctx,next);
     ctx.body = result;
 }
+exports.SEARCH_ARTICLE_TAGS = async(ctx,next)=>{
+    const result = await indexPage.searchArticleTags(ctx,next);
+    ctx.body = result;
+}
