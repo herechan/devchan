@@ -41,7 +41,7 @@
         </div>
       </div>
     </header>
-    <el-dialog title="" :visible.sync="searchModal" width="30%" :show-close="false" :lock-scroll="false" @open="searchModalOpen" @close="searchModalClose">
+    <el-dialog title="" :fullscreen="isFull" :visible.sync="searchModal" width="30%" :show-close="false" :lock-scroll="false" @open="searchModalOpen" @close="searchModalClose">
       <div class="search-content">
         <div class="search-header">
           <el-input :autofocus="true" class="search-input" v-model="searchText" placeholder="请输入搜索内容"></el-input>
@@ -49,8 +49,10 @@
         </div>
         <div class="search-inner">
           <div class="search-panel">
+
             <p class="search-item search-item-title">文章</p>
-            <ul class="search-result li-none">
+            <Loading v-if="searchArticleList.length == 0" />
+            <ul class="search-result li-none" v-else>
               <li>
                 <p class="elli">
                   <i class="el-icon-document"></i>
@@ -67,6 +69,26 @@
               </li>
             </ul>
           </div>
+          <div class="search-panel">
+            <p class="search-item search-item-title">标签</p>
+            <Loading v-if="searchTagList.length == 0" />
+            <ul class="search-result li-none" v-else>
+              <li>
+                <p class="elli">
+                  <i class="el-icon-document"></i>
+                  <span class="search-text">文章title文章title文章title文章title文章title文章title文章title文章title文章title</span>
+                </p>
+                <p class="search-item-sub elli">subsubsubsub</p>
+              </li>
+              <li>
+                <p class="elli">
+                  <i class="iconfont">&#xe68c;</i>
+                  <span class="search-text">标签title标签title标签title标签title</span>
+                </p>
+                <p class="search-item-sub elli">subsubsubsub</p>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </el-dialog>
@@ -76,6 +98,7 @@
 #container {
   /deep/ .el-dialog {
     min-width: 320px;
+    background: $searchBg;
   }
   /deep/ .el-dialog__header {
     display: none;
@@ -90,6 +113,7 @@
     }
   }
   .search-header {
+    background-color: #fff;
     .search-input /deep/ input {
       font-size: 15px;
     }
@@ -120,7 +144,7 @@
         padding: 8px 20px;
         cursor: pointer;
         &:hover {
-          p{
+          p {
             color: #fff;
           }
           background-color: $mainColor;
@@ -130,23 +154,22 @@
           .search-text {
             color: #fff;
           }
-          .search-item-sub{
+          .search-item-sub {
             color: #fff;
           }
         }
-        .search-item-sub{
-            margin-left: 23px;
-            margin-top: 5px;
-            color: $searchSub;
-          }
+        .search-item-sub {
+          margin-left: 23px;
+          margin-top: 5px;
+          color: $searchSub;
+        }
         i {
           font-size: 16px;
           margin-right: 8px;
         }
-
       }
     }
-    background: $searchBg;
+    
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     .search-item {
@@ -294,14 +317,14 @@ header {
 }
 </style>
 <script>
-// import SearchModal from "~/components/searchModal";
+import Loading from "~/components/widget/loading";
 export default {
   mounted() {
     this.getMiniImage();
     this.getLogoImage();
   },
   components: {
-    // SearchModal
+    Loading
   },
   data() {
     return {
@@ -324,19 +347,20 @@ export default {
         }
       ],
       searchModal: false,
-      searchText: ""
+      searchText: "",
+      searchArticleList: [],
+      searchTagList: [],
+      isFull: false
     };
   },
   methods: {
-    searchModalClose() {
-      // document.body.style.overflow = "auto";
-      // this.searchModal = true;
-    },
-    searchModalOpen() {
-      // document.body.style.overflow = "hidden"
-    },
+    searchModalClose() {},
+    searchModalOpen() {},
     showSearchModal() {
       this.searchModal = true;
+      if (document.documentElement.clientWidth < 768) {
+        this.isFull = true;
+      }
     },
     go: function(item) {
       this.$router.push({
