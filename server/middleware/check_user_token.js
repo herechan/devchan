@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken');
 const resObj = require("../common/resObj");
 const config = require("../common/config");
-const Users = require("../model/user")
+const Users = require("../model/user");
 exports.user_token = async (ctx, next) => {
     const token = ctx.cookies.get(config.jwt.secret);
     if (token) {
@@ -10,10 +10,10 @@ exports.user_token = async (ctx, next) => {
             const decode = jwt.verify(token, config.jwt.secret);
             const username = decode.username;
             const id = decode.id;
-            let user = await Users.findOne({username:username,_id:id}).exec()
-            if(user._id && user.username){
+            let user = await Users.findOne({ username: username, _id: id }).exec()
+            if (user._id && user.username) {
                 await next()
-            }else{
+            } else {
                 ctx.body = resObj(401, "Token is invalid!", "");
             }
         } catch (e) {
@@ -23,5 +23,4 @@ exports.user_token = async (ctx, next) => {
     } else {
         return (ctx.body = resObj(401, "Token is invalid!", ""))
     }
-
 }

@@ -212,6 +212,7 @@ exports.queryDateRecentActive = async (ctx, next) => {
 }
 
 exports.searchArticle = async (ctx, next) => {
+    
     return new Promise(async (resolved, rejected) => {
         const articleQuery = ctx.request.body.articleQuery;
         const articleList = await searchArticle(articleQuery);
@@ -224,7 +225,7 @@ exports.searchArticle = async (ctx, next) => {
 }
 
 function searchArticle(val) {
-    const valReg = new RegExp(val);
+    const valReg = new RegExp(val,"i");
     return new Promise((resolved, rejected) => {
         ArticleModel.aggregate([
             {

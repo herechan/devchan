@@ -12,7 +12,7 @@ exports.ARTICLE_COVER = async (ctx, next) => {
   const file = ctx.request.files.file;
   const coverName = file.path.split("\\")[file.path.split("\\").length - 1];
   const time = new Date();
-  const newPath = path.resolve(__dirname, "../public/image/article-cover/" + time.getTime() + "_" + file.name)
+  const newPath = path.resolve(__dirname, "../../public/image/article-cover/" + time.getTime() + "_" + file.name)
   const reader = fs.createReadStream(file.path);
   const stream = fs.createWriteStream(newPath);
   var renderStream = reader.pipe(stream);
@@ -21,7 +21,7 @@ exports.ARTICLE_COVER = async (ctx, next) => {
 
 //封面删除
 exports.ARTICLE_COVER_DELETE = async (ctx) => {
-  var filePath = path.resolve(__dirname, `../public${ctx.request.body.coverPath}`);
+  var filePath = path.resolve(__dirname, `../../public${ctx.request.body.coverPath}`);
   ctx.body = await deleteCover(filePath)
 }
 
@@ -29,7 +29,7 @@ exports.ARTICLE_COVER_DELETE = async (ctx) => {
 exports.ARTICLE_IMAGE_UPLOAD = async (ctx, next) => {
   var file = ctx.request.files.image;
   var reader = fs.createReadStream(file.path);
-  var newPath = path.resolve(__dirname, "../public/image/article-image/" + file.name);
+  var newPath = path.resolve(__dirname, "../../public/image/article-image/" + file.name);
   var writter = fs.createWriteStream(newPath);
   var articleImageStream = reader.pipe(writter);
   ctx.body = await streamFunc(articleImageStream, newPath);
@@ -38,12 +38,6 @@ exports.ARTICLE_IMAGE_UPLOAD = async (ctx, next) => {
 //文章保存
 exports.ARTICLE_SAVE = async (ctx, next) => {
   await writtingCenter.saveArticle(ctx);
-}
-
-//markdown页面登录权限验证
-exports.INDEX_CHECK = async (ctx, next) => {
-  
-  // ctx.body = resObj(1,"author confirm!","")
 }
 
 //验证登录权限

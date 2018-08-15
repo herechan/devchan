@@ -10,7 +10,6 @@ router.get("/api/articleTags", admin.ARTICLE_TAGS)
     .post("/api/admin/articleCoverDelete", admin.ARTICLE_COVER_DELETE)
     .post("/api/admin/articleImageUpload", admin.ARTICLE_IMAGE_UPLOAD)
     .post("/api/admin/saveArticle", admin.ARTICLE_SAVE)
-    .get("/api/admin", admin.INDEX_CHECK)
     .get("/api/auth", admin.CHECK_AUTH)
 
 //login

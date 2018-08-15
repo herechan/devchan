@@ -44,15 +44,15 @@
     <el-dialog title="" :fullscreen="isFull" :visible.sync="searchModal" width="30%" :show-close="false" :lock-scroll="false" @open="searchModalOpen" @close="searchModalClose">
       <div class="search-content">
         <div class="search-header">
-          <el-input :autofocus="true" @keydown.native.enter="searchTrigger" class="search-input" v-model="searchText" placeholder="键入Enter进行搜索"></el-input>
+          <el-input :autofocus="true" @keydown.native.enter="searchTrigger" class="search-input" v-model="searchText" placeholder="键入Enter进行文章搜索"></el-input>
           <i class="el-icon-circle-close" @click="searchModal = false"></i>
         </div>
         <div class="search-inner">
           <div class="search-panel">
             <p class="search-item search-item-title">文章</p>
-            <Loading v-if="searchArticleListResult.length == 0" />
-            <ul class="search-result li-none search-article-box" v-else>
-              <li v-for="(item, index) in searchArticleListResult" :key="index">
+            <Loading v-if="searchArticleListResult.length == 0 && !isHaveSearchBehavior" />
+            <ul class="search-result li-none search-article-box" v-if="searchArticleListResult.length>0">
+              <li v-for="(item, index) in searchArticleListResult" :key="index" @click="goDetail(item._id)">
                 <p class="elli">
                   <i class="el-icon-document"></i>
                   <span class="search-text">{{item.title}}</span>
@@ -60,10 +60,11 @@
                 <p class="search-item-sub elli">{{item.intro}}</p>
               </li>
             </ul>
+            <NoData class="no-data" v-if="searchArticleListResult.length == 0&&isHaveSearchBehavior"></NoData>
           </div>
-          <div class="search-panel">
+          <!-- <div class="search-panel">
             <p class="search-item search-item-title">标签</p>
-            <!-- <Loading v-if="searchTagList.length == 0" />
+            <Loading v-if="searchTagList.length == 0" />
             <ul class="search-result li-none" v-else>
               <li>
                 <p class="elli">
@@ -79,8 +80,8 @@
                 </p>
                 <p class="search-item-sub elli">subsubsubsub</p>
               </li>
-            </ul> -->
-          </div>
+            </ul>
+          </div> -->
         </div>
       </div>
     </el-dialog>
@@ -130,15 +131,22 @@
     padding: 0;
   }
   .search-inner {
+    .no-data{
+      min-height: 189px;
+    }
     .search-article-box {
       overflow: auto;
-      height: 295px;
+      max-height: 315px;
+      min-height: 189px;
     }
     .search-result {
       padding-left: 0;
       li {
-        padding: 8px 20px;
+        padding: 10px 20px;
         cursor: pointer;
+        &:first-child {
+          padding-top: 10px;
+        }
         &:hover {
           p {
             color: #fff;
@@ -315,6 +323,7 @@ header {
 <script>
 import Loading from "~/components/widget/loading";
 import axios from "~/plugins/axios";
+import NoData from "~/components/widget/noData";
 export default {
   mounted() {
     this.getMiniImage();
@@ -327,14 +336,17 @@ export default {
     }
   },
   components: {
-    Loading
+    Loading,
+    NoData
   },
   computed: {
     searchArticleListResult() {
-      var list =
-        this.searchArticleList.length > 0
-          ? this.searchArticleList
-          : this.$store.state.recentArticles;
+      let list = [];
+      if(!this.isHaveSearchBehavior){
+        list = this.$store.state.recentArticles;
+      }else{
+        list = this.searchArticleList;
+      }
       return list;
     }
   },
@@ -363,13 +375,23 @@ export default {
       searchArticleList: [],
       searchTagList: [],
       isFull: false,
-      lastSearchTime: ""
+      lastSearchTime: "",
+      isHaveSearchBehavior: false
     };
   },
 
   methods: {
     searchModalClose() {},
     searchModalOpen() {},
+    goDetail(id) {
+      this.$router.push({
+        path: "essayMain",
+        query: {
+          essayId: id
+        }
+      });
+      this.searchModal = false;
+    },
     searchTrigger() {
       if (!this.lastSearchTime) {
         this.lastSearchTime = Date.now();
@@ -390,6 +412,7 @@ export default {
         })
         .then(r => {
           if (r.data.status == 1) {
+            this.isHaveSearchBehavior = true;
             this.lastSearchTime = Date.now();
             this.searchArticleList = r.data.result;
           }

@@ -23,7 +23,7 @@ app.use(cors({
     credentials: true,
     // origin:"http://localhost:8008"
 }));
-app.use(serve(path.resolve(__dirname, "public")))
+app.use(serve(path.resolve(__dirname, "../public")))
 app.use(koaBody({
     multipart: true,
     formidable: {
