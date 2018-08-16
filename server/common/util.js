@@ -1,3 +1,9 @@
+const tn = require("tinify");
+const path = require("path");
+const sharp = require("sharp");
+const fs = require('fs')
+tn.key = "C4XInoPhN9cq0l2bjxTpisBlgGu2u9xM";
+
 //dateFormat(new Date(),"yyyy-MM-dd hh:mm:ss");
 exports.dateFormat = dateFormat
 function dateFormat(time, fmt) {
@@ -31,8 +37,8 @@ exports.getProperty = (array, doc) => {
         r = {}
         for (i in array) {
             r[array[i]] = doc[array[i]]
-            if(array[i] == "time"){
-                r[array[i]] = dateFormat(doc[array[i]],"yyyy-MM-dd")
+            if (array[i] == "time") {
+                r[array[i]] = dateFormat(doc[array[i]], "yyyy-MM-dd")
             }
         }
     } else {
@@ -42,7 +48,7 @@ exports.getProperty = (array, doc) => {
             for (i in array) {
                 r[k][array[i]] = doc[k][array[i]]
                 if (array[i] == "time") {
-                    r[k][array[i]] = dateFormat(doc[k][array[i]],"yyyy-MM-dd")
+                    r[k][array[i]] = dateFormat(doc[k][array[i]], "yyyy-MM-dd")
                 }
 
             }
@@ -51,3 +57,24 @@ exports.getProperty = (array, doc) => {
     }
     return r;
 }
+
+
+exports.getImageFormat = (file) => {
+    const length = file.name.split(".").length
+    return file.name.split(".")[length - 1]
+}
+
+
+exports.compressImage = async (obj) => {
+    //判断当前浏览器是否为chrome
+    // const isWebkit = obj.ua.match(/chrome/);
+
+    fs.readFile(obj.file.name, (err, sendData) => {
+        if(err) throw err;
+        tn.fromBuffer(sendData).toBuffer((err,resultData)=>{
+            if(err) throw err;
+            
+        })
+    })
+}
+

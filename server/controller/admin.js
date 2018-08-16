@@ -3,6 +3,9 @@ const path = require("path");
 let writtingCenter = require("../dao/writtingCenter")
 let resObj = require("../common/resObj");
 const formidable = require("formidable");
+const util = require("../common/util")
+const imgPublicPath = "../../public/"
+
 
 exports.ARTICLE_TAGS = async (ctx) => {
   await writtingCenter.getArticleTags(ctx);
@@ -10,7 +13,14 @@ exports.ARTICLE_TAGS = async (ctx) => {
 //上传封面
 exports.ARTICLE_COVER = async (ctx, next) => {
   const file = ctx.request.files.file;
-  const coverName = file.path.split("\\")[file.path.split("\\").length - 1];
+  // const coverName = file.path.split("\\")[file.path.split("\\").length - 1];
+  const format = util.getImageFormat(file)
+  util.compressImage({
+    ua:ctx.headers["user-agent"],
+    file:file,
+    imgPublicPath:imgPublicPath,
+    foldName:"article-cover"
+  })
   const time = new Date();
   const newPath = path.resolve(__dirname, "../../public/image/article-cover/" + time.getTime() + "_" + file.name)
   const reader = fs.createReadStream(file.path);
@@ -41,8 +51,8 @@ exports.ARTICLE_SAVE = async (ctx, next) => {
 }
 
 //验证登录权限
-exports.CHECK_AUTH = async (ctx, next) => { 
-}                                                                                                                                                                                                                                                                                          
+exports.CHECK_AUTH = async (ctx, next) => {
+}
 function writeArticleImage(ctx) {
   var form = new formidable.IncomingForm();
   return new Promise((reso, reje) => {

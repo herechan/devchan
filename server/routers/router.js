@@ -6,7 +6,8 @@ const page = require("../controller/page");
 const check_token = require("../middleware/check_user_token")
 //admin
 router.get("/api/articleTags", admin.ARTICLE_TAGS)
-    .post("/api/admin/articleCover", check_token.user_token, admin.ARTICLE_COVER)
+    // .post("/api/admin/articleCover", check_token.user_token, admin.ARTICLE_COVER)
+    .post("/api/admin/articleCover", admin.ARTICLE_COVER)
     .post("/api/admin/articleCoverDelete", admin.ARTICLE_COVER_DELETE)
     .post("/api/admin/articleImageUpload", admin.ARTICLE_IMAGE_UPLOAD)
     .post("/api/admin/saveArticle", admin.ARTICLE_SAVE)
