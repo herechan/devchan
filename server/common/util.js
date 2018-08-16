@@ -64,17 +64,30 @@ exports.getImageFormat = (file) => {
     return file.name.split(".")[length - 1]
 }
 
-
+/**
+ * 
+ * @param {*} obj
+ * obj.foldName 图片父级文件夹名称
+ * obj.file 文件名称
+ * obj.imgPublicPath 文件的公共路径
+ */
 exports.compressImage = async (obj) => {
     //判断当前浏览器是否为chrome
     // const isWebkit = obj.ua.match(/chrome/);
-
-    fs.readFile(obj.file.name, (err, sendData) => {
-        if(err) throw err;
-        tn.fromBuffer(sendData).toBuffer((err,resultData)=>{
-            if(err) throw err;
-            
+    return new Promise((resolved, rejected) => {
+        fs.readFile(obj.file.path, (err, sendData) => {
+            if (err) throw err;
+            tn.fromBuffer(sendData).toBuffer((err, resultData) => {
+                if (err) throw err;
+                //渲染普通格式图片
+                const newImgPath = path.resolve(__dirname, path.normalize(`${obj.imgPublicPath}/image/${obj.foldName}/${obj.file.name}`))
+                fs.writeFile(newImgPath, resultData, (err) => {
+                    if (err) throw err;
+                    resolved("success!")
+                })
+            })
         })
     })
+
 }
 

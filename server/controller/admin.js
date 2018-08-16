@@ -14,19 +14,26 @@ exports.ARTICLE_TAGS = async (ctx) => {
 exports.ARTICLE_COVER = async (ctx, next) => {
   const file = ctx.request.files.file;
   // const coverName = file.path.split("\\")[file.path.split("\\").length - 1];
-  const format = util.getImageFormat(file)
-  util.compressImage({
+  const format = util.getImageFormat(file);
+  
+  const state = await util.compressImage({
     ua:ctx.headers["user-agent"],
     file:file,
     imgPublicPath:imgPublicPath,
     foldName:"article-cover"
   })
-  const time = new Date();
-  const newPath = path.resolve(__dirname, "../../public/image/article-cover/" + time.getTime() + "_" + file.name)
-  const reader = fs.createReadStream(file.path);
-  const stream = fs.createWriteStream(newPath);
-  var renderStream = reader.pipe(stream);
-  ctx.body = await streamFunc(renderStream, newPath);
+  // const time = new Date();
+  // const newPath = path.resolve(__dirname, "../../public/image/article-cover/" + time.getTime() + "_" + file.name)
+  // const reader = fs.createReadStream(file.path);
+  // const stream = fs.createWriteStream(newPath);
+  // var renderStream = reader.pipe(stream);
+  // ctx.body = await streamFunc(renderStream, newPath);
+  
+  ctx.body = resObj({
+    msg:"ok",
+    status:1,
+    result:""
+  })
 }
 
 //封面删除
