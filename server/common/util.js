@@ -75,19 +75,50 @@ exports.compressImage = async (obj) => {
     //判断当前浏览器是否为chrome
     // const isWebkit = obj.ua.match(/chrome/);
     return new Promise((resolved, rejected) => {
+        //首先在本地服务器进行webp格式的转化
+        const webpPath = normalizeImgTargetPath("webp", obj)
+        sharp(obj.file.path)
+            .toFile(webpPath)
+        //第二部连接tinyping进行原图的压缩
         fs.readFile(obj.file.path, (err, sendData) => {
             if (err) throw err;
             tn.fromBuffer(sendData).toBuffer((err, resultData) => {
                 if (err) throw err;
                 //渲染普通格式图片
-                const newImgPath = path.resolve(__dirname, path.normalize(`${obj.imgPublicPath}/image/${obj.foldName}/${obj.file.name}`))
+                const newImgPath = normalizeImgTargetPath("image", obj)
                 fs.writeFile(newImgPath, resultData, (err) => {
                     if (err) throw err;
-                    resolved("success!")
+                    console.log("compress!")
+                    resolved({
+                        msg:"ok",
+                        status:1,
+                        result:""
+                    })
                 })
             })
         })
     })
 
 }
+/**
+ * 
+ * @param {String} type 文件的类型 普通image格式或者webp格式
+ * @param {Object} obj  文件对象
+ */
+function normalizeImgTargetPath(type, obj) {
+    let name = obj.file.name.split(".")[0];
+    let nameFormat = "";
+    if (type == "webp") {
+        nameFormat = name + ".webp"
+    } else {
+        nameFormat = obj.file.name
+    }
 
+    let resolvedPath = path.resolve(__dirname, path.normalize(`${obj.imgPublicPath}/${type}/${obj.foldName}/${nameFormat}`))
+    // if(type == "webp"){
+    //     var length = path.split(".").length;
+    //     path.split(".")[length - 1] = "webp"
+    // }
+
+    return resolvedPath
+}
