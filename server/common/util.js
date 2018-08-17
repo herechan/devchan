@@ -127,8 +127,6 @@ exports.compressImage = async (obj) => {
                         )
                     })
             })
-
-
     })
 }
 
