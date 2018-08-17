@@ -110,20 +110,34 @@ exports.compressImage = async (obj) => {
         const random = Date.now();
         //第一步转换webp格式
         const webpPath = normalizeImgTargetPath("webp", obj, random);
-        sharp(obj.file.path)
-            .toFile(webpPath).then(r => {
+        const originPath = normalizeImgTargetPath("image", obj, random);
+        //第一步转换webp格式
+        gm(obj.file.path)
+            .quality(60)
+            .write(webpPath, (err) => {
+                if (err) throw err
                 //第二步按原来的格式压缩
-                const originPath = normalizeImgTargetPath("image", obj, random);
-                sharp(obj.file.path)
-                    .toFile(originPath).then(r => {
+                gm(obj.file.path)
+                    .quality(60)
+                    .write(originPath, (err) => {
+                        if (err) throw err
                         const resultPath = originPath.split("public\\image")[1];
                         resolved(
                             resultPath
                         )
-                    });
+                    })
             })
+
+
     })
 }
+
+exports.articleImageCompress = async () => {
+    return new Promise((resolved, rejected) => {
+        const random = Date.now();
+    })
+}
+
 
 /**
  * 
