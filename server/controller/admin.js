@@ -43,11 +43,17 @@ exports.ARTICLE_COVER_DELETE = async (ctx) => {
 //文章内容图片上传
 exports.ARTICLE_IMAGE_UPLOAD = async (ctx, next) => {
   var file = ctx.request.files.image;
-  var reader = fs.createReadStream(file.path);
-  var newPath = path.resolve(__dirname, "../../public/image/article-image/" + file.name);
-  var writter = fs.createWriteStream(newPath);
-  var articleImageStream = reader.pipe(writter);
-  ctx.body = await streamFunc(articleImageStream, newPath);
+  // var reader = fs.createReadStream(file.path);
+  // var newPath = path.resolve(__dirname, "../../public/image/article-image/" + file.name);
+  // var writter = fs.createWriteStream(newPath);
+  // var articleImageStream = reader.pipe(writter);
+  // ctx.body = await streamFunc(articleImageStream, newPath);
+  const articleImagePath = await articleImageCompress({
+    file:file,
+    imgPublicPath: imgPublicPath,
+    foldName: "article-image"
+  });
+  ctx.body = resObj(1,"upload success!",articleImagePath)
 }
 
 //文章保存

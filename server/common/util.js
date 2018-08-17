@@ -108,7 +108,6 @@ exports.compressImage = async (obj) => {
 exports.compressImage = async (obj) => {
     return new Promise((resolved, rejected) => {
         const random = Date.now();
-        //第一步转换webp格式
         const webpPath = normalizeImgTargetPath("webp", obj, random);
         const originPath = normalizeImgTargetPath("image", obj, random);
         //第一步转换webp格式
@@ -130,9 +129,23 @@ exports.compressImage = async (obj) => {
     })
 }
 
-exports.articleImageCompress = async () => {
+exports.articleImageCompress = async (obj) => {
     return new Promise((resolved, rejected) => {
         const random = Date.now();
+        const webpPath = normalizeImgTargetPath("webp", obj, random);
+        const originPath = normalizeImgTargetPath("image", obj, random);
+        gm(obj.file.path)
+            .quality(60)
+            .write(originPath, (err) => {
+                if (err) throw err;
+                gm(obj.file.path)
+                    .quality(60)
+                    .write(webpPath, (err) => {
+                        if (err) throw err;
+                        const resultPath = originPath.split("public\\image")[1];
+                        resolved(resultPath)
+                    })
+            })
     })
 }
 
