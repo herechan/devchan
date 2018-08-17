@@ -13,14 +13,12 @@ exports.ARTICLE_TAGS = async (ctx) => {
 //上传封面
 exports.ARTICLE_COVER = async (ctx, next) => {
   const file = ctx.request.files.file;
-  // const coverName = file.path.split("\\")[file.path.split("\\").length - 1];
-  const format = util.getImageFormat(file);
-  
-  const state = await util.compressImage({
-    ua:ctx.headers["user-agent"],
-    file:file,
-    imgPublicPath:imgPublicPath,
-    foldName:"article-cover"
+  // const format = util.getImageFormat(file);
+  const commonPath = await util.compressImage({
+    ua: ctx.headers["user-agent"],
+    file: file,
+    imgPublicPath: imgPublicPath,
+    foldName: "article-cover"
   })
   // const time = new Date();
   // const newPath = path.resolve(__dirname, "../../public/image/article-cover/" + time.getTime() + "_" + file.name)
@@ -28,18 +26,18 @@ exports.ARTICLE_COVER = async (ctx, next) => {
   // const stream = fs.createWriteStream(newPath);
   // var renderStream = reader.pipe(stream);
   // ctx.body = await streamFunc(renderStream, newPath);
-  
-  ctx.body = resObj({
-    msg:"ok",
-    status:1,
-    result:""
-  })
+  ctx.body = resObj(1, "ok", commonPath)
 }
 
 //封面删除
 exports.ARTICLE_COVER_DELETE = async (ctx) => {
-  var filePath = path.resolve(__dirname, `../../public${ctx.request.body.coverPath}`);
-  ctx.body = await deleteCover(filePath)
+  let fileFullPath = ctx.request.body.coverPath;
+  let fileName = fileFullPath.substring(0, fileFullPath.lastIndexOf("."))
+  const originPath = path.resolve(__dirname, `../../public/image${fileName}`);
+  const webpPath = path.resolve(__dirname, `../../public/webp${fileName}`);
+  const deleteOriginPath = await deleteCover(originPath)
+  const deleteWebpPath = await deleteCover(webpPath);
+  ctx.body = resObj(1, "remove success!", "")
 }
 
 //文章内容图片上传
@@ -83,14 +81,24 @@ function streamFunc(s, newPath) {
 }
 
 
-function deleteCover(path) {
+function deleteCover(commonPath) {
+  let fileName = commonPath.substring(commonPath.lastIndexOf("\\") + 1);
+  let filePath = commonPath.substring(0, commonPath.lastIndexOf("\\"));
   return new Promise((reo, rej) => {
-    fs.unlink(path, (err) => {
-      if (err) {
-        throw err;
-        rej();
+    const files = fs.readdirSync(filePath)
+    for (let index = 0; index < files.length; index++) {
+      const element = files[index];
+      let elementName = element.substring(0, element.lastIndexOf("."));
+      if (elementName == fileName) {
+        fs.unlink(path.resolve(filePath,element), (err, data) => {
+          if (err) {
+            throw err;
+            rej();
+          }
+          reo()
+        })
+        break;
       }
-      reo(resObj(1, "remove success!", ""));
-    })
+    }
   })
 }

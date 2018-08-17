@@ -1,7 +1,8 @@
 const tn = require("tinify");
 const path = require("path");
 const sharp = require("sharp");
-const fs = require('fs')
+const fs = require('fs');
+const gm = require("gm").subClass({ imageMagick: true })
 tn.key = "C4XInoPhN9cq0l2bjxTpisBlgGu2u9xM";
 
 //dateFormat(new Date(),"yyyy-MM-dd hh:mm:ss");
@@ -64,13 +65,10 @@ exports.getImageFormat = (file) => {
     return file.name.split(".")[length - 1]
 }
 
+
 /**
  * 
- * @param {*} obj
- * obj.foldName 图片父级文件夹名称
- * obj.file 文件名称
- * obj.imgPublicPath 文件的公共路径
- */
+
 exports.compressImage = async (obj) => {
     //判断当前浏览器是否为chrome
     // const isWebkit = obj.ua.match(/chrome/);
@@ -90,22 +88,49 @@ exports.compressImage = async (obj) => {
                     if (err) throw err;
                     console.log("compress!")
                     resolved({
-                        msg:"ok",
-                        status:1,
-                        result:""
+                        msg: "ok",
+                        status: 1,
+                        result: ""
                     })
                 })
             })
         })
     })
-
 }
+ */
+/**
+ * 
+ * @param {*} obj
+ * obj.foldName 图片父级文件夹名称
+ * obj.file 文件名称
+ * obj.imgPublicPath 文件的公共路径
+ */
+exports.compressImage = async (obj) => {
+    return new Promise((resolved, rejected) => {
+        const random = Date.now();
+        //第一步转换webp格式
+        const webpPath = normalizeImgTargetPath("webp", obj, random);
+        sharp(obj.file.path)
+            .toFile(webpPath).then(r => {
+                //第二步按原来的格式压缩
+                const originPath = normalizeImgTargetPath("image", obj, random);
+                sharp(obj.file.path)
+                    .toFile(originPath).then(r => {
+                        const resultPath = originPath.split("public\\image")[1];
+                        resolved(
+                            resultPath
+                        )
+                    });
+            })
+    })
+}
+
 /**
  * 
  * @param {String} type 文件的类型 普通image格式或者webp格式
  * @param {Object} obj  文件对象
  */
-function normalizeImgTargetPath(type, obj) {
+function normalizeImgTargetPath(type, obj, random) {
     let name = obj.file.name.split(".")[0];
     let nameFormat = "";
     if (type == "webp") {
@@ -113,12 +138,6 @@ function normalizeImgTargetPath(type, obj) {
     } else {
         nameFormat = obj.file.name
     }
-
-    let resolvedPath = path.resolve(__dirname, path.normalize(`${obj.imgPublicPath}/${type}/${obj.foldName}/${nameFormat}`))
-    // if(type == "webp"){
-    //     var length = path.split(".").length;
-    //     path.split(".")[length - 1] = "webp"
-    // }
-
+    let resolvedPath = path.resolve(__dirname, path.normalize(`${obj.imgPublicPath}/${type}/${obj.foldName}/${random}_${nameFormat}`))
     return resolvedPath
 }
