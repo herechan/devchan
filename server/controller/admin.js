@@ -48,12 +48,12 @@ exports.ARTICLE_IMAGE_UPLOAD = async (ctx, next) => {
   // var writter = fs.createWriteStream(newPath);
   // var articleImageStream = reader.pipe(writter);
   // ctx.body = await streamFunc(articleImageStream, newPath);
-  const articleImagePath = await articleImageCompress({
-    file:file,
+  const articleImagePath = await util.articleImageCompress({
+    file: file,
     imgPublicPath: imgPublicPath,
     foldName: "article-image"
   });
-  ctx.body = resObj(1,"upload success!",articleImagePath)
+  ctx.body = resObj(1, "upload success!", articleImagePath)
 }
 
 //文章保存

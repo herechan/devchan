@@ -14,6 +14,7 @@ exports.queryArticleAndTwitter = async (ctx) => {
                 var properArr = ["_id", "tags", "intro", "coverPath",
                     , "title", "like", "watch", "time", "miniImagePath"]
                 var r = util.getProperty(properArr, doc);
+                
                 resolved({
                     status: 1,
                     msg: "success!",

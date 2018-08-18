@@ -100,10 +100,11 @@ exports.compressImage = async (obj) => {
  */
 /**
  * 
- * @param {*} obj
+ * @param {Object} obj 
  * obj.foldName 图片父级文件夹名称
  * obj.file 文件名称
  * obj.imgPublicPath 文件的公共路径
+ * @returns {String} 截取出一个公共路径用于返回前端
  */
 exports.compressImage = async (obj) => {
     return new Promise((resolved, rejected) => {
@@ -112,12 +113,12 @@ exports.compressImage = async (obj) => {
         const originPath = normalizeImgTargetPath("image", obj, random);
         //第一步转换webp格式
         gm(obj.file.path)
-            .quality(60)
+            .quality(50)
             .write(webpPath, (err) => {
                 if (err) throw err
                 //第二步按原来的格式压缩
                 gm(obj.file.path)
-                    .quality(60)
+                    .quality(50)
                     .write(originPath, (err) => {
                         if (err) throw err
                         const resultPath = originPath.split("public\\image")[1];
@@ -129,18 +130,27 @@ exports.compressImage = async (obj) => {
     })
 }
 
+/**
+ * 
+ * @param {Object} obj 
+ * obj.foldName 图片父级文件夹名称
+ * obj.file 文件名称
+ * obj.imgPublicPath 文件的公共路径
+ * @returns {String} 截取出一个公共路径用于返回前端
+ */
 exports.articleImageCompress = async (obj) => {
     return new Promise((resolved, rejected) => {
         const random = Date.now();
         const webpPath = normalizeImgTargetPath("webp", obj, random);
         const originPath = normalizeImgTargetPath("image", obj, random);
         gm(obj.file.path)
-            .quality(60)
+            .quality(50)
             .write(originPath, (err) => {
                 if (err) throw err;
                 gm(obj.file.path)
-                    .quality(60)
+                    .quality(50)
                     .write(webpPath, (err) => {
+                        2
                         if (err) throw err;
                         const resultPath = originPath.split("public\\image")[1];
                         resolved(resultPath)
@@ -151,9 +161,9 @@ exports.articleImageCompress = async (obj) => {
 
 
 /**
- * 
  * @param {String} type 文件的类型 普通image格式或者webp格式
  * @param {Object} obj  文件对象
+ * @returns {String} 处理之后带后缀名的新路径
  */
 function normalizeImgTargetPath(type, obj, random) {
     let name = obj.file.name.split(".")[0];
