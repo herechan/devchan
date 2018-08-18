@@ -150,7 +150,6 @@ exports.articleImageCompress = async (obj) => {
                 gm(obj.file.path)
                     .quality(50)
                     .write(webpPath, (err) => {
-                        2
                         if (err) throw err;
                         const resultPath = originPath.split("public\\image")[1];
                         resolved(resultPath)
@@ -169,9 +168,9 @@ function normalizeImgTargetPath(type, obj, random) {
     let name = obj.file.name.split(".")[0];
     let nameFormat = "";
     if (type == "webp") {
-        nameFormat = name + ".webp"
+        nameFormat = name + ".webp";
     } else {
-        nameFormat = obj.file.name
+        nameFormat = obj.file.name;
     }
     let resolvedPath = path.resolve(__dirname, path.normalize(`${obj.imgPublicPath}/${type}/${obj.foldName}/${random}_${nameFormat}`))
     return resolvedPath
