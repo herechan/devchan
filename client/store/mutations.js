@@ -41,5 +41,5 @@ export default {
     },
     setRecentArticles(state,list){
         state.recentArticles = list
-    }
+    },
 }

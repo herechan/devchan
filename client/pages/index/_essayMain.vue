@@ -41,12 +41,16 @@ export default {
     this.renderEassyBody();
   },
   methods: {
+    isSupportWebp(){
+      return !![].map && document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0;
+    },
     renderEassyBody() {
       var self = this;
       const id = this.$route.query.essayId;
       this.$store
         .dispatch("getEssayMessage", {
-          id: id
+          id: id,
+          isSupportWebp:this.isSupportWebp()
         })
         .then(r => {
           this.isInit = false;

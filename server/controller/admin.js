@@ -53,7 +53,7 @@ exports.ARTICLE_IMAGE_UPLOAD = async (ctx, next) => {
     imgPublicPath: imgPublicPath,
     foldName: "article-image"
   });
-  ctx.body = resObj(1, "upload success!", articleImagePath)
+  ctx.body = resObj(1, "upload success!", path.normalize("\\image"+articleImagePath))//暂时将路径写成原始格式
 }
 
 //文章保存

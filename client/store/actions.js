@@ -18,7 +18,8 @@ export default {
             return console.error("Arguments must be defined! such as essayId")
         }
         const r = await axios.post(`${process.env.baseUrl}/getArticleDetail`, {
-            id: essayObj.id
+            id: essayObj.id,
+            isSupportWebp:essayObj.isSupportWebp
         });
         if (r.data.status == 1) {
             const essayMessage = r.data.result;

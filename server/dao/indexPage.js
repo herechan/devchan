@@ -1,10 +1,12 @@
 var resObj = require("../common/resObj");
 var ArticleTagsModel = require("../model/articleTags")
 var ArticleModel = require("../model/article");
+var pathHandle = require("../common/pathHandle")
 const util = require("../common/util")
 exports.queryArticleAndTwitter = async (ctx) => {
     return new Promise(async (resolved, rejected) => {
         const page = Number(ctx.query.page) - 1;
+        const isSupportWebp = ctx.query.isSupportWebp == "true" ? true : false;
         const articleLength = await getResultLength({})
         ArticleModel.find({}).limit(9).skip(page * 9).sort({
             time: -1
@@ -14,7 +16,15 @@ exports.queryArticleAndTwitter = async (ctx) => {
                 var properArr = ["_id", "tags", "intro", "coverPath",
                     , "title", "like", "watch", "time", "miniImagePath"]
                 var r = util.getProperty(properArr, doc);
-                
+                r.forEach(element => {
+                    if (!element.coverPath) {
+                        return;
+                    }
+                    element.coverPath = pathHandle.articleCoverPathHandle({
+                        imagePath: element.coverPath,
+                        isSupportWebp: isSupportWebp
+                    })
+                });
                 resolved({
                     status: 1,
                     msg: "success!",
@@ -35,6 +45,7 @@ exports.queryArticleAndTwitter = async (ctx) => {
 }
 exports.queryArticleDetail = async (ctx, next) => {
     const id = ctx.request.body.id;
+    const isSupportWebp = ctx.request.body.isSupportWebp;
     return new Promise((resolved, rejected) => {
         ArticleModel.findOne({
             _id: id
@@ -51,6 +62,12 @@ exports.queryArticleDetail = async (ctx, next) => {
                 var properArr = ["_id", "tags", "intro", "coverPath",
                     "mdText", "title", "like", "watch", "time"]
                 var r = util.getProperty(properArr, doc);
+                if (r.coverPath) {
+                    r.coverPath = pathHandle.articleCoverPathHandle({
+                        imagePath: r.coverPath,
+                        isSupportWebp: isSupportWebp
+                    })
+                }
                 resolved({
                     msg: "success!",
                     result: r,
@@ -123,7 +140,7 @@ exports.queryRecentArticle = async (ctx, next) => {
             if (err) ctx.throw("findUser error:" + err);
             if (doc.length > 0) {
                 var properArr = ["_id", "tags",
-                    , "title", "miniImagePath", "time","intro"]
+                    , "title", "miniImagePath", "time", "intro"]
                 var r = util.getProperty(properArr, doc);
                 resolved({
                     status: 1,
@@ -213,7 +230,7 @@ exports.queryDateRecentActive = async (ctx, next) => {
 }
 
 exports.searchArticle = async (ctx, next) => {
-    
+
     return new Promise(async (resolved, rejected) => {
         const articleQuery = ctx.request.body.articleQuery;
         const articleList = await searchArticle(articleQuery);
@@ -226,7 +243,7 @@ exports.searchArticle = async (ctx, next) => {
 }
 
 function searchArticle(val) {
-    const valReg = new RegExp(val,"i");
+    const valReg = new RegExp(val, "i");
     return new Promise((resolved, rejected) => {
         ArticleModel.aggregate([
             {
@@ -246,9 +263,9 @@ function searchArticle(val) {
                     intro: 1,
                     title: 1
                 }
-            },{
-                $sort:{
-                    time:-1
+            }, {
+                $sort: {
+                    time: -1
                 }
             }
         ]).exec((err, doc) => {

@@ -49,7 +49,8 @@ export default {
       axios
         .get(`${this.baseUrl}/getArticleTwitterList`, {
           params: {
-            page: this.page
+            page: this.page,
+            isSupportWebp:this.isSupportWebp()
           }
         })
         .then(r => {
@@ -61,6 +62,9 @@ export default {
           if (r.data.result.articleList.length < 9) this.loadMoreFlag = false;
           this.loadingFlag = false;
         });
+    },
+    isSupportWebp(){
+      return !![].map && document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0;
     },
     loadMore() {
       this.page++;
