@@ -2,8 +2,8 @@ const tn = require("tinify");
 const path = require("path");
 const sharp = require("sharp");
 const fs = require('fs');
-const gm = require("gm").subClass({ imageMagick: true })
-tn.key = "C4XInoPhN9cq0l2bjxTpisBlgGu2u9xM";
+// const gm = require("gm").subClass({ imageMagick: true })
+// tn.key = "C4XInoPhN9cq0l2bjxTpisBlgGu2u9xM";
 
 //dateFormat(new Date(),"yyyy-MM-dd hh:mm:ss");
 exports.dateFormat = dateFormat
@@ -112,21 +112,45 @@ exports.compressImage = async (obj) => {
         const webpPath = normalizeImgTargetPath("webp", obj, random);
         const originPath = normalizeImgTargetPath("image", obj, random);
         //第一步转换webp格式
-        gm(obj.file.path)
-            .quality(50)
-            .write(webpPath, (err) => {
-                if (err) throw err
-                //第二步按原来的格式压缩
-                gm(obj.file.path)
-                    .quality(50)
-                    .write(originPath, (err) => {
-                        if (err) throw err
-                        const resultPath = originPath.split("public\\image")[1];
-                        resolved(
-                            resultPath
-                        )
-                    })
+        // gm(obj.file.path)
+        //     .quality(50)
+        //     .write(webpPath, (err) => {
+        //         if (err) throw err
+        //         //第二步按原来的格式压缩
+        //         gm(obj.file.path)
+        //             .quality(50)
+        //             .write(originPath, (err) => {
+        //                 if (err) throw err
+        //                 const resultPath = originPath.split("public\\image")[1];
+        //                 resolved(
+        //                     resultPath
+        //                 )
+        //             })
+        //     })
+        let quality = 65;
+        if (obj.file.path.match(/.png/)) {
+            quality = 95
+        } else {
+            quality = 65;
+        }
+
+        var webpState = sharp(obj.file.path)
+            .webp({
+                quality: 75
             })
+            .toFile(webpPath, (err) => {
+                if (err) console.log(err)
+            })
+
+        sharp(obj.file.path)
+            .jpeg({
+                quality: quality
+            }).toFile(originPath, (err) => {
+                if (err) console.log(err);
+                const resultPath = originPath.split("public\\image")[1];
+                resolved(resultPath)
+            })
+
     })
 }
 
@@ -143,17 +167,40 @@ exports.articleImageCompress = async (obj) => {
         const random = Date.now();
         const webpPath = normalizeImgTargetPath("webp", obj, random);
         const originPath = normalizeImgTargetPath("image", obj, random);
-        gm(obj.file.path)
-            .quality(50)
-            .write(originPath, (err) => {
-                if (err) throw err;
-                gm(obj.file.path)
-                    .quality(50)
-                    .write(webpPath, (err) => {
-                        if (err) throw err;
-                        const resultPath = originPath.split("public\\image")[1];
-                        resolved(resultPath)
-                    })
+        // gm(obj.file.path)
+        //     .quality(50)
+        //     .write(originPath, (err) => {
+        //         if (err) throw err;
+        //         gm(obj.file.path)
+        //             .quality(50)
+        //             .write(webpPath, (err) => {
+        //                 if (err) throw err;
+        //                 const resultPath = originPath.split("public\\image")[1];
+        //                 resolved(resultPath)
+        //             })
+        //     })
+        let quality = 65;
+        if (obj.file.path.match(/.png/)) {
+            quality = 95
+        } else {
+            quality = 65;
+        }
+
+        var webpState = sharp(obj.file.path)
+            .webp({
+                quality: 75
+            })
+            .toFile(webpPath, (err) => {
+                if (err) console.log(err)
+            })
+
+        sharp(obj.file.path)
+            .jpeg({
+                quality: quality
+            }).toFile(originPath, (err) => {
+                if (err) console.log(err);
+                const resultPath = originPath.split("public\\image")[1];
+                resolved(resultPath)
             })
     })
 }
