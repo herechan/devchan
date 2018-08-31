@@ -1,4 +1,3 @@
-const tn = require("tinify");
 const path = require("path");
 const sharp = require("sharp");
 const fs = require('fs');
@@ -68,7 +67,6 @@ exports.getImageFormat = (file) => {
 
 /**
  * 
-
 exports.compressImage = async (obj) => {
     //判断当前浏览器是否为chrome
     // const isWebkit = obj.ua.match(/chrome/);
@@ -147,7 +145,7 @@ exports.compressImage = async (obj) => {
                 quality: quality
             }).toFile(originPath, (err) => {
                 if (err) console.log(err);
-                const resultPath = originPath.split("public\\image")[1];
+                const resultPath = originPath.split(path.join("public/image"))[1];
                 resolved(resultPath)
             })
 
@@ -199,7 +197,8 @@ exports.articleImageCompress = async (obj) => {
                 quality: quality
             }).toFile(originPath, (err) => {
                 if (err) console.log(err);
-                const resultPath = originPath.split("public\\image")[1];
+                const resultPath = originPath.split(path.join("public/image"))[1];
+                
                 resolved(resultPath)
             })
     })
