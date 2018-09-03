@@ -12,9 +12,9 @@
               <p class="username">Chan</p>
               <p class="career">Web Developer</p>
               <p class="user-location">
-                <i class="iconfont">&#xe615;</i> Chengdu, China
+                <i class="iconfont">&#xe615;</i> Hangzhou, China
               </p>
-              <div class="follow-btn">FOLLOW</div>
+              <div class="follow-btn" @click="follow">FOLLOW</div>
             </div>
             <div class="article-info">
               <div class="article-info-item">
@@ -26,7 +26,7 @@
                 <p>TAGS</p>
               </div>
             </div>
-            <div class="user-social">
+            <!-- <div class="user-social">
               <ul class="li-none">
                 <li>
                   <a href="">
@@ -34,17 +34,17 @@
                   </a>
                 </li>
                 <li>
-                  <a href="">
+                  <a target="_blank" href="">
                     <i class="iconfont">&#xe6b6;</i>
                   </a>
                 </li>
                 <li>
-                  <a href="">
-                    <i class="iconfont">&#xe749;</i>
+                  <a target="_blank" href="https://www.weibo.com/chenjiechi/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1">
+                    <i class="iconfont">&#xe641;</i>
                   </a>
                 </li>
               </ul>
-            </div>
+            </div> -->
           </div>
         </el-col>
         <el-col :lg="14" :sm="17" class="timeline-col">
@@ -68,7 +68,7 @@
               </div>
             </div>
           </div>
-          <div class="aside-box">
+          <!-- <div class="aside-box">
             <p class="aside-title">文章归档</p>
             <ul class="aside-list li-none">
               <li class="elli">
@@ -90,9 +90,9 @@
                 </a>
               </li>
             </ul>
-          </div>
+          </div> -->
           <div class="aside-box">
-            <p class="aside-title">个人动态</p>
+            <p class="aside-title">近期动态</p>
             <ul class="aside-list li-none">
               <li class="elli" v-for="(item, index) in recentActive" :key="index">
                 <a @click="switchRecentActive($event)">
@@ -108,7 +108,7 @@
               </li>
             </ul>
           </div>
-          <div class="aside-box">
+          <!-- <div class="aside-box">
             <p class="aside-title">标签分类</p>
             <ul class="aside-list li-none">
               <li class="elli">
@@ -130,24 +130,24 @@
                 </a>
               </li>
             </ul>
-          </div>
+          </div> -->
           <div class="aside-box">
             <p class="aside-title">链接</p>
             <ul class="aside-list li-none">
               <li class="elli">
-                <a>
+                <a target="_blank" href="http://element-cn.eleme.io/#/">
                   <!-- <i class="iconfont">&#xe8fa;</i> -->
                   element-ui
                 </a>
               </li>
               <li>
-                <a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">
                   <!-- <i class="iconfont">&#xe8fa;</i> -->
                   nuxt
                 </a>
               </li>
               <li>
-                <a>
+                <a target="_blank" href="http://www.echojs.com/">
                   <!-- <i class="iconfont">&#xe8fa;</i> -->
                   Echo Js
                 </a>
@@ -213,6 +213,9 @@ export default {
     };
   },
   methods: {
+    follow(){
+      this.$message('该功能还在开发中')
+    },
     switchRecentActive(event) {
       const ele = event.currentTarget.parentNode;
       if (ele.className.match("aside-active")) {

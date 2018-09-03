@@ -1,14 +1,10 @@
 <template>
     <div class="container">
-        <Weibo/>
-        <Weibo/>
-        <Weibo/>
-        <Weibo/>
-        <Weibo/>
-        <div class="page-box">
+      <p style="text-align:center">这个家伙很懒，还没有发表任何微博</p>
+        <!-- <div class="page-box">
             <el-pagination layout="prev, pager, next" :total="50">
             </el-pagination>
-        </div>
+        </div> -->
     </div>
 </template>
 <script>

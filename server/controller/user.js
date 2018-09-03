@@ -3,9 +3,7 @@ const jwt = require("jsonwebtoken");
 const resObj = require("../common/resObj");
 const config = require("../common/config");
 exports.FIND_USER = async (ctx, next) => {
-
     var result = await userDao.findUser(ctx);
-
     if (result.status == 1) {
 
         const token = jwt.sign({

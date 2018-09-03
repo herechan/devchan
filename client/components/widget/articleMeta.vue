@@ -53,7 +53,7 @@ export default {
       font-size: 12px;
     }
     .tag-item{
-      cursor: pointer;
+      // cursor: pointer;
       margin-right: 5px;
     }
     &:first-child{

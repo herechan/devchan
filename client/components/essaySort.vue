@@ -44,7 +44,8 @@ export default {
       this.$store.commit("setEssaySortLoading", true);
       this.$store.commit("setEssayCurrentPage", 1);
       if (!this.tagArr.includes(item.name)) {
-        this.tagArr.push(item.name);
+        // this.tagArr.push(item.name);//切换成多选
+        this.tagArr = [item.name]//单选
       } else {
         const index = this.tagArr.indexOf(item.name);
         this.tagArr.splice(index, 1);

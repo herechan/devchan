@@ -5,10 +5,10 @@
         <el-row>
           <el-col :span="14">
             <div class="header-left">
-              <div class="logo" ref="logo">
+              <div class="logo" ref="logo" @click="toIndex">
                 <!-- <img src="~assets/img/logo.png" alt=""> -->
               </div>
-              <span class="logo-name">Chan</span>
+              <span class="logo-name" @click="toIndex">Chan</span>
               <div class="header-nav hidden-sm-and-down">
                 <span v-for="(item,index) in navList" :key="index" @click="go(item)">{{item.name}}</span>
               </div>
@@ -44,7 +44,7 @@
     <el-dialog title="" :fullscreen="isFull" :visible.sync="searchModal" width="30%" :show-close="false" :lock-scroll="false" @open="searchModalOpen" @close="searchModalClose">
       <div class="search-content">
         <div class="search-header">
-          <el-input :autofocus="true" @keydown.native.enter="searchTrigger" class="search-input" v-model="searchText" placeholder="键入Enter进行文章搜索"></el-input>
+          <el-input :autofocus="true" @keydown.native.enter="searchTrigger" class="search-input" v-model="searchText" placeholder="键入Enter搜索文章"></el-input>
           <i class="el-icon-circle-close" @click="searchModal = false"></i>
         </div>
         <div class="search-inner">
@@ -220,6 +220,7 @@ header {
         width: 44px;
         overflow: hidden;
         border-radius: 50%;
+        cursor: pointer;
         background-color: $page404;
         img {
           width: 100%;
@@ -230,7 +231,8 @@ header {
         font-weight: 600;
         margin-right: 35px;
         margin-left: 10px;
-        cursor: text;
+        cursor: pointer;
+
       }
     }
     .header-right {
@@ -362,13 +364,13 @@ export default {
           pathName: "essayIndex"
         },
         {
-          name: "推文",
+          name: "微博",
           pathName: "twitter"
         },
-        {
-          name: "关于",
-          pathName: ""
-        }
+        // {
+        //   name: "关于",
+        //   pathName: ""
+        // }
       ],
       searchModal: false,
       searchText: "",
@@ -381,6 +383,11 @@ export default {
   },
 
   methods: {
+    toIndex(){
+      this.$router.push({
+        path:"/"
+      })
+    },
     searchModalClose() {},
     searchModalOpen() {},
     goDetail(id) {

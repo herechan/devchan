@@ -20,7 +20,7 @@
       <div class="share-btn clearfix">
         <div>
           <i class="iconfont">&#xea87;</i>
-          <span>分享</span>
+          <span @click="share">分享</span>
         </div>
       </div>
     </div>
@@ -46,6 +46,9 @@ export default {
     };
   },
   methods: {
+    share(){
+      this.$message("该功能还在开发中")
+    },
     toEssayMain(id) {
       if (!this.isIndex) {
         return;

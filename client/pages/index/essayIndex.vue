@@ -19,6 +19,7 @@ export default {
     pageChange(number) {
       this.$store.commit("setEssayCurrentPage",number);
       this.$store.commit("setEssaySortLoading",true);
+      window.scrollTo(0,0)
       var type = this.$route.query.type
         ? this.$route.query.type
         : "";
