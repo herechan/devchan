@@ -10,7 +10,7 @@ const jwt = require("koa-jwt");
 const { Nuxt, Builder } = require("nuxt");
 const nuxtConfig = require("../nuxt.config.js");
 const router = require("./routers/router");
-
+let port = 8008
 
 // app.use(jwt({
 //     secret: "devchan_token"
@@ -38,7 +38,7 @@ app.use(router.routes());
 
 // nuxtConfig.dev = process.env.NODE_ENV === "production" 
 // 生产,环境,开发都为同一个打包模式，之前没有使用koa中间件渲染nuxt,所以这里暂时将三种模式用同一种方式打包
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test' ||  process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
     nuxtConfig.dev = true
 } else {
     nuxtConfig.dev = false
@@ -56,9 +56,13 @@ if (!nuxtConfig.dev) {
     listen()
 }
 
+// process.env.NODE_ENV === 'test'
+if(process.env.NODE_ENV === 'test'){
+    port = 9009
+}
 
 function listen (){
-    app.listen(8009,"127.0.0.1",() => {
-        console.log("server start at http://127.0.0.1:8009")
+    app.listen(port,"127.0.0.1",() => {
+        console.log(`server start at http://127.0.0.1:${port}`)
     });
 }
