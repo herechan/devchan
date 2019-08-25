@@ -4,7 +4,10 @@ let mongoose = require("mongoose");
 let db_url = ''
 if (process.env.NODE_ENV === 'dev') {
     db_url = 'mongodb://127.0.0.1:27017/devchan'
-} else {
+} else if(process.env.NODE_ENV === 'test'){
+    // 测试环境数据库
+    db_url = 'mongodb://devchan:Chen9099@47.98.147.199:27017/testDevchan';
+}else{
     db_url = 'mongodb://devchan:Chen9099@47.98.147.199:27017/devchan';
 }
 mongoose.connect(db_url, { 
