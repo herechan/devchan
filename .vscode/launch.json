@@ -8,7 +8,10 @@
             "type": "node",
             "request": "launch",
             "name": "devchan-server",
-            "program": "${workspaceFolder}\\server\\app.js"
+            "program": "${workspaceFolder}\\server\\app.js",
+            "env": {
+                "NODE_ENV" : "dev"
+            }
         }
     ]
 }

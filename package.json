@@ -14,6 +14,7 @@
     "server": "cross-env NODE_ENV=production node server/app.js",
     "testServer": "cross-env NODE_ENV=test node server/app.js",
     "testBuild": "cross-env NODE_ENV=test HOST=127.0.0.1 PORT=8009 nuxt build",
+    "testStart": "cross-env PORT=9008 nuxt start",
     "devServer": "cross-env NODE_ENV=dev node server/app.js"
   },
   "dependencies": {

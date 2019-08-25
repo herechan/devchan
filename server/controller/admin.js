@@ -4,7 +4,14 @@ let writtingCenter = require("../dao/writtingCenter")
 let resObj = require("../common/resObj");
 const formidable = require("formidable");
 const util = require("../common/util")
-const imgPublicPath = "../../public/"
+let imgPublicPath;
+if(process.env.NODE_ENV === 'test'){
+  imgPublicPath = '../../../static/test-env/public'
+} else if(process.env.NODE_ENV === 'production') {
+  imgPublicPath = '../../../static/online-env/public'
+} else{
+  imgPublicPath = '../../../static/dev-env/public'
+}
 
 
 exports.ARTICLE_TAGS = async (ctx) => {
@@ -33,8 +40,8 @@ exports.ARTICLE_COVER = async (ctx, next) => {
 exports.ARTICLE_COVER_DELETE = async (ctx) => {
   let fileFullPath = ctx.request.body.coverPath;
   let fileName = fileFullPath.substring(0, fileFullPath.lastIndexOf("."))
-  const originPath = path.resolve(__dirname, `../../public/image${fileName}`);
-  const webpPath = path.resolve(__dirname, `../../public/webp${fileName}`);
+  const originPath = path.resolve(__dirname, `${imgPublicPath}/image${fileName}`);
+  const webpPath = path.resolve(__dirname, `${imgPublicPath}/webp${fileName}`);
   const deleteOriginPath = await deleteCover(originPath)
   const deleteWebpPath = await deleteCover(webpPath);
   ctx.body = resObj(1, "remove success!", "")
@@ -53,7 +60,7 @@ exports.ARTICLE_IMAGE_UPLOAD = async (ctx, next) => {
     imgPublicPath: imgPublicPath,
     foldName: "article-image"
   });
-  ctx.body = resObj(1, "upload success!", path.normalize("\\image"+articleImagePath))//暂时将路径写成原始格式
+  ctx.body = resObj(1, "upload success!", path.normalize("\\image" + articleImagePath))//暂时将路径写成原始格式
 }
 
 //文章保存
@@ -69,19 +76,6 @@ function writeArticleImage(ctx) {
   return new Promise((reso, reje) => {
     form.parse(ctx.req, async (err, file, files) => {
       if (err) throw err;
-    })
-  })
-}
-
-
-function streamFunc(s, newPath) {
-  return new Promise((reo, rej) => {
-    s.on("finish", () => {
-      reo(resObj(
-        1,
-        "upload success!",
-        newPath.split("public")[1]
-      ))
     })
   })
 }
