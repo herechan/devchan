@@ -9,6 +9,7 @@ exports.findUser = async (ctx) => {
             password: password
         }, (err, doc) => {
             if (err) ctx.throw("findUser error:" + err);
+            console.log(doc)
             if (doc) {
                 resolved({
                     username: doc.username,

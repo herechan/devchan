@@ -10,7 +10,22 @@ const jwt = require("koa-jwt");
 const { Nuxt, Builder } = require("nuxt");
 const nuxtConfig = require("../nuxt.config.js");
 const router = require("./routers/router");
-let port = 8008
+let port = 8009
+let imgEnvFold
+
+switch (process.env.NODE_ENV) {
+    case 'dev':
+        imgEnvFold = 'dev-env'
+        break;
+    case 'test':
+        imgEnvFold = 'test-env'
+        break;
+    case 'production':
+        imgEnvFold = 'online-env'
+        break;
+    default:
+        break;
+}
 
 // app.use(jwt({
 //     secret: "devchan_token"
@@ -23,7 +38,8 @@ app.use(cors({
     credentials: true,
     // origin:"http://localhost:8008"
 }));
-app.use(serve(path.resolve(__dirname, "../public")))
+console.log(imgEnvFold)
+app.use(serve(path.resolve(__dirname, `../../static/${imgEnvFold}/public`)))
 app.use(koaBody({
     multipart: true,
     formidable: {
@@ -50,8 +66,9 @@ const nuxt = new Nuxt(nuxtConfig)
 app.use(nuxt.render)
 //当前为开发模式
 if (!nuxtConfig.dev) {
-    const builder = new Builder(nuxt)
-    builder.build().then(listen());
+    // const builder = new Builder(nuxt)
+    // builder.build().then(listen());
+    listen()
 }else {
     listen()
 }

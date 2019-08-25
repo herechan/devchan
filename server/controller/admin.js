@@ -6,9 +6,11 @@ const formidable = require("formidable");
 const util = require("../common/util")
 let imgPublicPath;
 if(process.env.NODE_ENV === 'test'){
- imgPublicPath = '../../../static/test-dev/public'
-} else {
- imgPublicPath = '../../../static/online-dev/public'
+  imgPublicPath = '../../../static/test-env/public'
+} else if(process.env.NODE_ENV === 'production') {
+  imgPublicPath = '../../../static/online-env/public'
+} else{
+  imgPublicPath = '../../../static/dev-env/public'
 }
 
 
