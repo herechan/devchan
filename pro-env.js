@@ -4,6 +4,7 @@
  */
 module.exports = function(){
     var baseUrl = '', staticUrl = '';
+    console.log(process.env.NODE_ENV)
     switch (process.env.NODE_ENV) {
         case 'production':
             baseUrl = "https://www.devchan.top/api"
