@@ -21,6 +21,7 @@
     "markdown-it": "^8.4.1y",
     "mavon-editor": "^2.6.9",
     "nuxt": "^1.0.0",
+    "qiniu": "^7.2.2",
     "qs": "^6.5.2"
   },
   "devDependencies": {
