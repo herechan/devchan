@@ -1,36 +1,54 @@
 import Vue from 'vue'
 
-const noopData = () => ({})
-
-// window.onNuxtReady(() => console.log('Ready')) hook
+// window.{{globals.loadedCallback}} hook
 // Useful for jsdom testing or plugins (https://github.com/tmpvar/jsdom#dealing-with-asynchronous-script-loading)
-if (process.browser) {
-  window._nuxtReadyCbs = []
-  window.onNuxtReady = function (cb) {
-    window._nuxtReadyCbs.push(cb)
+if (process.client) {
+  window.onNuxtReadyCbs = []
+  window.onNuxtReady = (cb) => {
+    window.onNuxtReadyCbs.push(cb)
   }
 }
 
-export function applyAsyncData(Component, asyncData) {
-  const ComponentData = Component.options.data || noopData
-  // Prevent calling this method for each request on SSR context
-  if (!asyncData && Component.options.hasAsyncData) {
+export function empty () {}
+
+export function globalHandleError (error) {
+  if (Vue.config.errorHandler) {
+    Vue.config.errorHandler(error)
+  }
+}
+
+export function interopDefault (promise) {
+  return promise.then(m => m.default || m)
+}
+
+export function applyAsyncData (Component, asyncData) {
+  if (
+    // For SSR, we once all this function without second param to just apply asyncData
+    // Prevent doing this for each SSR request
+    !asyncData && Component.options.__hasNuxtData
+  ) {
     return
   }
-  Component.options.hasAsyncData = true
+
+  const ComponentData = Component.options._originDataFn || Component.options.data || function () { return {} }
+  Component.options._originDataFn = ComponentData
+
   Component.options.data = function () {
-    const data =  ComponentData.call(this)
+    const data = ComponentData.call(this, this)
     if (this.$ssrContext) {
       asyncData = this.$ssrContext.asyncData[Component.cid]
     }
     return { ...data, ...asyncData }
   }
+
+  Component.options.__hasNuxtData = true
+
   if (Component._Ctor && Component._Ctor.options) {
     Component._Ctor.options.data = Component.options.data
   }
 }
 
-export function sanitizeComponent(Component) {
+export function sanitizeComponent (Component) {
   // If Component already sanitized
   if (Component.options && Component._Ctor === Component) {
     return Component
@@ -49,85 +67,89 @@ export function sanitizeComponent(Component) {
   return Component
 }
 
-export function getMatchedComponents(route, matches = false) {
-  return [].concat.apply([], route.matched.map(function (m, index) {
-    return Object.keys(m.components).map(function (key) {
+export function getMatchedComponents (route, matches = false, prop = 'components') {
+  return Array.prototype.concat.apply([], route.matched.map((m, index) => {
+    return Object.keys(m[prop]).map((key) => {
       matches && matches.push(index)
-      return m.components[key]
+      return m[prop][key]
     })
   }))
 }
 
-export function getMatchedComponentsInstances(route, matches = false) {
-  return [].concat.apply([], route.matched.map(function (m, index) {
-    return Object.keys(m.instances).map(function (key) {
-      matches && matches.push(index)
-      return m.instances[key]
-    })
+export function getMatchedComponentsInstances (route, matches = false) {
+  return getMatchedComponents(route, matches, 'instances')
+}
+
+export function flatMapComponents (route, fn) {
+  return Array.prototype.concat.apply([], route.matched.map((m, index) => {
+    return Object.keys(m.components).reduce((promises, key) => {
+      if (m.components[key]) {
+        promises.push(fn(m.components[key], m.instances[key], m, key, index))
+      } else {
+        delete m.components[key]
+      }
+      return promises
+    }, [])
   }))
 }
 
-export function flatMapComponents(route, fn) {
-  return Array.prototype.concat.apply([], route.matched.map(function (m, index) {
-    return Object.keys(m.components).map(function (key) {
-      return fn(m.components[key], m.instances[key], m, key, index)
-    })
-  }))
-}
-
-export function resolveRouteComponents(route) {
+export function resolveRouteComponents (route, fn) {
   return Promise.all(
-    flatMapComponents(route, async (Component, _, match, key) => {
+    flatMapComponents(route, async (Component, instance, match, key) => {
       // If component is a function, resolve it
       if (typeof Component === 'function' && !Component.options) {
         Component = await Component()
       }
-      return match.components[key] = sanitizeComponent(Component)
+      match.components[key] = Component = sanitizeComponent(Component)
+      return typeof fn === 'function' ? fn(Component, instance, match, key) : Component
     })
   )
 }
 
-export async function getRouteData(route) {
+export async function getRouteData (route) {
+  if (!route) {
+    return
+  }
   // Make sure the components are resolved (code-splitting)
   await resolveRouteComponents(route)
   // Send back a copy of route with meta based on Component definition
   return {
     ...route,
-    meta: getMatchedComponents(route).map((Component) => {
-      return Component.options.meta || {}
+    meta: getMatchedComponents(route).map((Component, index) => {
+      return { ...Component.options.meta, ...(route.matched[index] || {}).meta }
     })
   }
 }
 
-export async function setContext(app, context) {
-  const route = (context.to ? context.to : context.route)
+export async function setContext (app, context) {
   // If context not defined, create it
   if (!app.context) {
     app.context = {
-      get isServer() {
-        console.warn('context.isServer has been deprecated, please use process.server instead.')
-        return process.server
-      },
-      get isClient() {
-        console.warn('context.isClient has been deprecated, please use process.client instead.')
-        return process.client
-      },
       isStatic: process.static,
-      isDev: false,
+      isDev: true,
       isHMR: false,
       app,
-      store: app.store,
+
       payload: context.payload,
       error: context.error,
       base: '/',
-      env: {"staticUrl":"https://www.devchan.top","baseUrl":"https://www.devchan.top/api"}
+      env: {}
     }
     // Only set once
-    if (context.req) app.context.req = context.req
-    if (context.res) app.context.res = context.res
-    app.context.redirect = function (status, path, query) {
-      if (!status) return
-      app.context._redirected = true // Used in middleware
+    if (context.req) {
+      app.context.req = context.req
+    }
+    if (context.res) {
+      app.context.res = context.res
+    }
+    if (context.ssrContext) {
+      app.context.ssrContext = context.ssrContext
+    }
+    app.context.redirect = (status, path, query) => {
+      if (!status) {
+        return
+      }
+      app.context._redirected = true
       // if only 1 or 2 arguments: redirect('/') or redirect('/', { foo: 'bar' })
       let pathType = typeof path
       if (typeof status !== 'number' && (pathType === 'undefined' || pathType === 'object')) {
@@ -137,21 +159,21 @@ export async function setContext(app, context) {
         status = 302
       }
       if (pathType === 'object') {
-        path = app.router.resolve(path).href
+        path = app.router.resolve(path).route.fullPath
       }
       // "/absolute/route", "./relative/route" or "../relative/route"
       if (/(^[.]{1,2}\/)|(^\/(?!\/))/.test(path)) {
         app.context.next({
-          path: path,
-          query: query,
-          status: status
+          path,
+          query,
+          status
         })
       } else {
         path = formatUrl(path, query)
         if (process.server) {
           app.context.next({
-            path: path,
-            status: status
+            path,
+            status
           })
         }
         if (process.client) {
@@ -163,33 +185,52 @@ export async function setContext(app, context) {
         }
       }
     }
-    if (process.server) app.context.beforeNuxtRender = (fn) => context.beforeRenderFns.push(fn)
-    if (process.client) app.context.nuxtState = window.__NUXT__
+    if (process.server) {
+      app.context.beforeNuxtRender = fn => context.beforeRenderFns.push(fn)
+    }
+    if (process.client) {
+      app.context.nuxtState = window.__NUXT__
+    }
   }
+
   // Dynamic keys
+  const [currentRouteData, fromRouteData] = await Promise.all([
+    getRouteData(context.route),
+    getRouteData(context.from)
+  ])
+
+  if (context.route) {
+    app.context.route = currentRouteData
+  }
+
+  if (context.from) {
+    app.context.from = fromRouteData
+  }
+
   app.context.next = context.next
   app.context._redirected = false
   app.context._errored = false
-  app.context.isHMR = !!context.isHMR
-  if (context.route) app.context.route = await getRouteData(context.route)
+  app.context.isHMR = Boolean(context.isHMR)
   app.context.params = app.context.route.params || {}
   app.context.query = app.context.route.query || {}
-  if (context.from) app.context.from = await getRouteData(context.from)
 }
 
-export function middlewareSeries(promises, appContext) {
+export function middlewareSeries (promises, appContext) {
   if (!promises.length || appContext._redirected || appContext._errored) {
     return Promise.resolve()
   }
   return promisify(promises[0], appContext)
-  .then(() => {
-    return middlewareSeries(promises.slice(1), appContext)
-  })
+    .then(() => {
+      return middlewareSeries(promises.slice(1), appContext)
+    })
 }
 
-export function promisify(fn, context) {
+export function promisify (fn, context) {
   let promise
   if (fn.length === 2) {
+      console.warn('Callback-based asyncData, fetch or middleware calls are deprecated. ' +
+        'Please switch to promises or async/await syntax')
+
     // fn(context, callback)
     promise = new Promise((resolve) => {
       fn(context, function (err, data) {
@@ -203,15 +244,16 @@ export function promisify(fn, context) {
   } else {
     promise = fn(context)
   }
-  if (!promise || (!(promise instanceof Promise) && (typeof promise.then !== 'function'))) {
-    promise = Promise.resolve(promise)
+
+  if (promise && promise instanceof Promise && typeof promise.then === 'function') {
+    return promise
   }
-  return promise
+  return Promise.resolve(promise)
 }
 
 // Imported from vue-router
-export function getLocation(base, mode) {
-  var path = window.location.pathname
+export function getLocation (base, mode) {
+  let path = decodeURI(window.location.pathname)
   if (mode === 'hash') {
     return window.location.hash.replace(/^#\//, '')
   }
@@ -219,10 +261,6 @@ export function getLocation(base, mode) {
     path = path.slice(base.length)
   }
   return (path || '/') + window.location.search + window.location.hash
-}
-
-export function urlJoin() {
-  return [].slice.call(arguments).join('/').replace(/\/+/g, '/')
 }
 
 // Imported from path-to-regexp
@@ -234,11 +272,11 @@ export function urlJoin() {
  * @param  {Object=}            options
  * @return {!function(Object=, Object=)}
  */
-export function compile(str, options) {
-  return tokensToFunction(parse(str, options))
+export function compile (str, options) {
+  return tokensToFunction(parse(str, options), options)
 }
 
-export function getQueryDiff(toQuery, fromQuery) {
+export function getQueryDiff (toQuery, fromQuery) {
   const diff = {}
   const queries = { ...toQuery, ...fromQuery }
   for (const k in queries) {
@@ -247,6 +285,24 @@ export function getQueryDiff(toQuery, fromQuery) {
     }
   }
   return diff
+}
+
+export function normalizeError (err) {
+  let message
+  if (!(err.message || typeof err === 'string')) {
+    try {
+      message = JSON.stringify(err, null, 2)
+    } catch (e) {
+      message = `[${err.constructor.name}]`
+    }
+  } else {
+    message = err.message || err
+  }
+  return {
+    ...err,
+    message,
+    statusCode: (err.statusCode || err.status || (err.response && err.response.status) || 500)
+  }
 }
 
 /**
@@ -274,18 +330,18 @@ const PATH_REGEXP = new RegExp([
  * @param  {Object=} options
  * @return {!Array}
  */
-function parse(str, options) {
-  var tokens = []
-  var key = 0
-  var index = 0
-  var path = ''
-  var defaultDelimiter = options && options.delimiter || '/'
-  var res
+function parse (str, options) {
+  const tokens = []
+  let key = 0
+  let index = 0
+  let path = ''
+  const defaultDelimiter = (options && options.delimiter) || '/'
+  let res
 
   while ((res = PATH_REGEXP.exec(str)) != null) {
-    var m = res[0]
-    var escaped = res[1]
-    var offset = res.index
+    const m = res[0]
+    const escaped = res[1]
+    const offset = res.index
     path += str.slice(index, offset)
     index = offset + m.length
 
@@ -295,13 +351,13 @@ function parse(str, options) {
       continue
     }
 
-    var next = str[index]
-    var prefix = res[2]
-    var name = res[3]
-    var capture = res[4]
-    var group = res[5]
-    var modifier = res[6]
-    var asterisk = res[7]
+    const next = str[index]
+    const prefix = res[2]
+    const name = res[3]
+    const capture = res[4]
+    const group = res[5]
+    const modifier = res[6]
+    const asterisk = res[7]
 
     // Push the current path onto the tokens.
     if (path) {
@@ -309,20 +365,20 @@ function parse(str, options) {
       path = ''
     }
 
-    var partial = prefix != null && next != null && next !== prefix
-    var repeat = modifier === '+' || modifier === '*'
-    var optional = modifier === '?' || modifier === '*'
-    var delimiter = res[2] || defaultDelimiter
-    var pattern = capture || group
+    const partial = prefix != null && next != null && next !== prefix
+    const repeat = modifier === '+' || modifier === '*'
+    const optional = modifier === '?' || modifier === '*'
+    const delimiter = res[2] || defaultDelimiter
+    const pattern = capture || group
 
     tokens.push({
       name: name || key++,
       prefix: prefix || '',
-      delimiter: delimiter,
-      optional: optional,
-      repeat: repeat,
-      partial: partial,
-      asterisk: !!asterisk,
+      delimiter,
+      optional,
+      repeat,
+      partial,
+      asterisk: Boolean(asterisk),
       pattern: pattern ? escapeGroup(pattern) : (asterisk ? '.*' : '[^' + escapeString(delimiter) + ']+?')
     })
   }
@@ -346,8 +402,9 @@ function parse(str, options) {
  * @param  {string}
  * @return {string}
  */
-function encodeURIComponentPretty(str) {
-  return encodeURI(str).replace(/[\/?#]/g, function (c) {
+function encodeURIComponentPretty (str, slashAllowed) {
+  const re = slashAllowed ? /[?#]/g : /[/?#]/g
+  return encodeURI(str).replace(re, (c) => {
     return '%' + c.charCodeAt(0).toString(16).toUpperCase()
   })
 }
@@ -358,34 +415,52 @@ function encodeURIComponentPretty(str) {
  * @param  {string}
  * @return {string}
  */
-function encodeAsterisk(str) {
-  return encodeURI(str).replace(/[?#]/g, function (c) {
-    return '%' + c.charCodeAt(0).toString(16).toUpperCase()
-  })
+function encodeAsterisk (str) {
+  return encodeURIComponentPretty(str, true)
+}
+
+/**
+ * Escape a regular expression string.
+ *
+ * @param  {string} str
+ * @return {string}
+ */
+function escapeString (str) {
+  return str.replace(/([.+*?=^!:${}()[\]|/\\])/g, '\\$1')
+}
+
+/**
+ * Escape the capturing group by escaping special characters and meaning.
+ *
+ * @param  {string} group
+ * @return {string}
+ */
+function escapeGroup (group) {
+  return group.replace(/([=!:$/()])/g, '\\$1')
 }
 
 /**
  * Expose a method for transforming tokens into the path function.
  */
-function tokensToFunction(tokens) {
+function tokensToFunction (tokens, options) {
   // Compile all the tokens into regexps.
-  var matches = new Array(tokens.length)
+  const matches = new Array(tokens.length)
 
   // Compile all the patterns before compilation.
-  for (var i = 0; i < tokens.length; i++) {
+  for (let i = 0; i < tokens.length; i++) {
     if (typeof tokens[i] === 'object') {
-      matches[i] = new RegExp('^(?:' + tokens[i].pattern + ')$')
+      matches[i] = new RegExp('^(?:' + tokens[i].pattern + ')$', flags(options))
     }
   }
 
-  return function(obj, opts) {
-    var path = ''
-    var data = obj || {}
-    var options = opts || {}
-    var encode = options.pretty ? encodeURIComponentPretty : encodeURIComponent
+  return function (obj, opts) {
+    let path = ''
+    const data = obj || {}
+    const options = opts || {}
+    const encode = options.pretty ? encodeURIComponentPretty : encodeURIComponent
 
-    for (var i = 0; i < tokens.length; i++) {
-      var token = tokens[i]
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i]
 
       if (typeof token === 'string') {
         path += token
@@ -393,8 +468,8 @@ function tokensToFunction(tokens) {
         continue
       }
 
-      var value = data[token.name || 'pathMatch']
-      var segment
+      const value = data[token.name || 'pathMatch']
+      let segment
 
       if (value == null) {
         if (token.optional) {
@@ -422,7 +497,7 @@ function tokensToFunction(tokens) {
           }
         }
 
-        for (var j = 0; j < value.length; j++) {
+        for (let j = 0; j < value.length; j++) {
           segment = encode(value[j])
 
           if (!matches[i].test(segment)) {
@@ -449,23 +524,13 @@ function tokensToFunction(tokens) {
 }
 
 /**
- * Escape a regular expression string.
+ * Get the flags for a regexp from the options.
  *
- * @param  {string} str
+ * @param  {Object} options
  * @return {string}
  */
-function escapeString(str) {
-  return str.replace(/([.+*?=^!:()[\]|\/\\])/g, '\\$1')
-}
-
-/**
- * Escape the capturing group by escaping special characters and meaning.
- *
- * @param  {string} group
- * @return {string}
- */
-function escapeGroup(group) {
-  return group.replace(/([=!:$\/()])/g, '\\$1')
+function flags (options) {
+  return options && options.sensitive ? '' : 'i'
 }
 
 /**
@@ -477,11 +542,11 @@ function escapeGroup(group) {
  */
 function formatUrl (url, query) {
   let protocol
-  let index = url.indexOf('://')
+  const index = url.indexOf('://')
   if (index !== -1) {
     protocol = url.substring(0, index)
     url = url.substring(index + 3)
-  } else if (url.indexOf('//') === 0) {
+  } else if (url.startsWith('//')) {
     url = url.substring(2)
   }
 
@@ -492,8 +557,7 @@ function formatUrl (url, query) {
   let hash
   parts = path.split('#')
   if (parts.length === 2) {
-    path = parts[0]
-    hash = parts[1]
+    [path, hash] = parts
   }
 
   result += path ? '/' + path : ''
@@ -513,8 +577,8 @@ function formatUrl (url, query) {
  * @return {string}
  */
 function formatQuery (query) {
-  return Object.keys(query).sort().map(key => {
-    var val = query[key]
+  return Object.keys(query).sort().map((key) => {
+    const val = query[key]
     if (val == null) {
       return ''
     }

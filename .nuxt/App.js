@@ -1,55 +1,67 @@
 import Vue from 'vue'
+
+import {
+  getMatchedComponentsInstances,
+  promisify,
+  globalHandleError
+} from './utils'
+
 import NuxtLoading from './components/nuxt-loading.vue'
+import NuxtBuildIndicator from './components/nuxt-build-indicator'
 
-<<<<<<< HEAD
-import '..\\node_modules\\_element-ui@2.9.1@element-ui\\lib\\theme-chalk\\display.css'
-=======
-import '..\\node_modules\\_element-ui@2.13.0@element-ui\\lib\\theme-chalk\\display.css'
->>>>>>> feature-port
+import '..\\node_modules\\_iview@3.5.4@iview\\dist\\styles\\iview.css'
 
-import '..\\client\\assets\\common\\common.scss'
+import _6f6c098b from '..\\layouts\\default.vue'
 
-
-let layouts = {
-
-  "_default": () => import('..\\client\\layouts\\default.vue'  /* webpackChunkName: "layouts_default" */).then(m => m.default || m)
-
-}
-
-let resolvedLayouts = {}
+const layouts = { "_default": _6f6c098b }
 
 export default {
-  head: {"title":"devchan","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1,user-scalable=0"},{"hid":"chan","name":"chan","content":"It`s Chan`s personal website"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Fimg-static\u002Flogo.png"}],"style":[],"script":[]},
-  render(h, props) {
-    const loadingEl = h('nuxt-loading', { ref: 'loading' })
+  head: {"title":"Casper","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"Casper&#39;s land"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"}],"style":[],"script":[]},
+
+  render (h, props) {
+    const loadingEl = h('NuxtLoading', { ref: 'loading' })
+
     const layoutEl = h(this.layout || 'nuxt')
     const templateEl = h('div', {
       domProps: {
         id: '__layout'
       },
       key: this.layoutName
-    }, [ layoutEl ])
+    }, [layoutEl])
 
     const transitionEl = h('transition', {
       props: {
         name: 'layout',
         mode: 'out-in'
+      },
+      on: {
+        beforeEnter (el) {
+          // Ensure to trigger scroll event after calling scrollBehavior
+          window.$nuxt.$nextTick(() => {
+            window.$nuxt.$emit('triggerScroll')
+          })
+        }
       }
-    }, [ templateEl ])
+    }, [templateEl])
 
-    return h('div',{
+    return h('div', {
       domProps: {
         id: '__nuxt'
       }
     }, [
       loadingEl,
+      h(NuxtBuildIndicator),
       transitionEl
     ])
   },
+
   data: () => ({
+    isOnline: true,
+
     layout: null,
     layoutName: ''
   }),
+
   beforeCreate () {
     Vue.util.defineReactive(this, 'nuxt', this.$options.nuxt)
   },
@@ -57,57 +69,117 @@ export default {
     // Add this.$nuxt in child instances
     Vue.prototype.$nuxt = this
     // add to window so we can listen when ready
-    if (typeof window !== 'undefined') {
+    if (process.client) {
       window.$nuxt = this
+
+      this.refreshOnlineStatus()
+      // Setup the listeners
+      window.addEventListener('online', this.refreshOnlineStatus)
+      window.addEventListener('offline', this.refreshOnlineStatus)
     }
     // Add $nuxt.error()
     this.error = this.nuxt.error
+    // Add $nuxt.context
+    this.context = this.$options.context
   },
-  
+
   mounted () {
     this.$loading = this.$refs.loading
   },
   watch: {
     'nuxt.err': 'errorChanged'
   },
-  
+
+  computed: {
+    isOffline () {
+      return !this.isOnline
+    }
+  },
+
   methods: {
-    
-    errorChanged () {
-      if (this.nuxt.err && this.$loading) {
-        if (this.$loading.fail) this.$loading.fail()
-        if (this.$loading.finish) this.$loading.finish()
+    refreshOnlineStatus () {
+      if (process.client) {
+        if (typeof window.navigator.onLine === 'undefined') {
+          // If the browser doesn't support connection status reports
+          // assume that we are online because most apps' only react
+          // when they now that the connection has been interrupted
+          this.isOnline = true
+        } else {
+          this.isOnline = window.navigator.onLine
+        }
       }
     },
-    
+
+    async refresh () {
+      const pages = getMatchedComponentsInstances(this.$route)
+
+      if (!pages.length) {
+        return
+      }
+      this.$loading.start()
+
+      const promises = pages.map((page) => {
+        const p = []
+
+        if (page.$options.fetch) {
+          p.push(promisify(page.$options.fetch, this.context))
+        }
+
+        if (page.$options.asyncData) {
+          p.push(
+            promisify(page.$options.asyncData, this.context)
+              .then((newData) => {
+                for (const key in newData) {
+                  Vue.set(page.$data, key, newData[key])
+                }
+              })
+          )
+        }
+
+        return Promise.all(p)
+      })
+      try {
+        await Promise.all(promises)
+      } catch (error) {
+        this.$loading.fail()
+        globalHandleError(error)
+        this.error(error)
+      }
+      this.$loading.finish()
+    },
+
+    errorChanged () {
+      if (this.nuxt.err && this.$loading) {
+        if (this.$loading.fail) {
+          this.$loading.fail()
+        }
+        if (this.$loading.finish) {
+          this.$loading.finish()
+        }
+      }
+    },
+
     setLayout (layout) {
-      if (!layout || !resolvedLayouts['_' + layout]) layout = 'default'
+      if(layout && typeof layout !== 'string') {
+        throw new Error('[nuxt] Avoid using non-string value as layout property.')
+      }
+
+      if (!layout || !layouts['_' + layout]) {
+        layout = 'default'
+      }
       this.layoutName = layout
-      let _layout = '_' + layout
-      this.layout = resolvedLayouts[_layout]
+      this.layout = layouts['_' + layout]
       return this.layout
     },
     loadLayout (layout) {
-      if (!layout || !(layouts['_' + layout] || resolvedLayouts['_' + layout])) layout = 'default'
-      let _layout = '_' + layout
-      if (resolvedLayouts[_layout]) {
-        return Promise.resolve(resolvedLayouts[_layout])
+      if (!layout || !layouts['_' + layout]) {
+        layout = 'default'
       }
-      return layouts[_layout]()
-      .then((Component) => {
-        resolvedLayouts[_layout] = Component
-        delete layouts[_layout]
-        return resolvedLayouts[_layout]
-      })
-      .catch((e) => {
-        if (this.$nuxt) {
-          return this.$nuxt.error({ statusCode: 500, message: e.message })
-        }
-      })
+      return Promise.resolve(layouts['_' + layout])
     }
   },
+
   components: {
     NuxtLoading
   }
 }
-
