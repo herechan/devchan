@@ -3,19 +3,19 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const _1f342bf8 = () => import('..\\client\\pages\\lost.vue' /* webpackChunkName: "pages_lost" */).then(m => m.default || m)
-const _320f3f08 = () => import('..\\client\\pages\\auth.vue' /* webpackChunkName: "pages_auth" */).then(m => m.default || m)
-const _b623ccaa = () => import('..\\client\\pages\\admin.vue' /* webpackChunkName: "pages_admin" */).then(m => m.default || m)
-const _1321d712 = () => import('..\\client\\pages\\admin\\index.vue' /* webpackChunkName: "pages_admin_index" */).then(m => m.default || m)
-const _91763838 = () => import('..\\client\\pages\\error.vue' /* webpackChunkName: "pages_error" */).then(m => m.default || m)
-const _3d2668c5 = () => import('..\\client\\pages\\login.vue' /* webpackChunkName: "pages_login" */).then(m => m.default || m)
-const _737ec5ae = () => import('..\\client\\pages\\index.vue' /* webpackChunkName: "pages_index" */).then(m => m.default || m)
-const _27a86f14 = () => import('..\\client\\pages\\index\\index.vue' /* webpackChunkName: "pages_index_index" */).then(m => m.default || m)
-const _6122b5b5 = () => import('..\\client\\pages\\index\\twitter.vue' /* webpackChunkName: "pages_index_twitter" */).then(m => m.default || m)
-const _0a334403 = () => import('..\\client\\pages\\index\\essayIndex.vue' /* webpackChunkName: "pages_index_essayIndex" */).then(m => m.default || m)
-const _190f5bbb = () => import('..\\client\\pages\\index\\essayIndex\\_page.vue' /* webpackChunkName: "pages_index_essayIndex__page" */).then(m => m.default || m)
-const _63f2af72 = () => import('..\\client\\pages\\index\\tags.vue' /* webpackChunkName: "pages_index_tags" */).then(m => m.default || m)
-const _1569f305 = () => import('..\\client\\pages\\index\\_essayMain.vue' /* webpackChunkName: "pages_index__essayMain" */).then(m => m.default || m)
+const _6d3eb637 = () => import('..\\client\\pages\\admin.vue' /* webpackChunkName: "pages_admin" */).then(m => m.default || m)
+const _3a9b826b = () => import('..\\client\\pages\\admin\\index.vue' /* webpackChunkName: "pages_admin_index" */).then(m => m.default || m)
+const _b9c7fb20 = () => import('..\\client\\pages\\auth.vue' /* webpackChunkName: "pages_auth" */).then(m => m.default || m)
+const _7f958070 = () => import('..\\client\\pages\\error.vue' /* webpackChunkName: "pages_error" */).then(m => m.default || m)
+const _05770551 = () => import('..\\client\\pages\\login.vue' /* webpackChunkName: "pages_login" */).then(m => m.default || m)
+const _49506428 = () => import('..\\client\\pages\\lost.vue' /* webpackChunkName: "pages_lost" */).then(m => m.default || m)
+const _3bcf623a = () => import('..\\client\\pages\\index.vue' /* webpackChunkName: "pages_index" */).then(m => m.default || m)
+const _6bd4dd08 = () => import('..\\client\\pages\\index\\index.vue' /* webpackChunkName: "pages_index_index" */).then(m => m.default || m)
+const _22216e8f = () => import('..\\client\\pages\\index\\essayIndex.vue' /* webpackChunkName: "pages_index_essayIndex" */).then(m => m.default || m)
+const _cc3b08a2 = () => import('..\\client\\pages\\index\\essayIndex\\_page.vue' /* webpackChunkName: "pages_index_essayIndex__page" */).then(m => m.default || m)
+const _545aabd3 = () => import('..\\client\\pages\\index\\tags.vue' /* webpackChunkName: "pages_index_tags" */).then(m => m.default || m)
+const _4beb76a9 = () => import('..\\client\\pages\\index\\twitter.vue' /* webpackChunkName: "pages_index_twitter" */).then(m => m.default || m)
+const _2d581d91 = () => import('..\\client\\pages\\index\\_essayMain.vue' /* webpackChunkName: "pages_index__essayMain" */).then(m => m.default || m)
 
 
 
@@ -51,70 +51,70 @@ export function createRouter () {
     scrollBehavior,
     routes: [
 		{
-			path: "/lost",
-			component: _1f342bf8,
-			name: "lost"
-		},
-		{
-			path: "/auth",
-			component: _320f3f08,
-			name: "auth"
-		},
-		{
 			path: "/admin",
-			component: _b623ccaa,
+			component: _6d3eb637,
 			children: [
 				{
 					path: "",
-					component: _1321d712,
+					component: _3a9b826b,
 					name: "admin"
 				}
 			]
 		},
 		{
+			path: "/auth",
+			component: _b9c7fb20,
+			name: "auth"
+		},
+		{
 			path: "/error",
-			component: _91763838,
+			component: _7f958070,
 			name: "error"
 		},
 		{
 			path: "/login",
-			component: _3d2668c5,
+			component: _05770551,
 			name: "login"
 		},
 		{
+			path: "/lost",
+			component: _49506428,
+			name: "lost"
+		},
+		{
 			path: "/",
-			component: _737ec5ae,
+			component: _3bcf623a,
 			children: [
 				{
 					path: "",
-					component: _27a86f14,
+					component: _6bd4dd08,
 					name: "index"
 				},
 				{
-					path: "twitter",
-					component: _6122b5b5,
-					name: "index-twitter"
-				},
-				{
 					path: "essayIndex",
-					component: _0a334403,
+					component: _22216e8f,
 					name: "index-essayIndex",
 					children: [
 						{
 							path: ":page?",
-							component: _190f5bbb,
+							component: _cc3b08a2,
 							name: "index-essayIndex-page"
 						}
 					]
 				},
 				{
 					path: "tags",
-					component: _63f2af72,
+					component: _545aabd3,
 					name: "index-tags"
 				},
 				{
+					path: "twitter",
+					component: _4beb76a9,
+					name: "index-twitter"
+				},
+				{
 					path: ":essayMain",
-					component: _1569f305,
+					component: _2d581d91,
 					name: "index-essayMain"
 				}
 			]

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import NuxtLoading from './components/nuxt-loading.vue'
 
-import '..\\node_modules\\_element-ui@2.9.1@element-ui\\lib\\theme-chalk\\display.css'
+import '..\\node_modules\\_element-ui@2.13.0@element-ui\\lib\\theme-chalk\\display.css'
 
 import '..\\client\\assets\\common\\common.scss'
 
