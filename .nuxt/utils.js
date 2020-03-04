@@ -120,7 +120,7 @@ export async function setContext(app, context) {
       payload: context.payload,
       error: context.error,
       base: '/',
-      env: {"staticUrl":"http://localhost:8009","baseUrl":"http://localhost:8009/api"}
+      env: {"staticUrl":"https://www.devchan.top","baseUrl":"https://www.devchan.top/api"}
     }
     // Only set once
     if (context.req) app.context.req = context.req

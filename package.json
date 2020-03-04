@@ -10,12 +10,18 @@
     "start": "cross-env PORT=8008 nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "server": "cross-env NODE_ENV=production node server/app.js",
+    "testServer": "cross-env NODE_ENV=test node server/app.js",
+    "testBuild": "cross-env NODE_ENV=test HOST=127.0.0.1 PORT=9009 nuxt build",
+    "testStart": "cross-env NODE_ENV=test PORT=9008 nuxt start",
+    "devServer": "cross-env NODE_ENV=dev node server/app.js"
   },
   "dependencies": {
-    "markdown-it": "^8.4.1",
+    "markdown-it": "^8.4.1y",
     "mavon-editor": "^2.6.9",
     "nuxt": "^1.0.0",
+    "qiniu": "^7.2.2",
     "qs": "^6.5.2"
   },
   "devDependencies": {

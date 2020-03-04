@@ -96,7 +96,7 @@ module.exports = {
     styleResources: {
       scss: './client/assets/common/*.scss',
     },
-    publicPath: "http://cdn.devchan.top/dist/",
+    publicPath: "https://cdn.devchan.top/dist/",
     vendor: [
       "./client/assets/common/common.scss"
     ]
