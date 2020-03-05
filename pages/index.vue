@@ -1,12 +1,13 @@
 <template>
   <div class="container">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
     <div>
       <logo />
-      <h1 class="title">
-        Casper
-      </h1>
+      <!-- <h1 class="title">
+        devchan
+      </h1> -->
       <h2 class="subtitle">
-        Welcome to the iView + Nuxt.js template
+        测试
       </h2>
       <div class="links">
         <Button type="primary" target="_blank" to="https://nuxtjs.org/">
@@ -33,6 +34,9 @@ export default {
 </script>
 
 <style>
+body{
+  font-family: 'Ubuntu', sans-serif;
+}
 .container {
   margin: 0 auto;
   min-height: 100vh;
@@ -52,7 +56,7 @@ export default {
 }
 .subtitle {
   font-weight: 300;
-  font-size: 42px;
+  font-size: 24;
   color: #526488;
   word-spacing: 5px;
   padding-bottom: 15px;

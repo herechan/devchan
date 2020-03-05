@@ -1,6 +1,6 @@
 
 export default {
-  mode: 'spa',
+  mode: 'universal',
   /*
   ** Headers of the page
   */
@@ -41,14 +41,6 @@ export default {
   */
   modules: [
   ],
-  hooks: {
-    build: {
-      done (builder) {
-        // console.log(builder)
-        console.log('build done')
-      },
-    }
-  },
   /*
   ** Build configuration
   */
