@@ -23,7 +23,8 @@ export default {
   ** Global CSS
   */
   css: [
-    'iview/dist/styles/iview.css'
+    'iview/dist/styles/iview.css',
+    'assets/style.less'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -40,6 +41,7 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/style-resources'
   ],
   /*
   ** Build configuration
@@ -49,19 +51,10 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
-      config.resolve.alias['@assets'] =  path.resolve(__dirname, 'assets')
-      // config.module.rules.push(
-      //   {
-      //     use: [
-      //       {
-      //         loader: 'less-loader',
-      //         options: {
-      //           javascriptEnabled: true
-      //         }
-      //       }
-      //     ]
-      //   }
-      // )
+      config.resolve.alias['@imgs'] =  path.resolve(__dirname, 'assets/imgs')
     }
+  },
+  styleResources: {
+    less: ['./assets/style.less']
   }
 }

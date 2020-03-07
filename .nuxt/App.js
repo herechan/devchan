@@ -9,9 +9,11 @@ import {
 import NuxtLoading from './components/nuxt-loading.vue'
 import NuxtBuildIndicator from './components/nuxt-build-indicator'
 
-import '../node_modules/_iview@3.5.4@iview/dist/styles/iview.css'
+import '..\\node_modules\\_iview@3.5.4@iview\\dist\\styles\\iview.css'
 
-import _6f6c098b from '../layouts/default.vue'
+import '..\\assets\\style.less'
+
+import _6f6c098b from '..\\layouts\\default.vue'
 
 const layouts = { "_default": _6f6c098b }
 

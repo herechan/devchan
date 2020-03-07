@@ -1,0 +1,48 @@
+body{
+    font-family: 'Ubuntu', "Helvetica Neue",Helvetica,'Segoe UI', Roboto, "PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+@media screen and (min-width: 1088px){
+    .container {
+        max-width: 960px;
+        width: 960px;
+    }
+}
+@media screen and (min-width: 1280px){
+    .container {
+        max-width: 1152px;
+        width: 1152px;
+    }
+}
+// 大屏
+@media screen and (min-width: 1472px) {
+    .container{
+        max-width: 1344px;
+    }
+}
+// 小屏幕
+@media screen and (max-width: 1087px){
+    .container {
+        // max-width: 960px;
+        // width: 960px;
+        padding: 0 20px;
+    }
+}
+@g-shadow: 0 4px 10px rgba(0,0,0,0.05), 0 0 1px rgba(0,0,0,0.1);
+@card-shadow:  0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+@main-color: #00c58e;
+.g-shadow{
+    box-shadow: @g-shadow
+}
+.g-card{
+    background-color: white;
+    box-shadow: @card-shadow;
+    color: #4a4a4a;
+    max-width: 100%;
+    position: relative;
+}
+.flex{
+    display: flex;
+}
+li{
+    list-style-type: none;
+}
