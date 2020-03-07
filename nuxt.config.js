@@ -1,4 +1,4 @@
-
+const path = require('path')
 export default {
   mode: 'universal',
   /*
@@ -49,6 +49,19 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
+      config.resolve.alias['@assets'] =  path.resolve(__dirname, 'assets')
+      // config.module.rules.push(
+      //   {
+      //     use: [
+      //       {
+      //         loader: 'less-loader',
+      //         options: {
+      //           javascriptEnabled: true
+      //         }
+      //       }
+      //     ]
+      //   }
+      // )
     }
   }
 }
