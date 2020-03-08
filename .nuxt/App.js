@@ -18,7 +18,7 @@ import _6f6c098b from '..\\layouts\\default.vue'
 const layouts = { "_default": _6f6c098b }
 
 export default {
-  head: {"title":"devchan","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"Casper&#39;s land"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"}],"style":[],"script":[]},
+  head: {"title":"Casper's Land","script":[{"src":"https:\u002F\u002Fat.alicdn.com\u002Ft\u002Ffont_8d5l8fzk5b87iudi.js"}],"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"Casper&#39;s land"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Flogo.png"}],"style":[]},
 
   render (h, props) {
     const loadingEl = h('NuxtLoading', { ref: 'loading' })
