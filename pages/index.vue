@@ -25,26 +25,52 @@
     </header>
     <section>
       <div class="container clear content-wrap">
-        <div class="sidebar-left fl">
-          <div class="info-card g-shadow">
-            <div class="level1">
-              <div class="portrait">
-                <img src="@imgs/portrait.jpg" alt="" class="portrait">
+        <Row>
+          <Col :xs="24" :md="5">
+            <div class="sidebar-left">
+              <div class="info-card g-shadow">
+                <div class="level1">
+                  <div class="portrait">
+                    <img src="@imgs/portrait.jpg" alt="" class="portrait">
+                  </div>
+                  <p class="name">
+                    Casper
+                  </p>
+                  <p class="profession">
+                    Web Developer
+                  </p>
+                  <p class="coor">
+                    <img src="@imgs/coor.png" alt="hangzhou">
+                    Hangzhou, Zhejiang
+                    </p>
+                </div>
+                <div class="level2">
+                  <ul>
+                    <li>
+                      <p class="title">POST</p>
+                      <p class="num">11</p>
+                    </li>
+                    <li>
+                      <p class="title">CATEGORIES</p>
+                      <p class="num">6</p>
+                    </li>
+                    <li>
+                      <p class="title">TAG</p>
+                      <p class="num">3</p>
+                    </li>
+                  </ul>
+                </div>
+                <p class="follow-btn">Follow</p>
               </div>
-              <p class="name">
-                Casper
-              </p>
-              <p class="profession">
-                Web Developer
-              </p>
-              <p class="coor">
-                <img src="@imgs/coor.png" alt="hangzhou">
-                Hangzhou, Zhejiang
-                </p>
             </div>
-          </div>
-        </div>
-        <div class="sidebar-right"></div>
+          </Col>
+          <Col :xs="24" :md="14">
+          center
+          </Col>
+          <Col  :xs="24" :md="5">
+            <div class="sidebar-right">d</div>
+          </Col>
+        </Row>
       </div>
     </section>
   </div>
@@ -143,7 +169,7 @@ section{
       .info-card{
         border-radius: @g-radius;
         box-shadow: @g-shadow;
-        width: 320px;
+        width: 100%;
         background-color: #fff;
         padding: 20px;
         padding-top: 0;
@@ -174,6 +200,36 @@ section{
           text-align: center;
           font-size: @font5;
           color: @gray;
+          margin: 5px 0;
+        }
+        .level2{
+          margin: 10px 0;
+          ul{
+            display: flex;
+            justify-content: space-between;
+            li{
+              width: 30%;
+              p{
+                text-align: center;
+                font-size: 12px;
+                &.num{
+                  font-weight: 400;
+                  font-size: 24px;
+                  color: @gray-deep1;
+                }
+              }
+            }
+          }
+        }
+        .follow-btn{
+          cursor: pointer;
+          background-color: @main-color;
+          border-radius: 16px;
+          color: #fff;
+          line-height: 30px;
+          height: 30px;
+          text-align: center;
+          font-size: 14px;
         }
       }
     }
