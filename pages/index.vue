@@ -61,6 +61,12 @@
                   </ul>
                 </div>
                 <p class="follow-btn">Follow</p>
+                <ul class="flex icon-line">
+                  <li><a href=""><img src="@imgs/twitter.png" alt="twitter"></a></li>
+                  <li><a href=""><img src="@imgs/instagram.png" alt="instagram"></a></li>
+                  <li><a href=""><img src="@imgs/github.png" alt="github"></a></li>
+                  <li><a href=""><img src="@imgs/google.png" alt="google"></a></li>
+                </ul>
               </div>
             </div>
           </Col>
@@ -68,7 +74,29 @@
           center
           </Col>
           <Col  :xs="24" :md="5">
-            <div class="sidebar-right">d</div>
+            <div class="sidebar-right g-shadow">
+              <p class="title">
+                近期文章
+              </p>
+              <ul>
+                <li class="flex">
+                  <img src="@imgs/recent-test.jpg" class="cover">
+                  <div class="info">
+                    <p class="time">2020-03-09</p>
+                    <p class="title">a simple, delicateasdfsfsdfsdfsdfdsfsdfdsfdsfsdfdssdfsdf</p>
+                    <p class="cat">旅行</p>
+                  </div>
+                </li>
+                <li class="flex">
+                  <img src="@imgs/recent-test.jpg" class="cover">
+                  <div class="info">
+                    <p class="time">2020-03-09</p>
+                    <p class="title">a simple, delicateasdfsfsdfsdfsdfdsfsdfdsfdsfsdfdssdfsdf</p>
+                    <p class="cat">旅行</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </Col>
         </Row>
       </div>
@@ -166,6 +194,7 @@ section{
     }
     justify-content: space-around;
     .sidebar-left{
+      user-select: none;
       .info-card{
         border-radius: @g-radius;
         box-shadow: @g-shadow;
@@ -230,6 +259,57 @@ section{
           height: 30px;
           text-align: center;
           font-size: 14px;
+        }
+        .icon-line{
+          justify-content: space-between;
+          margin: 19px 0;
+          margin-bottom: 10px;
+          li{
+            img{
+              height: 18px;
+            }
+            width: 25%;
+            text-align: center;
+          }
+        }
+      }
+    }
+    .sidebar-right{
+      border-radius: @g-radius;
+      box-shadow: @g-shadow;
+      background-color: #fff;
+      padding: 20px;
+      .title{
+        line-height: 1em;
+        color:@gray;
+      }
+      ul{
+        li{
+          &:last-child{
+            margin-bottom: 0;
+          }
+          img{
+            height: 64px;
+            width: 64px;
+            object-fit: cover;
+            margin-right: 10px;
+          }
+          height: 64px;
+          justify-content: flex-start;
+          .info{
+            width: calc(100% - 20px);
+            .time{
+              margin-top: 3px;
+            }
+            .title{
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              padding-right: 20px;
+              margin: 3px 0;
+            }
+          }
+          margin: 20px 0;
         }
       }
     }
