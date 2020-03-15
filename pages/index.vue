@@ -72,7 +72,12 @@
           </Col>
           <Col :xs="24" :md="14">
             <article>
-              <div class="main-item g-shadow">d</div>
+              <div class="main-item g-shadow">
+                <img src="@imgs/recent-test.jpg" class="cover">
+                <p class="title"><a href="/">文章名称测试</a></p>
+                <p class="subscribe">this is subscribethis is subscribethis is subscribethis is subscribethis is subscribethis is subscribethis is subscribe</p>
+                <p class="more">Read More</p>
+              </div>
             </article>
           </Col>
           <Col  :xs="24" :md="5">
@@ -322,6 +327,45 @@ article{
   .main-item{
     background-color: #fff;
     border-radius: @g-radius;
+    overflow: hidden;
+    margin-bottom: 30px;
+    .cover{
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+    .title{
+      padding: 0 20px;
+      line-height: 4.5em;
+      letter-spacing: 1px;
+      a {
+        font-size: @font1;
+        color: @gray-deep1;
+        &:hover{
+          color: @main-color;
+        }
+      }
+    }
+    .subscribe{
+      font-size: @font3;  
+      color: @gray;
+      padding: 0 20px;
+    }
+    .more{
+      background-color: #f5f5f5;
+      color: @gray-deep1;
+      display: inline-block;
+      font-size: @font5;
+      margin: 20px;
+      padding: 5px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      &:hover{
+        background-color: @main-color;
+        color: #fff;
+      }
+    }
   }
 }
 </style>
