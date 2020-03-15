@@ -71,7 +71,9 @@
             </div>
           </Col>
           <Col :xs="24" :md="14">
-          center
+            <article>
+              <div class="main-item g-shadow">d</div>
+            </article>
           </Col>
           <Col  :xs="24" :md="5">
             <div class="sidebar-right g-shadow">
@@ -313,6 +315,13 @@ section{
         }
       }
     }
+  }
+}
+article{
+  padding: 0 20px;
+  .main-item{
+    background-color: #fff;
+    border-radius: @g-radius;
   }
 }
 </style>
