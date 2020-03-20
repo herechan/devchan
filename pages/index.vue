@@ -26,7 +26,7 @@
     <section>
       <div class="container clear content-wrap">
         <Row>
-          <Col :xs="24" :md="5">
+          <Col :sm="24" :lg="5">
             <div class="sidebar-left">
               <div class="info-card g-shadow">
                 <div class="level1">
@@ -70,7 +70,7 @@
               </div>
             </div>
           </Col>
-          <Col :xs="24" :md="14">
+          <Col :sm="24" :lg="14">
             <article>
               <div class="main-item g-shadow">
                 <img src="@imgs/recent-test.jpg" class="cover">
@@ -80,7 +80,7 @@
               </div>
             </article>
           </Col>
-          <Col  :xs="24" :md="5">
+          <Col  :sm="24" :lg="5">
             <div class="sidebar-right g-shadow">
               <p class="title">
                 近期文章
