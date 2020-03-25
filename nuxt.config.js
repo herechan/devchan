@@ -1,4 +1,5 @@
 const path = require('path')
+const envUrl = require("./pro-env")();
 export default {
   mode: 'universal',
   /*
@@ -17,6 +18,10 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/logo.png' }
     ]
+  },
+  env: {
+    staticUrl: envUrl.staticUrl,
+    baseUrl: envUrl.baseUrl
   },
   /*
   ** Customize the progress-bar color
