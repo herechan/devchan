@@ -13,7 +13,9 @@
               @click="navHandle(index)"
               :key="index"
               :class="navIndex === index ? 'active' : ''"
-            >{{item.name}}</li>
+            >
+            <span class="nav-name">{{item.name}}</span>
+            </li>
           </ul>
         </div>
         <div class="right">
@@ -157,11 +159,15 @@ header {
       }
       .logo {
         height: 40px;
+        // margin-right: 10px;
+        .casper{
+          color: @gray;
+        }
       }
       ul {
         li {
           height: 100%;
-          padding: 0 15px;
+          padding: 0;
           font-size: 14px;
           cursor: pointer;
           line-height: 60px;
@@ -174,6 +180,13 @@ header {
           }
           &.active {
             color: @main-color;
+          }
+          .nav-name{
+            display: block;
+            padding: 0 20px;
+            &:hover{
+              background-color: @fafa;
+            }
           }
         }
       }
