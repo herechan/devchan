@@ -42,7 +42,7 @@
                   <i class="iconfont">&#xe690;</i>
                 </el-button>
               </el-upload> -->
-            <Upload :action="baseUrl+'/admin/articleCover'">
+            <Upload :on-success="fileUpSuccess" :action="baseUrl+'/admin/articleCover'">
                   <Button icon="ios-cloud-upload-outline">Upload files</Button>
               </Upload>
               <transition name="cover-fade">
@@ -144,7 +144,8 @@ export default {
         .then(r => {
           if (r.status == 200 && r.data.result) {
             var url = r.data.result.replace(/\\/g, "/");
-            this.$refs.md.$img2Url(filename, `${process.env.staticUrl}${url}`);
+            // this.$refs.md.$img2Url(filename, `${process.env.staticUrl}${url}`);
+            this.$refs.md.$img2Url(filename, `${url}`)
           }
         });
     },
@@ -175,17 +176,17 @@ export default {
     validate() {
       //该方法会用toolbox组件调用
       if (
-        this.trim(this.intro) &&
-        this.trim(this.title) &&
-        this.trim(this.mdText) &&
-        this.$store.state.articleTagsActive.join("")
+        this.intro.trim() &&
+        this.title.trim() &&
+        this.mdText.trim()
+        // this.$store.state.articleTagsActive.join("")
       ) {
         return axios
           .post(`${process.env.baseUrl}/admin/saveArticle`, {
             intro: this.intro,
             mdText: this.mdText,
             title: this.title,
-            tags: this.$store.state.articleTagsActive,
+            // tags: this.$store.state.articleTagsActive,
             coverPath: this.coverPath
           })
           .then(r => {

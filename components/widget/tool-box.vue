@@ -7,7 +7,7 @@
     <div class="tool-item" v-for="(item,index) in toolList" :key="index" @click="triggerTool(item)">
       <i class="iconfont" :class="{'last-icon':index == toolList.length -1}" v-html="item.code"></i>
     </div>
-    <Modal title="" v-model="dialogVisible" :transfer="true" custom-class="tool-dialog">
+    <Modal :style="modalStyle" title="" v-model="dialogVisible" :transfer="true" custom-class="tool-dialog">
       <div class="dialog-content">
         <span v-html="icon" class="dialog-icon"></span>
         <span>{{dialogContent}}</span>
@@ -23,10 +23,13 @@
 import axios from "axios";
 export default {
   mounted() {
-    
   },
   data() {
     return {
+      modalStyle: {
+        zIndex: 3000,
+        position: 'relative'
+      },
       dialogVisible: false,
       showCancle: false,
       saveSuccess:false,
@@ -77,15 +80,12 @@ export default {
       }
     },
     saveAction() {
-      // if (!this.$parent.validate()) {
-      //   this.$Message({
-      //     message: this.validateFailure,
-      //     type: "warning"
-      //   });
-      // } else {
-      //   this.dialogVisible = true;
-      //   this.saveSuccess = true;
-      // }
+      if (!this.$parent.validate()) {
+        this.$Message.info('验证失败，请检查必填项')
+      } else {
+        this.dialogVisible = true;
+        this.saveSuccess = true;
+      }
     }
   }
 };
