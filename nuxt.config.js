@@ -38,7 +38,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/iview'
+    '@/plugins/iview',
+    '@/plugins/axios'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -49,7 +50,8 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+    '@nuxtjs/axios',
   ],
   /*
   ** Build configuration
@@ -60,6 +62,7 @@ export default {
     */
     extend (config, ctx) {
       config.resolve.alias['@imgs'] =  path.resolve(__dirname, 'assets/imgs')
+      config.resolve.alias['@axios'] = path.resolve(__dirname, 'middleware/axios/index.js')
     }
   },
   styleResources: {

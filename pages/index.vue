@@ -70,6 +70,7 @@
               </div>
             </div>
           </Col>
+          <!-- 文章主体列表 -->
           <Col :sm="24" :lg="14">
             <article>
               <div class="main-item g-shadow">
@@ -110,10 +111,13 @@
     </section>
   </div>
 </template>
-
 <script>
+import axios from '@nuxtjs/axios'
 export default {
   components: {},
+  asyncData (context) {
+    
+  },
   data() {
     return {
       navIndex: 0,
@@ -130,7 +134,10 @@ export default {
     navHandle(index) {
       this.navIndex = index;
     }
-  }
+  },
+  created() {
+    console.log(axios)
+  },
 };
 </script>
 <style lang="less" scoped>
