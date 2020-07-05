@@ -2,12 +2,35 @@
   <div>
     <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet" />
     <header class="header g-shadow">
-      <div class="container flex">
+      <div class="container flex mobile-container">
+        <div class="mobile-logo">
+          <a href="/">
+            <img src="../static/logo.png" alt="Casper" class="logo" />
+          </a>
+          <a href="/"><span>CASPER</span></a>
+        </div>
+        <div class="mobile-container mobile-sub-nav">
+          <ul class="flex nav-bar-mobile">
+            <li
+              v-for="(item, index) in navList"
+              @click="navHandle(index)"
+              :key="index"
+              :class="navIndex === index ? 'active' : ''"
+            >
+            <span class="nav-name">{{item.name}}</span>
+            </li>
+            <li>
+              <img src="@imgs/search.png" alt="search" class="search">
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="container flex pc-container">
         <div class="left">
           <a href="/">
             <img src="../static/logo.png" alt="Casper" class="logo" />
           </a>
-          <ul class="flex">
+          <ul class="flex nav-bar">
             <li
               v-for="(item, index) in navList"
               @click="navHandle(index)"
@@ -74,14 +97,17 @@
           </Col>
           <!-- 文章主体列表 -->
           <Col :sm="24" :lg="14">
-            <article>
-              <div class="main-item g-shadow">
-                <img src="@imgs/recent-test.jpg" class="cover">
-                <p class="title"><a href="/">文章名称测试</a></p>
-                <p class="subscribe">this is subscribethis is subscribethis is subscribethis is subscribethis is subscribethis is subscribethis is subscribe</p>
-                <p class="more">Read More</p>
-              </div>
-            </article>
+            <!-- <article>
+              <ul>
+                <li class="main-item g-shadow" v-for="(item, index) in articleList" :key="index">
+                  <img :src="item.coverPath" class="cover">
+                  <p class="title"><a href="/">{{item.title}}</a></p>
+                  <p class="subscribe">{{item.intro}}</p>
+                  <p class="more">Read More</p>
+                </li>
+              </ul>
+            </article> -->
+            <nuxt-child/>
           </Col>
           <Col  :sm="24" :lg="5">
             <div class="sidebar-right g-shadow">
@@ -114,11 +140,13 @@
   </div>
 </template>
 <script>
-import axios from '@nuxtjs/axios'
 export default {
   components: {},
-  asyncData (context) {
-    
+  async asyncData ({$axios}) {
+    let {data} = await $axios.$get(`${process.env.baseUrl}/getArticleTwitterList`)
+    return {
+      articleList: data.articleList
+    }
   },
   data() {
     return {
@@ -129,7 +157,8 @@ export default {
         { name: "相册" },
         { name: "文章" },
         { name: "关于" }
-      ]
+      ],
+      articleList: []
     };
   },
   methods: {
@@ -137,12 +166,16 @@ export default {
       this.navIndex = index;
     }
   },
+  watch: {
+  },
   created() {
-    console.log(axios)
   },
 };
 </script>
 <style lang="less" scoped>
+.mobile-container{
+  display: none;
+}
 header {
   background-color: #fff;
   * {
@@ -280,10 +313,10 @@ section{
         .follow-btn{
           cursor: pointer;
           background-color: @main-color;
-          border-radius: 16px;
+          border-radius: 25px;
           color: #fff;
-          line-height: 30px;
-          height: 30px;
+          line-height: 35px;
+          height: 35px;
           text-align: center;
           font-size: 14px;
         }
@@ -384,6 +417,58 @@ article{
       &:hover{
         background-color: @main-color;
         color: #fff;
+      }
+    }
+  }
+}
+@media screen and (max-width: 768px){
+  .nav-bar{
+    display: none;
+  }
+  .pc-container{
+    display: none;
+  }
+  .mobile-container{
+    display: block;
+    height: auto!important;
+    .mobile-logo{
+      justify-content: center;
+      margin-right: 5px;
+      height: 60px;
+      img{
+        height: 30px!important;
+        float: left;
+        margin-right: 5px;
+      }
+      span{
+        font-size: 18px;
+        font-weight: lighter;
+        color: @gray-deep1;
+      }
+    }
+    .mobile-sub-nav{
+      height: 55px;
+      display: block;
+      .nav-bar-mobile{
+        justify-content: space-between;
+        li{
+          justify-content: flex-start;
+          height: auto;
+          line-height: normal;
+          display: flex;
+          align-items: center;
+          span{
+            padding: 15px 5px;
+          }
+          &:first-child{
+            span{
+              padding-left: 0;
+            }
+          }
+          img.search{
+            height: 16px;
+          }
+        }
       }
     }
   }

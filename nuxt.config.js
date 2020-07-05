@@ -8,7 +8,7 @@ export default {
   head: {
     title: 'Casper\'s Land',
     script: [
-      {src: 'https://at.alicdn.com/t/font_8d5l8fzk5b87iudi.js'}
+      {src: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js'}
     ],
     meta: [
       { charset: 'utf-8' },

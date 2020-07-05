@@ -77,7 +77,7 @@ export function sanitizeComponent (Component) {
     Component._Ctor = Component
     Component.extendOptions = Component.options
   }
-  // For debugging purpose
+  // If no component name defined, set file path as name, (also fixes #5703)
   if (!Component.options.name && Component.options.__file) {
     Component.options.name = Component.options.__file
   }
@@ -150,13 +150,13 @@ export async function setContext (app, context) {
       payload: context.payload,
       error: context.error,
       base: '/',
-      env: {"staticUrl":"http://localhost:8009","baseUrl":"http://localhost:8009/api"}
+      env: {"staticUrl":"http://www.devchan.top","baseUrl":"http://www.devchan.top/api"}
     }
     // Only set once
-    if (context.req) {
+    if (!process.static && context.req) {
       app.context.req = context.req
     }
-    if (context.res) {
+    if (!process.static && context.res) {
       app.context.res = context.res
     }
     if (context.ssrContext) {
@@ -570,7 +570,11 @@ function formatUrl (url, query) {
   let parts = url.split('/')
   let result = (protocol ? protocol + '://' : '//') + parts.shift()
 
-  let path = parts.filter(Boolean).join('/')
+  let path = parts.join('/')
+  if (path === '' && parts.length === 1) {
+    result += '/'
+  }
+
   let hash
   parts = path.split('#')
   if (parts.length === 2) {
@@ -610,5 +614,15 @@ export function addLifecycleHook(vm, hook, fn) {
   if (!vm.$options[hook]) {
     vm.$options[hook] = []
   }
-  vm.$options[hook].push(fn)
+  if (!vm.$options[hook].includes(fn)) {
+    vm.$options[hook].push(fn)
+  }
+}
+
+export const urlJoin = function urlJoin () {
+  return [].slice
+    .call(arguments)
+    .join('/')
+    .replace(/\/+/g, '/')
+    .replace(':/', '://')
 }

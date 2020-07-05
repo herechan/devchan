@@ -13,8 +13,8 @@ module.exports = function(){
             baseUrl = "https://t.devchan.top/api"
             staticUrl = "https://t.devchan.top"
         default:
-            baseUrl = "http://localhost:8009/api"
-            staticUrl = "http://localhost:8009"
+            baseUrl = "http://www.devchan.top/api"
+            staticUrl = "http://www.devchan.top"
             break;
     }
     return {

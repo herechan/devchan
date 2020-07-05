@@ -1,11 +1,6 @@
 import Vue from 'vue'
 
-import {
-  getMatchedComponentsInstances,
-  getChildrenComponentInstancesUsingFetch,
-  promisify,
-  globalHandleError
-} from './utils'
+import { getMatchedComponentsInstances, getChildrenComponentInstancesUsingFetch, promisify, globalHandleError, urlJoin, sanitizeComponent } from './utils'
 
 import NuxtLoading from './components/nuxt-loading.vue'
 import NuxtBuildIndicator from './components/nuxt-build-indicator'
@@ -16,7 +11,7 @@ import '../assets/style.less'
 
 import _6f6c098b from '../layouts/default.vue'
 
-const layouts = { "_default": _6f6c098b }
+const layouts = { "_default": sanitizeComponent(_6f6c098b) }
 
 export default {
   render (h, props) {
@@ -71,8 +66,8 @@ export default {
   created () {
     // Add this.$nuxt in child instances
     Vue.prototype.$nuxt = this
-    // add to window so we can listen when ready
     if (process.client) {
+      // add to window so we can listen when ready
       window.$nuxt = this
 
       this.refreshOnlineStatus()
@@ -86,9 +81,10 @@ export default {
     this.context = this.$options.context
   },
 
-  mounted () {
+  async mounted () {
     this.$loading = this.$refs.loading
   },
+
   watch: {
     'nuxt.err': 'errorChanged'
   },
@@ -98,9 +94,9 @@ export default {
       return !this.isOnline
     },
 
-      isFetching() {
+    isFetching () {
       return this.nbFetching > 0
-    }
+    },
   },
 
   methods: {
@@ -192,7 +188,7 @@ export default {
         layout = 'default'
       }
       return Promise.resolve(layouts['_' + layout])
-    }
+    },
   },
 
   components: {
