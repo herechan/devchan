@@ -8,7 +8,7 @@ export default {
   head: {
     title: 'Casper\'s Land',
     script: [
-      {src: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js'}
+      {src: '//at.alicdn.com/t/font_705325_nnhyywkuxl.js'},
     ],
     meta: [
       { charset: 'utf-8' },
@@ -16,7 +16,7 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/logo.png' }
+      { rel: 'icon', type: 'image/x-icon', href: '/logo.png' },
     ]
   },
   env: {

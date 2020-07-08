@@ -13,7 +13,7 @@
           <ul class="flex nav-bar-mobile">
             <li
               v-for="(item, index) in navList"
-              @click="navHandle(index)"
+              @click="navHandle(index, item)"
               :key="index"
               :class="navIndex === index ? 'active' : ''"
             >
@@ -33,7 +33,7 @@
           <ul class="flex nav-bar">
             <li
               v-for="(item, index) in navList"
-              @click="navHandle(index)"
+              @click="navHandle(index, item)"
               :key="index"
               :class="navIndex === index ? 'active' : ''"
             >
@@ -152,7 +152,7 @@ export default {
     return {
       navIndex: 0,
       navList: [
-        { name: "主页" },
+        { name: "主页", url: '/' },
         { name: "微博" },
         { name: "相册" },
         { name: "文章" },
@@ -162,13 +162,16 @@ export default {
     };
   },
   methods: {
-    navHandle(index) {
+    navHandle(index, item) {
       this.navIndex = index;
+      this.$router.push({
+        path: item.url
+      })
     }
   },
   watch: {
   },
-  created() {
+  mounted() {
   },
 };
 </script>

@@ -17,7 +17,7 @@ export default {
 <style lang="less" scoped>
     .card{
         background-color: @card-bg;
-        .card-border;
+        // .card-border;
         box-shadow: 0 5px 8px -4px rgba(0, 0, 0, 0.2);
         padding: 10px 0;
         margin-bottom: 20px;
