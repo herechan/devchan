@@ -13,7 +13,19 @@
             <div class="card-row">
               <p class="card-row-name">Tags</p>
               <div class="card-list">
-                <!-- <TagList/> -->
+                <Icon type="md-refresh" @click="resetBtnHandle" class="reset-btn"/>
+                <Tag @click.native="setDelItemListHandle(item)" class="tag-item" size="medium" v-for="(item, index) in tagList" :key="index" :class="item.selected ? 'item-active' : ''">
+                  {{item.name}}
+                </Tag>
+                <div class="tag-edit-box" v-show="tagEditFlag">
+                  <Input size="small" v-model="editValue" class="edit-value-box"/>
+                  <Button size="small" type="primary" @click="editConfirm">确定</Button>
+                  <Button size="small" type="warning" @click="editCancle">取消</Button>
+                </div>
+                <Button @click="editTagHandle" icon="ios-add" type="dashed" size="small" v-if="!tagEditFlag && !tagDelFlag">添加</Button>
+                <Button @click="deleteAction" icon="ios-trash-outline" type="error" size="small" v-if="!tagEditFlag && !tagDelFlag">删除</Button>
+                <!-- <Button @click="deleteAction" type="error" size="small" v-if="tagDelFlag" class="tag-item-del">删除</Button>
+                <Button @click="deleteActionCancle" type="dashed" size="small" v-if="tagDelFlag" class="tag-item-del">取消</Button> -->
               </div>
             </div>
             <div class="card-row fake">
@@ -70,6 +82,17 @@
         </Card>
       </Col>
     </Row>
+    <Modal
+        v-model="deleteModelFlag"
+        title="即将删除"
+        @on-ok="deleteModelConfirm"
+        ok-text="确认"
+        cancel-text="取消"
+        @on-cancel="deleteModelCancle">
+        <span v-for='(item, index) in tagList' :key="index" v-show="item.selected">
+          {{item.name}}
+        </span>
+    </Modal>
     <ToolBox/>
   </div>
 </template>
@@ -78,7 +101,7 @@ import Card from "~/components/admin-card";
 import 'mavon-editor/dist/css/index.css'
 // import TagList from "~/components/essaySort";
 import { mavonEditor } from "mavon-editor";
-import axios from "axios";
+// import this.$axios from "this.$axios";
 import ToolBox from "~/components/widget/tool-box";
 import qs from "qs";
 const {baseUrl} = process.env
@@ -93,12 +116,18 @@ export default {
   computed: {},
   data() {
     return {
+      editValue: '',
       intro: "",
       mdText: "",
       title: "",
       coverPath: "",
       baseUrl: baseUrl,
       cardList: [{}],
+      tagList: [],
+      tagEditFlag: false,
+      tagDelFlag: false,
+      deleteModelFlag: false,
+      selectedTagList: [],
       toolbars: {
         bold: true, // 粗体
         italic: true, // 斜体
@@ -120,9 +149,99 @@ export default {
     };
   },
   mounted() {
-    axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
+    this.$axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
+    this.queryTagList()
+  },
+  watch: {
+    tagDelFlag () {
+      this.resetTagStatus()
+    },
+    tagEditFlag () {
+      this.resetTagStatus()
+    }
   },
   methods: {
+    resetBtnHandle () {
+      this.resetTagStatus()
+      this.tagEditFlag = false
+    },
+    resetTagStatus () {
+      this.tagList.forEach(item => {
+        if (item.selected) {
+          this.$set(item, 'selected', false)
+        }
+      })
+      this.selectedTagList = []
+    },
+    setDelItemListHandle (item) {
+      let id = item._id
+      let index = this.selectedTagList.indexOf(id)
+      if (index !== -1) {
+        this.selectedTagList.splice(index, 1)
+        this.$set(item, 'selected', false)
+      } else {
+        this.selectedTagList.push(id)
+        this.$set(item, 'selected', true)
+      }
+      
+    },
+    deleteActionCancle () {
+      this.tagDelFlag = false
+    },
+    deleteAction () {
+      if (!this.selectedTagList.length) {
+        this.$Message.error('请选择要删除的标签')
+        return
+      }
+      this.deleteConfirm()
+    },
+    deleteConfirm () {
+      this.deleteModelFlag = true
+    },
+    deleteModelConfirm () {
+      
+    },
+    deleteModelCancle () {
+      this.deleteModelFlag = false
+    },
+    deleteTagHandle () {
+      this.tagDelFlag = true
+    },
+    editConfirm () {
+      if (!this.editValue.trim()) {
+        this.$Message.error('请输入有效的字符');
+        return
+      }
+      this.$axios.get(`${process.env.baseUrl}/saveTag`, {
+        params: {
+          tag: this.editValue
+        }
+      }).then(({data}) => {
+        if (data.result === 0) {
+          this.$Message.error(data.msg)
+          return
+        } else if (data.result === 1) {
+          this.$Message.success('标签保存成功！')
+          this.editValue = ''
+          this.tagEditFlag = false
+          this.queryTagList()
+        }
+      })
+    },
+    editCancle () {
+      this.tagEditFlag = false
+      this.editValue = ''
+    },
+    editTagHandle () {
+      this.tagEditFlag = true
+    },
+    queryTagList () {
+      this.$axios.get(`${process.env.baseUrl}/articleTags`).then(({data}) => {
+        if (data.result === 1) {
+          this.tagList = data.data
+        }
+      })
+    },
     imgDel() {
       return false;
     },
@@ -135,7 +254,7 @@ export default {
       }
       var formData = new FormData();
       formData.append("image", file);
-      axios
+      this.$axios
         .post(`${process.env.baseUrl}/admin/articleImageUpload`, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
@@ -153,7 +272,7 @@ export default {
       if (!this.coverPath) {
         return;
       }
-      axios
+      this.$axios
         .post(`${process.env.baseUrl}/admin/articleCoverDelete`, {
           coverPath: this.coverPath
         })
@@ -181,7 +300,7 @@ export default {
         this.mdText.trim()
         // this.$store.state.articleTagsActive.join("")
       ) {
-        return axios
+        return this.$axios
           .post(`${process.env.baseUrl}/admin/saveArticle`, {
             intro: this.intro,
             mdText: this.mdText,
@@ -263,6 +382,9 @@ export default {
         background-color: #fff;
       }
     }
+    .v-note-wrapper{
+      z-index: 9;
+    }
   }
 }
 .upload-card {
@@ -270,6 +392,19 @@ export default {
 }
 .card-list {
   min-height: 28px;
+  .reset-btn{
+    cursor: pointer;
+    font-size: 15px;
+  }
+  .tag-item{
+    position: relative;
+    &.item-active{
+      border-color: @main-color;
+    }
+  }
+    .tag-item-del{
+      padding: 1px 7px 1px;
+    }
 }
 .card .card-row /deep/ .filter-item {
   padding-left: 0;
@@ -298,6 +433,12 @@ export default {
 }
 .upload-cover-row /deep/ .el-upload-list__item-name {
   padding-left: 10px;
+}
+.tag-edit-box{
+  display: inline-block;
+  .edit-value-box{
+    width: 80px;
+  }
 }
 @media screen and(max-width: 767px) {
   .justify-row {

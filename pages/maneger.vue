@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-
+import cookie from 'cookie'
 export default {
   data() {
     return {
@@ -53,7 +53,14 @@ export default {
       ]
     };
   },
-  
+  beforeMount() {
+    let cookieObj = cookie.parse(document.cookie)
+    if (!cookieObj.devchan_token) {
+      this.$router.push({
+        path: 'login'
+      })
+    }
+  },
   methods: {
     triggerAside(item, index) {
       this.curIndex = index;
@@ -111,7 +118,7 @@ aside {
   box-shadow: 5px 0px 8px -4px rgba(0, 0, 0, 0.2);
   position: fixed;
   left: 0;
-  z-index: 2999;
+  z-index: 9;
   .admin-logo {
     display: flex;
     justify-content: center;

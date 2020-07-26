@@ -3,9 +3,9 @@ import Router from 'vue-router'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _61303110 = () => interopDefault(import('../pages/admin.vue' /* webpackChunkName: "pages/admin" */))
-const _0556f3fb = () => interopDefault(import('../pages/admin/index.vue' /* webpackChunkName: "pages/admin/index" */))
 const _67a03692 = () => interopDefault(import('../pages/login.vue' /* webpackChunkName: "pages/login" */))
+const _da436fdc = () => interopDefault(import('../pages/maneger.vue' /* webpackChunkName: "pages/maneger" */))
+const _0104f915 = () => interopDefault(import('../pages/maneger/index.vue' /* webpackChunkName: "pages/maneger/index" */))
 const _c40ed90a = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 const _132d5c84 = () => interopDefault(import('../pages/index/index.vue' /* webpackChunkName: "pages/index/index" */))
 const _60bb313e = () => interopDefault(import('../pages/index/_article/index.vue' /* webpackChunkName: "pages/index/[_]article/index" */))
@@ -27,17 +27,17 @@ export const routerOptions = {
   scrollBehavior,
 
   routes: [{
-    path: "/admin",
-    component: _61303110,
-    children: [{
-      path: "",
-      component: _0556f3fb,
-      name: "admin"
-    }]
-  }, {
     path: "/login",
     component: _67a03692,
     name: "login"
+  }, {
+    path: "/maneger",
+    component: _da436fdc,
+    children: [{
+      path: "",
+      component: _0104f915,
+      name: "maneger"
+    }]
   }, {
     path: "/",
     component: _c40ed90a,

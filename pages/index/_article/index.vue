@@ -1,6 +1,6 @@
 <template>
-  <article class="article-body">
-    <div class="article-inner">
+  <section class="section-body">
+    <div class="section-inner">
       <img :src="'/'+ articleData.coverPath" class="cover" />
       <p class="title">{{articleData.title}}</p>
       <div class="info">
@@ -13,10 +13,16 @@
           测试
         </p>
       </div>
+      <article v-html="articleBody">
+      </article>
     </div>
-  </article>
+  </section>
 </template>
 <script>
+import 'mavon-editor/src/lib/css/markdown.css'
+const md = require("markdown-it")({
+  html:true
+});
 export default {
   async asyncData({
     isDev,
@@ -45,16 +51,23 @@ export default {
     }
   },
   created() {},
+  computed: {
+    articleBody () {
+      let content = this.articleData.mdText || ''
+      return md.render(content)
+    }
+  },
   data() {
     return {
       articleData: {}
     };
-  }
+  },
 };
 </script>
 <style lang="less" scope>
-.article-body {
-  .article-inner {
+.section-body {
+  padding-top: 0!important;
+  .section-inner {
     padding: 20px;
     box-shadow: @g-shadow;
     border-radius: @g-radius;
@@ -87,6 +100,14 @@ export default {
       .tag-box{
         margin-left: 10px;
       }
+    }
+    article{
+      padding: 20px 0;
+      p{
+        img{
+          max-width: 100%;
+        }
+      }  
     }
   }
 }
