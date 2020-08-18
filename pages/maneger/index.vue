@@ -18,14 +18,14 @@
                   {{item.name}}
                 </Tag>
                 <div class="tag-edit-box" v-show="tagEditFlag">
-                  <Input size="small" v-model="editValue" class="edit-value-box"/>
+                  <Input size="small" @keyup.enter.native="editConfirm" v-model="editValue" class="edit-value-box" ref="editValueInput"/>
                   <Button size="small" type="primary" @click="editConfirm">确定</Button>
                   <Button size="small" type="warning" @click="editCancle">取消</Button>
                 </div>
-                <Button @click="editTagHandle" icon="ios-add" type="dashed" size="small" v-if="!tagEditFlag && !tagDelFlag">添加</Button>
-                <Button @click="deleteAction" icon="ios-trash-outline" type="error" size="small" v-if="!tagEditFlag && !tagDelFlag">删除</Button>
-                <!-- <Button @click="deleteAction" type="error" size="small" v-if="tagDelFlag" class="tag-item-del">删除</Button>
-                <Button @click="deleteActionCancle" type="dashed" size="small" v-if="tagDelFlag" class="tag-item-del">取消</Button> -->
+                <div  class="tag-edit-box" >
+                  <Button @click="editTagHandle" icon="ios-add" type="dashed" size="small" v-if="!tagEditFlag && !tagDelFlag">添加</Button>
+                  <Button @click="deleteAction" icon="ios-trash-outline" type="error" size="small" v-if="!tagEditFlag && !tagDelFlag">删除</Button>
+                </div>
               </div>
             </div>
             <div class="card-row fake">
@@ -191,15 +191,25 @@ export default {
     deleteAction () {
       if (!this.selectedTagList.length) {
         this.$Message.error('请选择要删除的标签')
+        this.deleteModelFlag = false
         return
       }
-      this.deleteConfirm()
-    },
-    deleteConfirm () {
       this.deleteModelFlag = true
     },
     deleteModelConfirm () {
-      
+      this.$axios.get(`${process.env.baseUrl}/deleteTags`, {
+        params: {
+          tags: this.selectedTagList.join(',')
+        }
+      }).then(({data}) => {
+        console.log(data)
+        if (data.result) {
+          this.$Message.success('删除成功！', 3)
+          this.queryTagList()
+        } else {
+          this.$Message.error('删除失败，请在控制台查看error信息', 3)
+        }
+      })
     },
     deleteModelCancle () {
       this.deleteModelFlag = false
@@ -234,6 +244,9 @@ export default {
     },
     editTagHandle () {
       this.tagEditFlag = true
+      this.$nextTick(() => {
+        this.$refs.editValueInput.focus()
+      })
     },
     queryTagList () {
       this.$axios.get(`${process.env.baseUrl}/articleTags`).then(({data}) => {
@@ -395,9 +408,11 @@ export default {
   .reset-btn{
     cursor: pointer;
     font-size: 15px;
+    vertical-align: 0;
   }
   .tag-item{
     position: relative;
+    margin-bottom: 10px;
     &.item-active{
       border-color: @main-color;
     }
@@ -435,7 +450,8 @@ export default {
   padding-left: 10px;
 }
 .tag-edit-box{
-  display: inline-block;
+  // display: inline-block;
+  padding-left: 19px;
   .edit-value-box{
     width: 80px;
   }
