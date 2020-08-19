@@ -1,7 +1,7 @@
 <template>
   <section class="section-body">
     <div class="section-inner">
-      <img :src="'/'+ articleData.coverPath" class="cover" />
+      <img v-if="articleData.coverPath" :src="'/'+ articleData.coverPath" class="cover" />
       <p class="title">{{articleData.title}}</p>
       <div class="info">
         <span class="date">{{articleData.time}}</span>
@@ -10,7 +10,7 @@
           <svg class="iconfont tag" aria-hidden="true">
             <use xlink:href="#icon-tag" />
           </svg>
-          测试
+          <span v-for="(tagItem, tagIndex) in articleData.tags" :key="tagIndex">{{tagItem}}</span>
         </p>
       </div>
       <article v-html="articleBody">
@@ -106,7 +106,9 @@ export default {
       p{
         img{
           max-width: 100%;
+          margin: 10px 0;
         }
+        font-size: 16px;
       }  
     }
   }

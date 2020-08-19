@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{'mobile-state':mobileState}">
+  <div class="" :class="{'mobile-state':mobileState}">
     <aside class="">
       <div class="admin-logo">
         <img src="@imgs/portrait.jpg" alt="">

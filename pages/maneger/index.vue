@@ -1,6 +1,6 @@
 <!--admin首页，新增文章页面-->
 <template>
-  <div class="container">
+  <div class="">
     <Row class="justify-row">
       <Col :sm="12">
         <Card class="card">
@@ -310,7 +310,8 @@ export default {
       if (
         this.intro.trim() &&
         this.title.trim() &&
-        this.mdText.trim()
+        this.mdText.trim() && 
+        this.selectedTagList.length
         // this.$store.state.articleTagsActive.join("")
       ) {
         return this.$axios
