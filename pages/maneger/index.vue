@@ -54,7 +54,7 @@
                   <i class="iconfont">&#xe690;</i>
                 </el-button>
               </el-upload> -->
-            <Upload :on-success="fileUpSuccess" :action="baseUrl+'/admin/articleCover'">
+            <Upload :on-success="fileUpSuccess" :action="baseUrl+'/admin/articleCover'" :before-upload="beforeUploadHandle" :on-remove="removeCoverHandle">
                   <Button icon="ios-cloud-upload-outline">Upload files</Button>
               </Upload>
               <transition name="cover-fade">
@@ -161,6 +161,27 @@ export default {
     }
   },
   methods: {
+    removeCoverHandle (file, fileList) {
+      const coverPath = file.response.result
+      this.$axios.post(`${process.env.baseUrl}/admin/articleCoverDelete`, {
+        coverPath
+      }).then(({data}) => {
+        if (data.result === 1) {
+          this.$Message.success('删除成功', 3)
+          this.coverPath = ''
+        } else {
+          this.$Message.error(data.msg, 3)
+        }
+      })
+    },
+    beforeUploadHandle () {
+      if (this.coverPath) {
+        this.$Message.warning('请先移除已上传的封面', 3)
+        return false
+      } else {
+        return true
+      }
+    },
     resetBtnHandle () {
       this.resetTagStatus()
       this.tagEditFlag = false
@@ -278,20 +299,6 @@ export default {
             var url = r.data.result.replace(/\\/g, "/");
             // this.$refs.md.$img2Url(filename, `${process.env.staticUrl}${url}`);
             this.$refs.md.$img2Url(filename, `${url}`)
-          }
-        });
-    },
-    removeCover(f) {
-      if (!this.coverPath) {
-        return;
-      }
-      this.$axios
-        .post(`${process.env.baseUrl}/admin/articleCoverDelete`, {
-          coverPath: this.coverPath
-        })
-        .then(r => {
-          if (r.status == 200) {
-            this.coverPath = "";
           }
         });
     },

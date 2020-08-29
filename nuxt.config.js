@@ -39,7 +39,8 @@ export default {
   */
   plugins: [
     '@/plugins/iview',
-    '@/plugins/axios'
+    '@/plugins/axios',
+    {src: '@/plugins/vue-carousel', ssr: false}
   ],
   /*
   ** Nuxt.js dev-modules

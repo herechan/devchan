@@ -153,7 +153,7 @@ export default {
       navIndex: 0,
       navList: [
         { name: "主页", url: '/' },
-        { name: "微博" },
+        { name: "微博" , url: '/weibo'},
         { name: "相册" },
         { name: "文章" },
         { name: "关于" }

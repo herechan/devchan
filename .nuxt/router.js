@@ -8,7 +8,8 @@ const _da436fdc = () => interopDefault(import('../pages/maneger.vue' /* webpackC
 const _0104f915 = () => interopDefault(import('../pages/maneger/index.vue' /* webpackChunkName: "pages/maneger/index" */))
 const _c40ed90a = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 const _132d5c84 = () => interopDefault(import('../pages/index/index.vue' /* webpackChunkName: "pages/index/index" */))
-const _60bb313e = () => interopDefault(import('../pages/index/_article/index.vue' /* webpackChunkName: "pages/index/[_]article/index" */))
+const _41b8b257 = () => interopDefault(import('../pages/index/weibo/index.vue' /* webpackChunkName: "pages/index/weibo/index" */))
+const _60bb313e = () => interopDefault(import('../pages/index/_article/index.vue' /* webpackChunkName: "pages/index/_article/index" */))
 
 // TODO: remove in Nuxt 3
 const emptyFn = () => {}
@@ -45,6 +46,10 @@ export const routerOptions = {
       path: "",
       component: _132d5c84,
       name: "index"
+    }, {
+      path: "weibo",
+      component: _41b8b257,
+      name: "index-weibo"
     }, {
       path: ":article",
       component: _60bb313e,
