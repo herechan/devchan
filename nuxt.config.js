@@ -8,7 +8,7 @@ export default {
   head: {
     title: 'Casper\'s Land',
     script: [
-      {src: '//at.alicdn.com/t/font_705325_nnhyywkuxl.js'},
+      {src: '//at.alicdn.com/t/font_705325_l921bfenv3l.js'},
     ],
     meta: [
       { charset: 'utf-8' },
@@ -40,7 +40,7 @@ export default {
   plugins: [
     '@/plugins/iview',
     '@/plugins/axios',
-    {src: '@/plugins/vue-carousel', ssr: false}
+    {src: '@/plugins/vue-carousel', ssr: false},
   ],
   /*
   ** Nuxt.js dev-modules

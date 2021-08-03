@@ -6,6 +6,7 @@ import scrollBehavior from './router.scrollBehavior.js'
 const _67a03692 = () => interopDefault(import('../pages/login.vue' /* webpackChunkName: "pages/login" */))
 const _da436fdc = () => interopDefault(import('../pages/maneger.vue' /* webpackChunkName: "pages/maneger" */))
 const _0104f915 = () => interopDefault(import('../pages/maneger/index.vue' /* webpackChunkName: "pages/maneger/index" */))
+const _520d8724 = () => interopDefault(import('../pages/maneger/weibo/index.vue' /* webpackChunkName: "pages/maneger/weibo/index" */))
 const _c40ed90a = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 const _132d5c84 = () => interopDefault(import('../pages/index/index.vue' /* webpackChunkName: "pages/index/index" */))
 const _41b8b257 = () => interopDefault(import('../pages/index/weibo/index.vue' /* webpackChunkName: "pages/index/weibo/index" */))
@@ -38,6 +39,10 @@ export const routerOptions = {
       path: "",
       component: _0104f915,
       name: "maneger"
+    }, {
+      path: "weibo",
+      component: _520d8724,
+      name: "maneger-weibo"
     }]
   }, {
     path: "/",

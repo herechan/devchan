@@ -15,7 +15,7 @@
       </ul>
     </aside>
     <header>
-      <p class="header-title">Writting Center</p>
+      <p class="header-title">{{panelName}}</p>
       <i class="iconfont" @click="triggerMenu">&#xe654;</i>
     </header>
     <article>
@@ -34,16 +34,17 @@ export default {
       mobileState: false,
       shadow: false,
       search: "",
+      panelName: 'Writting Center',
       asideList: [
         {
           name: "Writting Center",
           // icon: "&#xe633;",
-          path: ""
+          path: "/maneger"
         },
         {
-          name: "Twitter",
+          name: "Weibo Editor",
           // icon: "&#xe749;",
-          path: ""
+          path: "/maneger/weibo"
         },
         {
           name: "Draft",
@@ -64,6 +65,7 @@ export default {
   methods: {
     triggerAside(item, index) {
       this.curIndex = index;
+      this.panelName = item.name
       this.$router.push(item.path);
       this.removeShadow();
     },
